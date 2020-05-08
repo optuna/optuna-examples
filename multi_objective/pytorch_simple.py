@@ -1,26 +1,16 @@
 """
-Optuna example that optimizes multi-layer perceptrons using PyTorch.
+Optuna multi-objective optimization example that optimizes multi-layer perceptrons using PyTorch.
 
-In this example, we optimize the validation accuracy of hand-written digit recognition using
-PyTorch and MNIST. We optimize the neural network architecture as well as the optimizer
-configuration. As it is too time consuming to use the whole MNIST dataset, we here use a small
-subset of it.
-
-We have the following two ways to execute this example:
-
-(1) Execute this code directly.
-    $ python pytorch_simple.py
-
-
-(2) Execute through CLI.
-    $ STUDY_NAME=`optuna create-study --direction maximize --storage sqlite:///example.db`
-    $ optuna study optimize pytorch_simple.py objective --n-trials=100 --study $STUDY_NAME \
-      --storage sqlite:///example.db
+In this example, we optimize the neural network architecture as well as the optimizer configuration
+by considering the validation accuracy of hand-written digit recognition (MNIST dataset) and
+the FLOPS of the PyTorch model. As it is too time consuming to use the whole MNIST dataset,
+we here use a small subset of it.
 
 """
 
 import os
 
+import thop
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -38,7 +28,7 @@ DIR = os.getcwd()
 EPOCHS = 10
 LOG_INTERVAL = 10
 N_TRAIN_EXAMPLES = BATCHSIZE * 30
-N_VALID_EXAMPLES = BATCHSIZE * 10
+N_VAL_EXAMPLES = BATCHSIZE * 10
 
 
 def define_model(trial):
@@ -63,18 +53,21 @@ def define_model(trial):
 
 def get_mnist():
     # Load MNIST dataset.
+    train_dataset = datasets.MNIST(DIR, train=True, download=True, transform=transforms.ToTensor())
     train_loader = torch.utils.data.DataLoader(
-        datasets.MNIST(DIR, train=True, download=True, transform=transforms.ToTensor()),
-        batch_size=BATCHSIZE,
-        shuffle=True,
-    )
-    valid_loader = torch.utils.data.DataLoader(
-        datasets.MNIST(DIR, train=False, transform=transforms.ToTensor()),
+        torch.utils.data.Subset(train_dataset, list(range(N_TRAIN_EXAMPLES))),
         batch_size=BATCHSIZE,
         shuffle=True,
     )
 
-    return train_loader, valid_loader
+    val_dataset = datasets.MNIST(DIR, train=False, transform=transforms.ToTensor())
+    val_loader = torch.utils.data.DataLoader(
+        torch.utils.data.Subset(val_dataset, list(range(N_VAL_EXAMPLES))),
+        batch_size=BATCHSIZE,
+        shuffle=True,
+    )
+
+    return train_loader, val_loader
 
 
 def objective(trial):
@@ -84,61 +77,53 @@ def objective(trial):
 
     # Generate the optimizers.
     optimizer_name = trial.suggest_categorical("optimizer", ["Adam", "RMSprop", "SGD"])
-    lr = trial.suggest_loguniform("lr", 1e-5, 1e-1)
+    lr = trial.suggest_uniform("lr", 1e-5, 1e-1)
     optimizer = getattr(optim, optimizer_name)(model.parameters(), lr=lr)
 
     # Get the MNIST dataset.
-    train_loader, valid_loader = get_mnist()
+    train_loader, val_loader = get_mnist()
 
     # Training of the model.
     model.train()
     for epoch in range(EPOCHS):
         for batch_idx, (data, target) in enumerate(train_loader):
-            # Limiting training data for faster epochs.
-            if batch_idx * BATCHSIZE >= N_TRAIN_EXAMPLES:
-                break
-
             data, target = data.view(-1, 28 * 28).to(DEVICE), target.to(DEVICE)
 
-            # Zeroing out gradient buffers.
             optimizer.zero_grad()
-            # Performing a forward pass.
             output = model(data)
-            # Computing negative Log Likelihood loss.
             loss = F.nll_loss(output, target)
-            # Performing a backward pass.
             loss.backward()
-            # Updating the weights.
             optimizer.step()
 
     # Validation of the model.
     model.eval()
     correct = 0
     with torch.no_grad():
-        for batch_idx, (data, target) in enumerate(valid_loader):
-            # Limiting validation data.
-            if batch_idx * BATCHSIZE >= N_VALID_EXAMPLES:
-                break
+        for batch_idx, (data, target) in enumerate(val_loader):
             data, target = data.view(-1, 28 * 28).to(DEVICE), target.to(DEVICE)
             output = model(data)
             pred = output.argmax(dim=1, keepdim=True)  # Get the index of the max log-probability.
             correct += pred.eq(target.view_as(pred)).sum().item()
 
-    accuracy = correct / N_VALID_EXAMPLES
-    return accuracy
+    accuracy = correct / N_VAL_EXAMPLES
+
+    flops, _params = thop.profile(model, inputs=(torch.randn(1, 28 * 28),), verbose=False)
+    return flops, accuracy
 
 
 if __name__ == "__main__":
-    study = optuna.create_study(direction="maximize")
+    study = optuna.multi_objective.create_study(["minimize", "maximize"])
     study.optimize(objective, n_trials=100)
 
     print("Number of finished trials: ", len(study.trials))
 
-    print("Best trial:")
-    trial = study.best_trial
+    print("Pareto front:")
 
-    print("  Value: ", trial.value)
+    trials = {str(trial.values): trial for trial in study.get_pareto_front_trials()}
+    trials = list(trials.values())
+    trials.sort(key=lambda t: t.values)
 
-    print("  Params: ")
-    for key, value in trial.params.items():
-        print("    {}: {}".format(key, value))
+    for trial in trials:
+        print("  Trial#{}".format(trial.number))
+        print("    Values: FLOPS={}, accuracy={}".format(trial.values[0], trial.values[1]))
+        print("    Params: {}".format(trial.params))
