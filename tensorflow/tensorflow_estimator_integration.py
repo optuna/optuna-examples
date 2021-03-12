@@ -13,11 +13,20 @@ You can run this example as follows:
 
 import shutil
 import tempfile
+import urllib
 
 import tensorflow as tf
 import tensorflow_datasets as tfds
 
 import optuna
+from optuna.trial import TrialState
+
+
+# TODO(crcrpar): Remove the below three lines once everything is ok.
+# Register a global custom opener to avoid HTTP Error 403: Forbidden when downloading MNIST.
+opener = urllib.request.build_opener()
+opener.addheaders = [("User-agent", "Mozilla/5.0")]
+urllib.request.install_opener(opener)
 
 
 MODEL_DIR = tempfile.mkdtemp()
@@ -100,8 +109,8 @@ def objective(trial):
 def main():
     study = optuna.create_study(direction="maximize")
     study.optimize(objective, n_trials=25)
-    pruned_trials = [t for t in study.trials if t.state == optuna.trial.TrialState.PRUNED]
-    complete_trials = [t for t in study.trials if t.state == optuna.trial.TrialState.COMPLETE]
+    pruned_trials = study.get_trials(deepcopy=False, states=[TrialState.PRUNED])
+    complete_trials = study.get_trials(deepcopy=False, states=[TrialState.COMPLETE])
     print("Study statistics: ")
     print("  Number of finished trials: ", len(study.trials))
     print("  Number of pruned trials: ", len(pruned_trials))

@@ -14,6 +14,7 @@ as follows:
 """
 
 import sys
+import urllib
 
 import chainer
 import chainer.functions as F
@@ -22,6 +23,14 @@ import chainermn
 import numpy as np
 
 import optuna
+from optuna.trial import TrialState
+
+
+# TODO(crcrpar): Remove the below three lines once everything is ok.
+# Register a global custom opener to avoid HTTP Error 403: Forbidden when downloading MNIST.
+opener = urllib.request.build_opener()
+opener.addheaders = [("User-agent", "Mozilla/5.0")]
+urllib.request.install_opener(opener)
 
 
 N_TRAIN_EXAMPLES = 3000
@@ -123,8 +132,8 @@ if __name__ == "__main__":
     chainermn_study.optimize(objective, n_trials=25)
 
     if comm.rank == 0:
-        pruned_trials = [t for t in study.trials if t.state == optuna.trial.TrialState.PRUNED]
-        complete_trials = [t for t in study.trials if t.state == optuna.trial.TrialState.COMPLETE]
+        pruned_trials = study.get_trials(deepcopy=False, states=[TrialState.PRUNED])
+        complete_trials = study.get_trials(deepcopy=False, states=[TrialState.COMPLETE])
         print("Study statistics: ")
         print("  Number of finished trials: ", len(study.trials))
         print("  Number of pruned trials: ", len(pruned_trials))

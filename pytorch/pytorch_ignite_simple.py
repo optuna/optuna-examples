@@ -13,6 +13,7 @@ argument.
 """
 
 import argparse
+import urllib
 
 from ignite.engine import create_supervised_evaluator
 from ignite.engine import create_supervised_trainer
@@ -32,6 +33,13 @@ from torchvision.transforms import ToTensor
 import optuna
 
 
+# Register a global custom opener to avoid HTTP Error 403: Forbidden when downloading MNIST.
+# This is a temporary fix until torchvision v0.9 is released.
+opener = urllib.request.build_opener()
+opener.addheaders = [("User-agent", "Mozilla/5.0")]
+urllib.request.install_opener(opener)
+
+
 EPOCHS = 10
 TRAIN_BATCH_SIZE = 64
 VAL_BATCH_SIZE = 1000
@@ -42,7 +50,7 @@ N_VALID_EXAMPLES = 1000
 class Net(nn.Module):
     def __init__(self, trial):
         # We optimize dropout rate in a convolutional neural network.
-        super(Net, self).__init__()
+        super().__init__()
         self.conv1 = nn.Conv2d(1, 10, kernel_size=5)
         self.conv2 = nn.Conv2d(10, 20, kernel_size=5)
         dropout_rate = trial.suggest_float("dropout_rate", 0, 1)
