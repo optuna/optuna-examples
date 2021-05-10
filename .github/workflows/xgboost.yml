@@ -1,0 +1,45 @@
+name: xgboost
+
+on:
+  schedule:
+    - cron: '0 15 * * *'
+  pull_request:
+    paths:
+      - 'xgboost/**'
+      - '.github/workflows/xgboost.yml'
+
+jobs:
+  examples:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.6, 3.7, 3.8, 3.9]
+
+    # if: github.repository == 'optuna/optuna-examples'
+    steps:
+    - uses: actions/checkout@v2
+    - name: setup-python${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install (Python)
+      run: |
+        python -m pip install --upgrade pip
+        pip install --progress-bar off -U setuptools
+        pip install git+https://github.com/optuna/optuna.git
+        python -c 'import optuna'
+
+        pip install -r xgboost/requirements.txt
+    - name: Run XGBoost examples
+      run: |
+        python xgboost/xgboost_simple.py
+        python xgboost/xgboost_integration.py
+      env:
+        OMP_NUM_THREADS: 1
+    - name: Run XGBoost CV examples
+      run: |
+        python xgboost/xgboost_cv.py
+        python xgboost/xgboost_cv_integration.py
+      env:
+        OMP_NUM_THREADS: 1

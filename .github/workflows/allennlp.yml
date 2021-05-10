@@ -1,0 +1,39 @@
+name: allennlp
+
+on:
+  schedule:
+    - cron: '0 15 * * *'
+  pull_request:
+    paths:
+      - 'allennlp/**'
+      - '.github/workflows/allennlp.yml'
+
+jobs:
+  examples:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.6, 3.7, 3.8]
+
+    # if: github.repository == 'optuna/optuna-examples'
+    steps:
+    - uses: actions/checkout@v2
+    - name: setup-python${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install (Python)
+      run: |
+        python -m pip install --upgrade pip
+        pip install --progress-bar off -U setuptools
+        pip install git+https://github.com/optuna/optuna.git
+        python -c 'import optuna'
+
+        pip install -r allennlp/requirements.txt
+    - name: Run examples
+      run: |
+        python allennlp/allennlp_simple.py
+        python allennlp/allennlp_jsonnet.py
+      env:
+        OMP_NUM_THREADS: 1
