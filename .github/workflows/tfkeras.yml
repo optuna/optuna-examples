@@ -16,7 +16,7 @@ jobs:
       matrix:
         python-version: [3.6, 3.7, 3.8]
 
-    # if: github.repository == 'optuna/optuna-examples'
+    if: github.repository == 'optuna/optuna-examples'
     steps:
     - uses: actions/checkout@v2
     - name: setup-python${{ matrix.python-version }}
