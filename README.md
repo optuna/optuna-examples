@@ -77,7 +77,7 @@ In addition, integration modules are available for the following libraries, prov
 
 ### Examples of Visualization
 
-* [Visualizing study](https://colab.research.google.com/github/optuna/optuna/blob/master/examples/visualization/plot_study.ipynb)
+* [Visualizing study](https://colab.research.google.com/github/optuna/optuna-examples/blob/main/visualization/plot_study.ipynb)
 
 ### An example to enqueue trials with given parameter values
 
@@ -117,7 +117,7 @@ PRs to add additional projects welcome!
 
 ### Running with Optuna's Docker images?
 You can use our docker images with the tag ending with `-dev` to run most of the examples.
-For example, you can run [PyTorch Simple](./pytorch/pytorch_simple.py) via `docker run --rm optuna/optuna:py3.7-dev python examples/pytorch/pytorch_simple.py`.
+For example, you can run [PyTorch Simple](./pytorch/pytorch_simple.py) via `docker run --rm -v $(pwd):/prj -w /prj optuna/optuna:py3.7-dev python pytorch/pytorch_simple.py`.
 Also, you can try our visualization example in Jupyter Notebook by opening `localhost:8888` in your browser after executing this:
 
 ```bash
