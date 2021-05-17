@@ -33,7 +33,8 @@ if __name__ == "__main__":
     source_study = optuna.create_study(sampler=cma)
     source_study.optimize(biased_sphere, n_trials=50)
     print(
-        f"Best value on the source task: {source_study.best_value} (params: {source_study.best_params}\n"
+        f"Best value on the source task: {source_study.best_value},"
+        f" (params: {source_study.best_params}\n"
     )
 
     # Perform optimization on a target task by warm starting CMA-ES
@@ -41,5 +42,6 @@ if __name__ == "__main__":
     target_study = optuna.create_study(sampler=ws_cma)
     target_study.optimize(sphere, n_trials=50)
     print(
-        f"Best value on the target task: {target_study.best_value} (params: {target_study.best_params}\n"
+        f"Best value on the target task: {target_study.best_value},"
+        f" (params: {target_study.best_params}\n"
     )
