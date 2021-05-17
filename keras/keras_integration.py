@@ -11,7 +11,7 @@ You can run this example as follows:
 
 For a similar Optuna example that demonstrates Keras without a pruner on a regression dataset,
 see the following link:
-    https://github.com/optuna/optuna/blob/master/examples/mlflow/keras_mlflow.py
+    https://github.com/optuna/optuna-examples/blob/main/mlflow/keras_mlflow.py
 
 """
 import urllib
