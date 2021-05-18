@@ -1,4 +1,6 @@
 keras
 optuna
-tensorflow
+# TODO(nzw): Remove the version constraint after resolving the issue
+# https://github.com/keras-team/keras/issues/14632
+tensorflow<2.5.0
 tensorflow-datasets
