@@ -66,6 +66,10 @@ In addition, integration modules are available for the following libraries, prov
 * [Pruning with XGBoost integration module](./xgboost/xgboost_integration.py)
 * [Pruning with XGBoost integration module (cross validation, XGBoost.cv)](./xgboost/xgboost_cv_integration.py)
 
+### Examples of Samplers
+
+* [Warm Starting CMA-ES](./samplers/warm_starting_cma.py)
+
 ### Examples of User-Defined Sampler
 
 * [SimulatedAnnealingSampler](./samplers/simulated_annealing_sampler.py)
