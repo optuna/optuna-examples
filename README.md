@@ -15,7 +15,6 @@ This page contains a list of example codes written with Optuna.
 * [CatBoost](./catboost/catboost_simple.py)
 * [Chainer](./chainer/chainer_simple.py)
 * [ChainerMN](./chainer/chainermn_simple.py)
-* [CMA-ES (Warm Starting CMA-ES)](./cma/warm_starting_cma.py)
 * [Dask-ML](./dask_ml/dask_ml_simple.py)
 * [FastAI V1](./fastai/fastaiv1_simple.py)
 * [FastAI V2](./fastai/fastaiv2_simple.py)
@@ -66,6 +65,10 @@ In addition, integration modules are available for the following libraries, prov
 * [Pruning with Tensorflow integration module](./tensorflow/tensorflow_estimator_integration.py)
 * [Pruning with XGBoost integration module](./xgboost/xgboost_integration.py)
 * [Pruning with XGBoost integration module (cross validation, XGBoost.cv)](./xgboost/xgboost_cv_integration.py)
+
+### Examples of Samplers
+
+* [Warm Starting CMA-ES](./samplers/warm_starting_cma.py)
 
 ### Examples of User-Defined Sampler
 
