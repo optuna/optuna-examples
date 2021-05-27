@@ -51,7 +51,6 @@ The following example demonstrates how to implement pruning logic with Optuna.
 In addition, integration modules are available for the following libraries, providing simpler interfaces to utilize pruning.
 
 * [Pruning with Catalyst integration module](./pytorch/catalyst_simple.py)
-* [Pruning with Catboost integration module](./catboost/catboost_simple.py)
 * [Pruning with Chainer integration module](./chainer/chainer_integration.py)
 * [Pruning with ChainerMN integration module](./chainer/chainermn_integration.py)
 * [Pruning with FastAI V1 integration module](./fastai/fastaiv1_simple.py)
