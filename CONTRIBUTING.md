@@ -60,8 +60,6 @@ The title of your pull request should
 - wrap any code with backticks
 - not end with a period
 
-*The title will be directly visible in the release notes.*
-
 #### Example
 
 Add new example for using Optuna to tune GPT-4
