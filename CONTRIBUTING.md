@@ -23,7 +23,7 @@ See the [optuna/optuna/CONTRIBUTIONS.MD](https://github.com/optuna/optuna/blob/m
 ### Checking the Format and Coding Style
 
 Code is formatted with [black](https://github.com/psf/black),
-Coding style is checked with [flake8](http://flake8.pycqa.org) and [isort](https://pycqa.github.io/isort/),
+Coding style is checked with [flake8](http://flake8.pycqa.org)
 and additional conventions are described in the [Wiki](https://github.com/optuna/optuna/wiki/Coding-Style-Conventions).
 
 If your environment misses some dependencies such as black and flake8.
