@@ -71,7 +71,7 @@ The title of your pull request should
 
 #### Example
 
-Introduces Tree-structured Parzen Estimator to `optuna.samplers`
+Add new example for using Optuna to tune GPT-4
 
 ### Description
 
