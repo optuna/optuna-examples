@@ -29,13 +29,6 @@ and additional conventions are described in the [Wiki](https://github.com/optuna
 If your environment misses some dependencies such as black and flake8.
 you will be asked to install them.
 
-You can also check them using [tox](https://tox.readthedocs.io/en/latest/) like below.
-
-```
-$ pip install tox
-$ tox -e flake8 -e black
-```
-
 ## Continuous Integration and Local Verification
 
 Optuna repository uses GitHub Actions and CircleCI.
