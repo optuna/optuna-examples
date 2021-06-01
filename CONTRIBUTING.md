@@ -31,7 +31,7 @@ you will be asked to install them.
 
 ## Continuous Integration and Local Verification
 
-Optuna repository uses GitHub Actions and CircleCI.
+This repository uses GitHub Actions.
 
 ### Local Verification
 
