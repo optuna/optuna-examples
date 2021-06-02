@@ -10,17 +10,14 @@ we here use a small subset of it.
 
 import os
 
+import optuna
 import thop
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 import torch.utils.data
-from torchvision import datasets
-from torchvision import transforms
-
-import optuna
-
+from torchvision import datasets, transforms
 
 DEVICE = torch.device("cpu")
 BATCHSIZE = 128

@@ -18,19 +18,16 @@ https://pytorch.org/tutorials/intermediate/dist_tuto.html#communication-backends
 import os
 import urllib
 
+import optuna
 import torch
 import torch.distributed as dist
 import torch.nn as nn
 import torch.nn.functional as F
-from torch.nn.parallel import DistributedDataParallel as DDP
 import torch.optim as optim
 import torch.utils.data
-from torchvision import datasets
-from torchvision import transforms
-
-import optuna
 from optuna.trial import TrialState
-
+from torch.nn.parallel import DistributedDataParallel as DDP
+from torchvision import datasets, transforms
 
 # Register a global custom opener to avoid HTTP Error 403: Forbidden when downloading FashionMNIST.
 # This is a temporary fix until torchvision v0.9 is released.

@@ -14,13 +14,12 @@ You can run this example as follows:
 import logging
 import urllib
 
-import mxnet as mx
 import numpy as np
-
 import optuna
 from optuna.integration import MXNetPruningCallback
 from optuna.trial import TrialState
 
+import mxnet as mx
 
 # TODO(crcrpar): Remove the below three lines once everything is ok.
 # Register a global custom opener to avoid HTTP Error 403: Forbidden when downloading MNIST.

@@ -6,13 +6,13 @@ We optimize both the choice of booster model and their hyperparameters.
 
 """
 
-import lightgbm as lgb
 import numpy as np
+import optuna
+
+import lightgbm as lgb
 import sklearn.datasets
 import sklearn.metrics
 from sklearn.model_selection import train_test_split
-
-import optuna
 
 
 # FYI: Objective functions can take additional arguments

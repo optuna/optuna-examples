@@ -4,11 +4,10 @@ Optuna example that optimizes a classifier configuration for cancer dataset usin
 In this example, we optimize the cross-validated log loss of cancer detection.
 
 """
-import sklearn.datasets
-from sklearn.model_selection import KFold
-
 import optuna.integration.lightgbm as lgb
 
+import sklearn.datasets
+from sklearn.model_selection import KFold
 
 if __name__ == "__main__":
     data, target = sklearn.datasets.load_breast_cancer(return_X_y=True)

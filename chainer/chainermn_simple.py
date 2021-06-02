@@ -13,14 +13,13 @@ as follows:
 """
 import sys
 
+import chainermn
+import numpy as np
+import optuna
+
 import chainer
 import chainer.functions as F
 import chainer.links as L
-import chainermn
-import numpy as np
-
-import optuna
-
 
 N_TRAIN_EXAMPLES = 3000
 N_VALID_EXAMPLES = 1000

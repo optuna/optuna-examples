@@ -9,21 +9,17 @@ The example code is based on https://github.com/deepmind/dm-haiku/blob/master/ex
 """
 
 import os
-from typing import Any
-from typing import Generator
-from typing import Mapping
-from typing import Tuple
 import urllib
+from typing import Any, Generator, Mapping, Tuple
 
-import haiku as hk
 import jax
 import jax.numpy as jnp
 import numpy as np
 import optax
+import optuna
 import tensorflow_datasets as tfds
 
-import optuna
-
+import haiku as hk
 
 # TODO(crcrpar): Remove the below three lines once everything is ok.
 # Register a global custom opener to avoid HTTP Error 403: Forbidden when downloading MNIST.

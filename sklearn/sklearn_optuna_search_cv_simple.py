@@ -6,11 +6,10 @@ Classifier is from scikit-learn.
 
 """
 
-from sklearn.datasets import load_iris
-from sklearn.svm import SVC
-
 import optuna
 
+from sklearn.datasets import load_iris
+from sklearn.svm import SVC
 
 if __name__ == "__main__":
     clf = SVC(gamma="auto")

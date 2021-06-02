@@ -9,12 +9,12 @@ hyperparameters.
 """
 
 import numpy as np
+import optuna
+
 import sklearn.datasets
 import sklearn.metrics
-from sklearn.model_selection import train_test_split
 import xgboost as xgb
-
-import optuna
+from sklearn.model_selection import train_test_split
 
 
 def objective(trial):
