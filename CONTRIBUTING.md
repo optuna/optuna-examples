@@ -47,7 +47,7 @@ Currently, you can run the following jobs:
 
 - `checks`
   - Checks the format
-- 'examples'
+- `examples`
   - Run the examples
 
 To run a specific example job:
