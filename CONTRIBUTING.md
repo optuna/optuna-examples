@@ -56,7 +56,7 @@ To run a specific example job:
 act -j examples -W path/to/example.yml/file
 ```
 
-Usually, the example.yml file will be in the .github/workflows/ directory.
+Usually, the example.yml file will be in the [`.github/workflows/`](.github/workflows/) directory.
 
 ## Creating a Pull Request
 
