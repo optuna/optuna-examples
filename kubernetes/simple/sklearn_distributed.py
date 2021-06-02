@@ -13,7 +13,6 @@ in order to avoid errors when the code is run from multiple workers.
 import os
 
 import optuna
-
 import sklearn.datasets
 import sklearn.ensemble
 import sklearn.model_selection

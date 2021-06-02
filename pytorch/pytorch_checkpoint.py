@@ -22,7 +22,9 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 import torch.utils.data
-from torchvision import datasets, transforms
+from torchvision import datasets
+from torchvision import transforms
+
 
 DEVICE = torch.device("cpu")
 BATCHSIZE = 128

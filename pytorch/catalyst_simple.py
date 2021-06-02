@@ -18,13 +18,16 @@ See also: https://catalyst-team.github.io/catalyst/api/callbacks.html?highlight=
 import argparse
 import os
 
+from catalyst.dl import AccuracyCallback
+from catalyst.dl import OptunaPruningCallback
+from catalyst.dl import SupervisedRunner
 import optuna
 import torch
-from catalyst.dl import (AccuracyCallback, OptunaPruningCallback,
-                         SupervisedRunner)
 from torch import nn
 from torch.utils.data import DataLoader
-from torchvision import datasets, transforms
+from torchvision import datasets
+from torchvision import transforms
+
 
 CLASSES = 10
 

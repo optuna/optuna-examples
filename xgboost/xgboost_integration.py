@@ -12,11 +12,10 @@ You can run this example as follows:
 
 import numpy as np
 import optuna
-
 import sklearn.datasets
 import sklearn.metrics
-import xgboost as xgb
 from sklearn.model_selection import train_test_split
+import xgboost as xgb
 
 
 # FYI: Objective functions can take additional arguments

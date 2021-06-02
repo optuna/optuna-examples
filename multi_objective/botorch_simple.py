@@ -1,5 +1,6 @@
+from botorch.settings import suppress_botorch_warnings
+from botorch.settings import validate_input_scaling
 import optuna
-from botorch.settings import suppress_botorch_warnings, validate_input_scaling
 
 
 def objective(trial):

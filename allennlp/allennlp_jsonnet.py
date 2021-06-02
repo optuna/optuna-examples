@@ -12,12 +12,12 @@ we here use the validation dataset instead.
 import os.path
 import shutil
 
+import allennlp
 import optuna
 from optuna.integration import AllenNLPExecutor
 from optuna.integration.allennlp import dump_best_config
 from packaging import version
 
-import allennlp
 
 # This path trick is used since this example is also
 # run from the root of this repository by CI.

@@ -10,10 +10,9 @@ choice of distance metric classes.
 
 import numpy as np
 import optuna
-
 import skimage.feature as ft
-import sklearn.metrics
 from sklearn.datasets import fetch_olivetti_faces
+import sklearn.metrics
 
 
 def load_data():

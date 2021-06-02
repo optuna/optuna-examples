@@ -11,9 +11,8 @@ The optimization results in `multirun/` directory,
 for example `multirun/2021-01-31/19-26-39/optimization_results.yaml`.
 """
 
-from omegaconf import DictConfig
-
 import hydra
+from omegaconf import DictConfig
 
 
 @hydra.main(config_path="conf", config_name="config")

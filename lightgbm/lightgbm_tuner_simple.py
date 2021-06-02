@@ -7,10 +7,10 @@ In this example, we optimize the validation log loss of cancer detection.
 
 import numpy as np
 import optuna.integration.lightgbm as lgb
-
 import sklearn.datasets
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
+
 
 if __name__ == "__main__":
     data, target = sklearn.datasets.load_breast_cancer(return_X_y=True)

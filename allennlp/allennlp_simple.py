@@ -12,19 +12,20 @@ import random
 import shutil
 import sys
 
-import numpy
-import optuna
-import torch
-from optuna.integration import AllenNLPPruningCallback
-from packaging import version
-
 import allennlp
 import allennlp.data
 import allennlp.models
 import allennlp.modules
+import numpy
+import optuna
+from optuna.integration import AllenNLPPruningCallback
+from packaging import version
+import torch
+
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from subsample_dataset_reader import SubsampleDatasetReader  # NOQA
+
 
 DEVICE = -1  # If you want to use GPU, use DEVICE = 0.
 N_TRAIN_DATA_SIZE = 2000

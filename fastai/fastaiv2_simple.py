@@ -17,11 +17,16 @@ argument.
 import argparse
 import urllib
 
+from fastai.vision.all import accuracy
+from fastai.vision.all import aug_transforms
+from fastai.vision.all import ImageDataLoaders
+from fastai.vision.all import Learner
+from fastai.vision.all import SimpleCNN
+from fastai.vision.all import untar_data
+from fastai.vision.all import URLs
 import optuna
 from optuna.integration import FastAIPruningCallback
 
-from fastai.vision.all import (ImageDataLoaders, Learner, SimpleCNN, URLs,
-                               accuracy, aug_transforms, untar_data)
 
 # TODO(crcrpar): Remove the below three lines once fastai gets compatible with torchvision v0.9.
 # Register a global custom opener to avoid HTTP Error 403: Forbidden when downloading MNIST.

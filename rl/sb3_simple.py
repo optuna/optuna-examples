@@ -8,16 +8,18 @@ You can run this example as follows:
     $ python sb3_simple.py
 
 """
-from typing import Any, Dict
+from typing import Any
+from typing import Dict
 
 import gym
 import optuna
-import torch
-import torch.nn as nn
 from optuna.pruners import MedianPruner
 from optuna.samplers import TPESampler
 from stable_baselines3 import A2C
 from stable_baselines3.common.callbacks import EvalCallback
+import torch
+import torch.nn as nn
+
 
 N_TRIALS = 100
 N_STARTUP_TRIALS = 5

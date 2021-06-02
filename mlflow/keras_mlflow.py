@@ -15,16 +15,16 @@ After the script finishes, run the MLflow UI:
 and view the optimization results at http://127.0.0.1:5000.
 """
 
-import optuna
-
-import mlflow
 from keras.backend import clear_session
 from keras.layers import Dense
 from keras.models import Sequential
 from keras.optimizers import SGD
+import mlflow
+import optuna
 from sklearn.datasets import load_wine
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+
 
 TEST_SIZE = 0.25
 BATCHSIZE = 16

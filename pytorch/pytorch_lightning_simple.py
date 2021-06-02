@@ -12,17 +12,22 @@ argument.
 """
 import argparse
 import os
-from typing import List, Optional
+from typing import List
+from typing import Optional
 
 import optuna
-import pytorch_lightning as pl
-import torch
-import torch.nn.functional as F
 from optuna.integration import PyTorchLightningPruningCallback
 from packaging import version
-from torch import nn, optim
-from torch.utils.data import DataLoader, random_split
-from torchvision import datasets, transforms
+import pytorch_lightning as pl
+import torch
+from torch import nn
+from torch import optim
+import torch.nn.functional as F
+from torch.utils.data import DataLoader
+from torch.utils.data import random_split
+from torchvision import datasets
+from torchvision import transforms
+
 
 if version.parse(pl.__version__) < version.parse("1.0.2"):
     raise RuntimeError("PyTorch Lightning>=1.0.2 is required for this example.")

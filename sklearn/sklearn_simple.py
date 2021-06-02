@@ -8,7 +8,6 @@ hyperparameters.
 """
 
 import optuna
-
 import sklearn.datasets
 import sklearn.ensemble
 import sklearn.model_selection

@@ -9,7 +9,6 @@ compared to `sklearn_simple.py`.
 """
 
 import optuna
-
 import sklearn.datasets
 import sklearn.ensemble
 import sklearn.model_selection

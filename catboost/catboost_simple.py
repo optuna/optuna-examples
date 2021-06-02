@@ -7,10 +7,9 @@ Catboost. We optimize both the choice of booster model and their hyperparameters
 
 """
 
+import catboost as cb
 import numpy as np
 import optuna
-
-import catboost as cb
 from sklearn.datasets import load_breast_cancer
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split

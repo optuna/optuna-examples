@@ -11,13 +11,13 @@ import logging
 
 import joblib
 import optuna
-
 import ray
+from ray.util.joblib import register_ray
 import sklearn.datasets
 import sklearn.ensemble
 import sklearn.model_selection
 import sklearn.svm
-from ray.util.joblib import register_ray
+
 
 # Get a URL for the Ray dashboard.
 try:

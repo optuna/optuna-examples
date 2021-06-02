@@ -14,7 +14,6 @@ You can run this example as follows:
 
 import optuna
 from optuna.trial import TrialState
-
 import sklearn.datasets
 import sklearn.linear_model
 import sklearn.model_selection

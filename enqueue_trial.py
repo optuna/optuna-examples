@@ -7,7 +7,6 @@ given parameter values, such as a default and a manually suggested one.
 """
 
 import optuna
-
 import sklearn.datasets
 import sklearn.model_selection
 import sklearn.svm

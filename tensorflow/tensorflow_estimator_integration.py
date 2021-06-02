@@ -16,10 +16,10 @@ import tempfile
 import urllib
 
 import optuna
-import tensorflow_datasets as tfds
 from optuna.trial import TrialState
-
 import tensorflow as tf
+import tensorflow_datasets as tfds
+
 
 # TODO(crcrpar): Remove the below three lines once everything is ok.
 # Register a global custom opener to avoid HTTP Error 403: Forbidden when downloading MNIST.

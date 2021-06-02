@@ -17,14 +17,15 @@ see the following link:
 import urllib
 import warnings
 
+import keras
+from keras.datasets import mnist
+from keras.layers import Dense
+from keras.layers import Dropout
+from keras.models import Sequential
 import optuna
 from optuna.integration import KerasPruningCallback
 from optuna.trial import TrialState
 
-import keras
-from keras.datasets import mnist
-from keras.layers import Dense, Dropout
-from keras.models import Sequential
 
 # TODO(crcrpar): Remove the below three lines once everything is ok.
 # Register a global custom opener to avoid HTTP Error 403: Forbidden when downloading MNIST.
