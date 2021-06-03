@@ -47,6 +47,16 @@ Currently, you can run the following jobs:
 
 - `checks`
   - Checks the format
+- `examples`
+  - Run the examples
+
+To run a specific example job:
+
+```bash
+act -j examples -W path/to/example.yml/file
+```
+
+Usually, the example.yml file will be in the [`.github/workflows/`](.github/workflows/) directory.
 
 ## Creating a Pull Request
 
