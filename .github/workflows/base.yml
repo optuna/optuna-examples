@@ -1,4 +1,4 @@
-name: rl
+name: base
 
 on:
   schedule:
