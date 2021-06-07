@@ -9,6 +9,8 @@ Keras. We optimize the filter and kernel size, kernel stride and layer activatio
 import urllib
 import warnings
 
+import optuna
+
 from keras.backend import clear_session
 from keras.datasets import mnist
 from keras.layers import Conv2D
@@ -16,8 +18,6 @@ from keras.layers import Dense
 from keras.layers import Flatten
 from keras.models import Sequential
 from keras.optimizers import RMSprop
-
-import optuna
 
 
 # TODO(crcrpar): Remove the below three lines once everything is ok.

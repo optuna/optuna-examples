@@ -15,9 +15,9 @@ import cudf
 from cuml.ensemble import RandomForestClassifier
 from cuml.metrics import accuracy_score
 from cuml.preprocessing.model_selection import train_test_split
-from sklearn.datasets import load_iris
-
 import optuna
+
+from sklearn.datasets import load_iris
 
 
 def train_and_eval(X_param, y_param, max_depth=16, n_estimators=100):

@@ -14,7 +14,6 @@ You can run this example as follows:
 """
 
 import numpy as np
-
 import optuna
 from optuna import distributions
 from optuna.samplers import BaseSampler

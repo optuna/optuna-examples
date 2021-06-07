@@ -18,10 +18,10 @@ import argparse
 from functools import partial
 import urllib
 
-from fastai import vision
-
 import optuna
 from optuna.integration import FastAIV1PruningCallback
+
+from fastai import vision
 
 
 # Register a global custom opener to avoid HTTP Error 403: Forbidden when downloading MNIST.

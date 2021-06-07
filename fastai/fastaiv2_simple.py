@@ -17,6 +17,9 @@ argument.
 import argparse
 import urllib
 
+import optuna
+from optuna.integration import FastAIPruningCallback
+
 from fastai.vision.all import accuracy
 from fastai.vision.all import aug_transforms
 from fastai.vision.all import ImageDataLoaders
@@ -24,9 +27,6 @@ from fastai.vision.all import Learner
 from fastai.vision.all import SimpleCNN
 from fastai.vision.all import untar_data
 from fastai.vision.all import URLs
-
-import optuna
-from optuna.integration import FastAIPruningCallback
 
 
 # TODO(crcrpar): Remove the below three lines once fastai gets compatible with torchvision v0.9.

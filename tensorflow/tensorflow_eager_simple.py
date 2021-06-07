@@ -9,11 +9,11 @@ configuration.
 
 import urllib
 
+import optuna
 from packaging import version
+
 import tensorflow as tf
 from tensorflow.keras.datasets import mnist
-
-import optuna
 
 
 # TODO(crcrpar): Remove the below three lines once everything is ok.

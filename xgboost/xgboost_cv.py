@@ -10,11 +10,11 @@ hyperparameters.
 import os
 import shutil
 
+import optuna
+
 import sklearn.datasets
 import sklearn.metrics
 import xgboost as xgb
-
-import optuna
 
 
 SEED = 108

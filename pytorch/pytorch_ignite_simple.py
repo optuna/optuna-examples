@@ -18,6 +18,7 @@ from ignite.engine import create_supervised_evaluator
 from ignite.engine import create_supervised_trainer
 from ignite.engine import Events
 from ignite.metrics import Accuracy
+import optuna
 import torch
 from torch import nn
 import torch.nn.functional as F
@@ -28,8 +29,6 @@ from torchvision.datasets.mnist import FashionMNIST
 from torchvision.transforms import Compose
 from torchvision.transforms import Normalize
 from torchvision.transforms import ToTensor
-
-import optuna
 
 
 EPOCHS = 10

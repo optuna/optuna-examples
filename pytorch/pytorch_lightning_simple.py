@@ -15,6 +15,8 @@ import os
 from typing import List
 from typing import Optional
 
+import optuna
+from optuna.integration import PyTorchLightningPruningCallback
 from packaging import version
 import pytorch_lightning as pl
 import torch
@@ -25,9 +27,6 @@ from torch.utils.data import DataLoader
 from torch.utils.data import random_split
 from torchvision import datasets
 from torchvision import transforms
-
-import optuna
-from optuna.integration import PyTorchLightningPruningCallback
 
 
 if version.parse(pl.__version__) < version.parse("1.0.2"):

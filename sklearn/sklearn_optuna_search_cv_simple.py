@@ -6,10 +6,10 @@ Classifier is from scikit-learn.
 
 """
 
+import optuna
+
 from sklearn.datasets import load_iris
 from sklearn.svm import SVC
-
-import optuna
 
 
 if __name__ == "__main__":

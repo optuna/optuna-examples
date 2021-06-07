@@ -18,6 +18,8 @@ https://pytorch.org/tutorials/intermediate/dist_tuto.html#communication-backends
 import os
 import urllib
 
+import optuna
+from optuna.trial import TrialState
 import torch
 import torch.distributed as dist
 import torch.nn as nn
@@ -27,9 +29,6 @@ import torch.optim as optim
 import torch.utils.data
 from torchvision import datasets
 from torchvision import transforms
-
-import optuna
-from optuna.trial import TrialState
 
 
 # Register a global custom opener to avoid HTTP Error 403: Forbidden when downloading FashionMNIST.

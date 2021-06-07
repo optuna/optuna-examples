@@ -1,6 +1,5 @@
 from botorch.settings import suppress_botorch_warnings
 from botorch.settings import validate_input_scaling
-
 import optuna
 
 

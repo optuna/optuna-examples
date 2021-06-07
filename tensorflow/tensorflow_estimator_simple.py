@@ -12,10 +12,10 @@ import shutil
 import tempfile
 import urllib
 
-import tensorflow as tf
+import optuna
 import tensorflow_datasets as tfds
 
-import optuna
+import tensorflow as tf
 
 
 # TODO(crcrpar): Remove the below three lines once everything is ok.

@@ -1,5 +1,7 @@
 import os
 
+import optuna
+from optuna.integration.mlflow import MLflowCallback
 import pytorch_lightning as pl
 from pytorch_lightning import Callback
 import torch
@@ -9,9 +11,6 @@ from torch.optim import Adam
 import torch.utils.data
 from torchvision import datasets
 from torchvision import transforms
-
-import optuna
-from optuna.integration.mlflow import MLflowCallback
 
 
 PERCENT_VALID_EXAMPLES = 0.1

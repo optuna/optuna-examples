@@ -10,14 +10,14 @@ hyperparameters.
 import logging
 
 import joblib
+import optuna
+
 import ray
 from ray.util.joblib import register_ray
 import sklearn.datasets
 import sklearn.ensemble
 import sklearn.model_selection
 import sklearn.svm
-
-import optuna
 
 
 # Get a URL for the Ray dashboard.

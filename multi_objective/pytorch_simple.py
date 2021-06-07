@@ -10,6 +10,7 @@ we here use a small subset of it.
 
 import os
 
+import optuna
 import thop
 import torch
 import torch.nn as nn
@@ -18,8 +19,6 @@ import torch.optim as optim
 import torch.utils.data
 from torchvision import datasets
 from torchvision import transforms
-
-import optuna
 
 
 DEVICE = torch.device("cpu")

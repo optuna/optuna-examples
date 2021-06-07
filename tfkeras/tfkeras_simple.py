@@ -9,6 +9,8 @@ tf.keras. We optimize the filter and kernel size, kernel stride and layer activa
 
 import urllib
 
+import optuna
+
 from tensorflow.keras.backend import clear_session
 from tensorflow.keras.datasets import mnist
 from tensorflow.keras.layers import Conv2D
@@ -16,8 +18,6 @@ from tensorflow.keras.layers import Dense
 from tensorflow.keras.layers import Flatten
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.optimizers import RMSprop
-
-import optuna
 
 
 # TODO(crcrpar): Remove the below three lines once everything is ok.

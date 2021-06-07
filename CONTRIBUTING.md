@@ -23,10 +23,10 @@ See the [optuna/optuna/CONTRIBUTIONS.MD](https://github.com/optuna/optuna/blob/m
 ### Checking the Format and Coding Style
 
 Code is formatted with [black](https://github.com/psf/black),
-Coding style is checked with [flake8](http://flake8.pycqa.org)
+Coding style is checked with [flake8](http://flake8.pycqa.org) and [isort](https://pycqa.github.io/isort/)
 and additional conventions are described in the [Wiki](https://github.com/optuna/optuna/wiki/Coding-Style-Conventions).
 
-If your environment misses some dependencies such as black and flake8.
+If your environment is missing some dependencies such as black, flake8, or isort,
 you will be asked to install them.
 
 ## Continuous Integration and Local Verification
