@@ -21,6 +21,7 @@ from optuna.visualization import plot_optimization_history
 from optuna.visualization import plot_parallel_coordinate
 from optuna.visualization import plot_param_importances
 from optuna.visualization import plot_slice
+
 from sklearn.datasets import fetch_openml
 from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPClassifier

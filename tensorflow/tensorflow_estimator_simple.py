@@ -13,8 +13,9 @@ import tempfile
 import urllib
 
 import optuna
-import tensorflow as tf
 import tensorflow_datasets as tfds
+
+import tensorflow as tf
 
 
 # TODO(crcrpar): Remove the below three lines once everything is ok.

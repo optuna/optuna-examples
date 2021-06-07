@@ -12,6 +12,7 @@ You can run this example as follows:
 
 import numpy as np
 import optuna
+
 import sklearn.datasets
 import sklearn.metrics
 from sklearn.model_selection import train_test_split

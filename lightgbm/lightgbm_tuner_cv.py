@@ -5,6 +5,7 @@ In this example, we optimize the cross-validated log loss of cancer detection.
 
 """
 import optuna.integration.lightgbm as lgb
+
 import sklearn.datasets
 from sklearn.model_selection import KFold
 

@@ -17,14 +17,15 @@ see the following link:
 import urllib
 import warnings
 
+import optuna
+from optuna.integration import KerasPruningCallback
+from optuna.trial import TrialState
+
 import keras
 from keras.datasets import mnist
 from keras.layers import Dense
 from keras.layers import Dropout
 from keras.models import Sequential
-import optuna
-from optuna.integration import KerasPruningCallback
-from optuna.trial import TrialState
 
 
 # TODO(crcrpar): Remove the below three lines once everything is ok.

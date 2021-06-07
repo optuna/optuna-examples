@@ -11,6 +11,7 @@ import urllib
 
 import optuna
 from packaging import version
+
 import tensorflow as tf
 from tensorflow.keras.datasets import mnist
 

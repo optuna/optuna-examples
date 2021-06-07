@@ -15,13 +15,14 @@ from typing import Mapping
 from typing import Tuple
 import urllib
 
-import haiku as hk
 import jax
 import jax.numpy as jnp
 import numpy as np
 import optax
 import optuna
 import tensorflow_datasets as tfds
+
+import haiku as hk
 
 
 # TODO(crcrpar): Remove the below three lines once everything is ok.

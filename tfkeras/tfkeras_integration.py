@@ -17,8 +17,9 @@ import urllib
 import optuna
 from optuna.integration import TFKerasPruningCallback
 from optuna.trial import TrialState
-import tensorflow as tf
 import tensorflow_datasets as tfds
+
+import tensorflow as tf
 
 
 # TODO(crcrpar): Remove the below three lines once everything is ok.

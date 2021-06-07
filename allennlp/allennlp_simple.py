@@ -12,15 +12,16 @@ import random
 import shutil
 import sys
 
-import allennlp
-import allennlp.data
-import allennlp.models
-import allennlp.modules
 import numpy
 import optuna
 from optuna.integration import AllenNLPPruningCallback
 from packaging import version
 import torch
+
+import allennlp
+import allennlp.data
+import allennlp.models
+import allennlp.modules
 
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))

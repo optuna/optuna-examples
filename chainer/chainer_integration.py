@@ -11,13 +11,14 @@ You can run this example as follows:
 
 """
 
-import chainer
-import chainer.functions as F
-import chainer.links as L
 import numpy as np
 import optuna
 from optuna.trial import TrialState
 from packaging import version
+
+import chainer
+import chainer.functions as F
+import chainer.links as L
 
 
 if version.parse(chainer.__version__) < version.parse("4.0.0"):

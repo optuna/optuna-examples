@@ -11,6 +11,7 @@ You can run this example as follows:
 """
 
 import optuna
+
 import sklearn.datasets
 import xgboost as xgb
 

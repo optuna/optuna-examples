@@ -10,6 +10,7 @@ tf.keras. We optimize the filter and kernel size, kernel stride and layer activa
 import urllib
 
 import optuna
+
 from tensorflow.keras.backend import clear_session
 from tensorflow.keras.datasets import mnist
 from tensorflow.keras.layers import Conv2D

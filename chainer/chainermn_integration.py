@@ -16,13 +16,14 @@ as follows:
 
 import sys
 
-import chainer
-import chainer.functions as F
-import chainer.links as L
 import chainermn
 import numpy as np
 import optuna
 from optuna.trial import TrialState
+
+import chainer
+import chainer.functions as F
+import chainer.links as L
 
 
 N_TRAIN_EXAMPLES = 3000

@@ -1,11 +1,12 @@
 import urllib
 
+import numpy as np
+import optuna
+
 import mxnet as mx
 from mxnet import autograd
 from mxnet import gluon
 from mxnet.gluon import nn
-import numpy as np
-import optuna
 
 
 # TODO(crcrpar): Remove the below three lines once everything is ok.
