@@ -1,3 +1,4 @@
 pandas
 sklearn
-cudf
+scikit-image
+# ray

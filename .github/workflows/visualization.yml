@@ -1,12 +1,11 @@
-name: base
+name: visualization
 
 on:
   schedule:
     - cron: '0 15 * * *'
   pull_request:
-    paths:
-      - './**'
-      - '.github/workflows/base.yml'
+      - 'visualization/**'
+      - '.github/workflows/visualization.yml'
 
 jobs:
   examples:
@@ -29,17 +28,10 @@ jobs:
         pip install git+https://github.com/optuna/optuna.git
         python -c 'import optuna'
 
-        pip install -r requirements.txt
-        # [todo crissman] resolve cudf issues for rapids
-        # conda install -c rapidsai -c nvidia -c conda-forge rapids-blazing
+        pip install -r visualization/requirements.txt
     - name: Run examples
       run: |
-        python max_trials_callback.py
-        python enqueue_trial.py
-        python quadratic_simple.py
-        python simple_pruning.py
-        python skimage/skimage_lbp_simple.py
-        # python ray/ray_joblib.py
-        # python rapids_simple.py
+        python visualization/plot_pareto_front.py
+        python visualization/plot_study.py
       env:
         OMP_NUM_THREADS: 1
