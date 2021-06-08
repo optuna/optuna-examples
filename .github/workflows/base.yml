@@ -36,6 +36,7 @@ jobs:
         python quadratic_simple.py
         python simple_pruning.py
         python skimage/skimage_lbp_simple.py
-        python -m py_compile rapids_simple.py  # due to difficulty importing rapids, compile only
+        python -m py_compile rapids_simple.py  # due to difficulty importing, compile only
+        python -m py_compile ray/ray_joblib.py  # due to difficulty importing, compile only
       env:
         OMP_NUM_THREADS: 1
