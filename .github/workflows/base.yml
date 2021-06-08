@@ -5,7 +5,6 @@ on:
     - cron: '0 15 * * *'
   pull_request:
     paths:
-      - './**'
       - '.github/workflows/base.yml'
 
 jobs:
@@ -30,8 +29,6 @@ jobs:
         python -c 'import optuna'
 
         pip install -r requirements.txt
-        # TODO(crissman): resolve cudf issues for rapids
-        # conda install -c rapidsai -c nvidia -c conda-forge rapids-blazing
     - name: Run examples
       run: |
         python max_trials_callback.py
@@ -39,7 +36,6 @@ jobs:
         python quadratic_simple.py
         python simple_pruning.py
         python skimage/skimage_lbp_simple.py
-        # python ray/ray_joblib.py
-        # python rapids_simple.py
+        python -m py_compile rapids_simple.py  # due to difficulty importing rapids, compile only
       env:
         OMP_NUM_THREADS: 1
