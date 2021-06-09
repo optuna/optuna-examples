@@ -1,12 +1,12 @@
-name: base
+name: skimage
 
 on:
   schedule:
     - cron: '0 15 * * *'
   pull_request:
     paths:
-      - './**.py'
-      - '.github/workflows/base.yml'
+      - 'skimage/**.py'
+      - '.github/workflows/skimage.yml'
 
 jobs:
   examples:
@@ -29,13 +29,9 @@ jobs:
         pip install git+https://github.com/optuna/optuna.git
         python -c 'import optuna'
 
-        pip install -r requirements.txt
+        pip install -r skimage/requirements.txt
     - name: Run examples
       run: |
-        python max_trials_callback.py
-        python enqueue_trial.py
-        python quadratic_simple.py
-        python simple_pruning.py
-        python -m py_compile rapids_simple.py  # due to difficulty importing, compile only
+        python skimage/skimage_lbp_simple.py
       env:
         OMP_NUM_THREADS: 1

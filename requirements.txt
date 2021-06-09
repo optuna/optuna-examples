@@ -1,3 +1,2 @@
 pandas  # used in max_trials_callback.py
 sklearn  # used in enqueue_trial.py
-scikit-image
