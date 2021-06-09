@@ -6,6 +6,7 @@ on:
   pull_request:
     paths:
       - './**.py'
+      - 'requirements.txt'
       - '.github/workflows/base.yml'
 
 jobs:
