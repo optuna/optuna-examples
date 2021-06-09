@@ -1,0 +1,2 @@
+scikit-image
+sklearn  # used in skimage_lbp_simple.py
