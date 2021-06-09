@@ -5,7 +5,7 @@ on:
     - cron: '0 15 * * *'
   pull_request:
     paths:
-      - 'ray/**.py'
+      - 'ray/**'
       - '.github/workflows/ray.yml'
 
 jobs:
