@@ -5,7 +5,7 @@ on:
     - cron: '0 15 * * *'
   pull_request:
     paths:
-      - 'skimage/**.py'
+      - 'skimage/**'
       - '.github/workflows/skimage.yml'
 
 jobs:
