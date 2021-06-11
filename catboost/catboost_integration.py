@@ -1,3 +1,15 @@
+"""
+Optuna example that demonstrates a pruner for CatBoost.
+
+In this example, we optimize the validation accuracy of cancer detection using CatBoost.
+We optimize both the choice of booster model and their hyperparameters. Throughout
+training of models, a pruner observes intermediate results and stop unpromising trials.
+
+You can run this example as follows:
+    $ python catboost_integration.py
+
+"""
+
 import numpy as np
 import optuna
 
@@ -6,7 +18,6 @@ from sklearn.datasets import load_breast_cancer
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 
-from sklearn.metrics import roc_auc_score
 
 def objective(trial):
     data, target = load_breast_cancer(return_X_y=True)
@@ -21,7 +32,7 @@ def objective(trial):
             "bootstrap_type", ["Bayesian", "Bernoulli", "MVS"]
         ),
         "used_ram_limit": "3gb",
-        "eval_metric": "AUC"
+        "eval_metric": "AUC",
     }
 
     if param["bootstrap_type"] == "Bayesian":
@@ -31,9 +42,16 @@ def objective(trial):
 
     gbm = cb.CatBoostClassifier(**param)
 
-    pruning_callback = optuna.integration.CatBoostPruningCallback(trial, "validation", "AUC")
+    pruning_callback = optuna.integration.CatBoostPruningCallback(trial, "AUC", "validation")
 
-    gbm.fit(train_x, train_y, eval_set=[(valid_x, valid_y)], verbose=0, early_stopping_rounds=100, callbacks=[pruning_callback])
+    gbm.fit(
+        train_x,
+        train_y,
+        eval_set=[(valid_x, valid_y)],
+        verbose=0,
+        early_stopping_rounds=100,
+        callbacks=[pruning_callback],
+    )
     pruning_callback.check_pruned()
 
     preds = gbm.predict(valid_x)
@@ -42,10 +60,11 @@ def objective(trial):
 
     return accuracy
 
+
 if __name__ == "__main__":
     study = optuna.create_study(
         pruner=optuna.pruners.MedianPruner(n_warmup_steps=5), direction="maximize"
-    )    
+    )
     study.optimize(objective, n_trials=100, timeout=600)
 
     print("Number of finished trials: {}".format(len(study.trials)))
