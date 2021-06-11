@@ -1,1 +1,1 @@
-hydra-optuna-sweeper==0.9.0rc2
+hydra-optuna-sweeper
