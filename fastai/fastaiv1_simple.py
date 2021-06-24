@@ -15,8 +15,8 @@ argument.
 """
 
 import argparse
-import urllib
 from functools import partial
+import urllib
 
 import optuna
 from optuna.integration import FastAIV1PruningCallback
