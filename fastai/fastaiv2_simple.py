@@ -77,7 +77,7 @@ def objective(trial):
         model,
         metrics=[accuracy],
         # You could as FastAIPruningCallback in the fit function
-        cbs=FastAIPruningCallback(trial),
+        cbs=FastAIPruningCallback(trial, monitor="accuracy"),
     )
 
     # See https://forums.fast.ai/t/how-to-diable-progress-bar-completely/65249/3
@@ -86,7 +86,7 @@ def objective(trial):
         with learn.no_logging():
             learn.fit(EPOCHS)
 
-    return learn.validate()[-1]
+    return learn.recorder.metrics[0].value.item()
 
 
 if __name__ == "__main__":
