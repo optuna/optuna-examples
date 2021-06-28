@@ -74,7 +74,7 @@ def objective(trial):
     )
     learn.fit(EPOCHS)
 
-    return learn.recorder.metrics[0][0].item()
+    return learn.recorder.metrics[-1][0].item()
 
 
 if __name__ == "__main__":
