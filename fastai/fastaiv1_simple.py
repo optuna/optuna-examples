@@ -70,11 +70,11 @@ def objective(trial):
         model,
         silent=True,
         metrics=[vision.accuracy],
-        callback_fns=[partial(FastAIV1PruningCallback, trial=trial, monitor="valid_loss")],
+        callback_fns=[partial(FastAIV1PruningCallback, trial=trial, monitor="accuracy")],
     )
     learn.fit(EPOCHS)
 
-    return learn.validate()[-1].item()
+    return learn.recorder.metrics[-1][0].item()
 
 
 if __name__ == "__main__":
