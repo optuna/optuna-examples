@@ -3,3 +3,6 @@ thop
 torch
 torchaudio
 torchvision
+# pillow 8.3.0 causes TypeError: __array__() takes 1 positional argument but 2 were given
+# Ok to remove after 8.3.1 released
+pillow != 8.3.0
