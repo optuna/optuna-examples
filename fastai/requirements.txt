@@ -1,2 +1,6 @@
 fastai
 optuna
+# pillow 8.3.0 causes RuntimeError: Could not infer dtype of PILImage
+# Ok to remove after fixed:
+# https://github.com/fastai/fastai/issues/3416#issuecomment-875470777 
+ pillow < 8.3.0
