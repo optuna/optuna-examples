@@ -78,8 +78,8 @@ class LightningNet(pl.LightningModule):
         output = self(data)
         pred = output.argmax(dim=1, keepdim=True)
         accuracy = pred.eq(target.view_as(pred)).float().mean()
-        self.log("val_acc", accuracy)
-        self.log("hp_metric", accuracy, on_step=False, on_epoch=True)
+        self.log("val_acc", accuracy, sync_dist=True)
+        self.log("hp_metric", accuracy, on_step=False, on_epoch=True, sync_dist=True)
 
     def configure_optimizers(self) -> optim.Optimizer:
         return optim.Adam(self.model.parameters())
@@ -133,7 +133,7 @@ def objective(trial: optuna.trial.Trial) -> float:
         limit_val_batches=PERCENT_VALID_EXAMPLES,
         checkpoint_callback=False,
         max_epochs=EPOCHS,
-        gpus=1 if torch.cuda.is_available() else None,
+        gpus=-1 if torch.cuda.is_available() else None,
         callbacks=[PyTorchLightningPruningCallback(trial, monitor="val_acc")],
     )
     hyperparameters = dict(n_layers=n_layers, dropout=dropout, output_dims=output_dims)
