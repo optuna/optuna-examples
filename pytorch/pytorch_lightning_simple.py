@@ -31,6 +31,10 @@ from torchvision import transforms
 
 if version.parse(pl.__version__) < version.parse("1.0.2"):
     raise RuntimeError("PyTorch Lightning>=1.0.2 is required for this example.")
+elif version.parse(pl.__version__) < version.parse("1.4.0"):
+    DUMMY_GPU_NUM = 1
+else:
+    DUMMY_GPU_NUM = -1
 
 PERCENT_VALID_EXAMPLES = 0.1
 BATCHSIZE = 128
@@ -133,7 +137,7 @@ def objective(trial: optuna.trial.Trial) -> float:
         limit_val_batches=PERCENT_VALID_EXAMPLES,
         checkpoint_callback=False,
         max_epochs=EPOCHS,
-        gpus=-1 if torch.cuda.is_available() else None,
+        gpus=DUMMY_GPU_NUM if torch.cuda.is_available() else None,
         callbacks=[PyTorchLightningPruningCallback(trial, monitor="val_acc")],
     )
     hyperparameters = dict(n_layers=n_layers, dropout=dropout, output_dims=output_dims)
