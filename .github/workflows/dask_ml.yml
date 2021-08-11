@@ -6,7 +6,7 @@ on:
   pull_request:
     paths:
       - 'dask_ml/**'
-      - '.github/workflows/dask.yml'
+      - '.github/workflows/dask_ml.yml'
 
 jobs:
   examples:
