@@ -1,8 +1,6 @@
 name: dask
 
 on:
-  # Remove push builds before merging
-  push:
   schedule:
     - cron: '0 15 * * *'
   pull_request:
