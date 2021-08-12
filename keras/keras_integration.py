@@ -27,6 +27,7 @@ from keras.layers import Dense
 from keras.layers import Dropout
 from keras.models import Sequential
 from tensorflow.keras.optimizers import RMSprop
+from tensorflow.keras.utils import to_categorical
 
 
 # TODO(crcrpar): Remove the below three lines once everything is ok.
@@ -78,8 +79,8 @@ def objective(trial):
     x_valid = x_valid.reshape(10000, 784)[:N_VALID_EXAMPLES].astype("float32") / 255
 
     # Convert class vectors to binary class matrices.
-    y_train = keras.utils.to_categorical(y_train[:N_TRAIN_EXAMPLES], CLASSES)
-    y_valid = keras.utils.to_categorical(y_valid[:N_VALID_EXAMPLES], CLASSES)
+    y_train = to_categorical(y_train[:N_TRAIN_EXAMPLES], CLASSES)
+    y_valid = to_categorical(y_valid[:N_VALID_EXAMPLES], CLASSES)
 
     # Generate our trial model.
     model = create_model(trial)
