@@ -11,13 +11,13 @@ To run this example:
     $ python dask_simple.py
 """
 
+import optuna
+
 from dask.distributed import Client
 from sklearn.datasets import load_digits
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
-
-import optuna
 
 
 def objective(trial):
