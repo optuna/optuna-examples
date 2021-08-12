@@ -20,7 +20,7 @@ import optuna
 from keras.backend import clear_session
 from keras.layers import Dense
 from keras.models import Sequential
-from keras.optimizers import SGD
+from tensorflow.keras.optimizers import SGD
 import mlflow
 from sklearn.datasets import load_wine
 from sklearn.model_selection import train_test_split
