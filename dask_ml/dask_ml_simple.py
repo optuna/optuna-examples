@@ -8,9 +8,9 @@ the regularization (penalty) when relevant and its strength (C).
 
 """
 
-import dask.array as da
 import optuna
 
+import dask.array as da
 from dask_ml.linear_model import LogisticRegression
 from dask_ml.model_selection import train_test_split
 from sklearn.datasets import load_iris
