@@ -26,7 +26,7 @@ from keras.datasets import mnist
 from keras.layers import Dense
 from keras.layers import Dropout
 from keras.models import Sequential
-from tensorflow.keras import RMSprop
+from tensorflow.keras.optimizers import RMSprop
 
 
 # TODO(crcrpar): Remove the below three lines once everything is ok.
