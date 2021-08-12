@@ -1,8 +1,5 @@
-# TODO(hvy): Remove the version constraint. See https://github.com/optuna/optuna/pull/2851
-keras<2.6.0
+keras
 mlflow
 optuna
 scikit-learn
-# TODO(hvy): Remove the version constraint after resolving the issue
-# https://github.com/keras-team/keras/issues/14632
-tensorflow<2.5.0
+tensorflow
