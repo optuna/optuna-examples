@@ -42,17 +42,15 @@ def objective(trial):
 
     gbm = cb.CatBoostClassifier(**param)
 
-    pruning_callback = optuna.integration.CatBoostPruningCallback(trial, "AUC", "validation")
-
     gbm.fit(
         train_x,
         train_y,
         eval_set=[(valid_x, valid_y)],
         verbose=0,
         early_stopping_rounds=100,
-        callbacks=[pruning_callback],
+        callbacks=[optuna.integration.CatBoostPruningCallback(trial, "AUC", "validation")
+],
     )
-    pruning_callback.check_pruned()
 
     preds = gbm.predict(valid_x)
     pred_labels = np.rint(preds)
