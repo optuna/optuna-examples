@@ -26,8 +26,6 @@ from keras.datasets import mnist
 from keras.layers import Dense
 from keras.layers import Dropout
 from keras.models import Sequential
-from keras.optimizers import RMSprop
-from keras.utils import to_categorical
 
 
 # TODO(crcrpar): Remove the below three lines once everything is ok.
