@@ -17,7 +17,7 @@ from keras.layers import Conv2D
 from keras.layers import Dense
 from keras.layers import Flatten
 from keras.models import Sequential
-from tensorflow.keras.optimizers import RMSprop
+from keras.optimizers import RMSprop
 
 
 # TODO(crcrpar): Remove the below three lines once everything is ok.

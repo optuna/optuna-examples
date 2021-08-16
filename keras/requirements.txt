@@ -1,4 +1,4 @@
-keras
+keras<2.6.0
 optuna
-tensorflow
+tensorflow<2.5.0
 tensorflow-datasets
