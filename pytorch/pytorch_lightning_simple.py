@@ -138,7 +138,7 @@ def objective(trial: optuna.trial.Trial) -> float:
     )
     hyperparameters = dict(n_layers=n_layers, dropout=dropout, output_dims=output_dims)
     trainer.logger.log_hyperparams(hyperparameters)
-    trainer.fit(model, datamodule=datamodule)
+    trainer.fit(model, datamodule.train_dataloader(), datamodule.val_dataloader())
 
     return trainer.callback_metrics["val_acc"].item()
 
