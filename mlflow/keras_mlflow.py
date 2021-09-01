@@ -17,14 +17,14 @@ and view the optimization results at http://127.0.0.1:5000.
 
 import optuna
 
-from keras.backend import clear_session
-from keras.layers import Dense
-from keras.models import Sequential
-from keras.optimizers import SGD
 import mlflow
 from sklearn.datasets import load_wine
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+from tensorflow.keras.backend import clear_session
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.optimizers import SGD
 
 
 TEST_SIZE = 0.25
