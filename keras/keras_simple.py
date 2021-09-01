@@ -87,9 +87,7 @@ if __name__ == "__main__":
         "There is now only one Keras: tf.keras. "
         "There may be some breaking changes for some workflows by upgrading to keras 2.4.0. "
         "Test before upgrading. "
-        "REF: https://github.com/keras-team/keras/releases/tag/2.4.0. "
-        "There is an alternative callback function that can be used instead: "
-        ":class:`~optuna.integration.TFKerasPruningCallback`",
+        "REF:https://github.com/keras-team/keras/releases/tag/2.4.0"
     )
     study = optuna.create_study(direction="maximize")
     study.optimize(objective, n_trials=100, timeout=600)
