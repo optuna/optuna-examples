@@ -15,6 +15,7 @@ previous saved checkpoint using heartbeat.
 
 import copy
 import os
+import shutil
 
 import optuna
 import torch
@@ -133,6 +134,7 @@ def objective(trial):
 
         # Save optimization status. We should save the objective value because the process may be
         # killed between saving the last model and recording the objective value to the storage.
+        tmp_path = os.path.join(path, "tmp_model.pt")
         torch.save(
             {
                 "epoch": epoch,
@@ -140,8 +142,9 @@ def objective(trial):
                 "optimizer_state_dict": optimizer.state_dict(),
                 "accuracy": accuracy,
             },
-            os.path.join(path, "model.pt"),
+            tmp_path,
         )
+        shutil.move(tmp_path, os.path.join(path, "model.pt"))
 
         # Handle pruning based on the intermediate value.
         if trial.should_prune():
