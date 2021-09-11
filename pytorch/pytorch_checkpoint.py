@@ -9,8 +9,8 @@ we here use a small subset of it.
 Even if the process where the trial is running is killed for some reason, you can restart from
 previous saved checkpoint using heartbeat.
 
-    $ timeout 20 python examples/pytorch/pytorch_checkpoint.py
-    $ python examples/pytorch/pytorch_checkpoint.py
+    $ timeout 20 python pytorch/pytorch_checkpoint.py
+    $ python pytorch/pytorch_checkpoint.py
 """
 
 import copy
@@ -35,6 +35,7 @@ EPOCHS = 10
 LOG_INTERVAL = 10
 N_TRAIN_EXAMPLES = BATCHSIZE * 30
 N_VALID_EXAMPLES = BATCHSIZE * 10
+CHECKPOINT_DIR = "pytorch_checkpoint"
 
 
 def define_model(trial):
@@ -84,8 +85,14 @@ def objective(trial):
     optimizer = getattr(optim, optimizer_name)(model.parameters(), lr=lr)
 
     if "checkpoint_path" in trial.user_attrs:
-        checkpoint = torch.load(trial.user_attrs["checkpoint_path"])
-        epoch_begin = checkpoint["epoch"] + 1
+        checkpoint_path = trial.user_attrs["checkpoint_path"]
+        trial_number = trial.user_attrs["trial_number"]
+        checkpoint = torch.load(checkpoint_path)
+        epoch = checkpoint["epoch"]
+        epoch_begin = epoch + 1
+
+        print(f"Loading a checkpoint from trial {trial_number} in epoch {epoch}.")
+
         model.load_state_dict(checkpoint["model_state_dict"])
         optimizer.load_state_dict(checkpoint["optimizer_state_dict"])
         accuracy = checkpoint["accuracy"]
@@ -95,8 +102,15 @@ def objective(trial):
     # Get the FashionMNIST dataset.
     train_loader, valid_loader = get_mnist()
 
-    path = f"pytorch_checkpoint/{trial.number}"
-    os.makedirs(path, exist_ok=True)
+    trial_checkpoint_dir = f"{CHECKPOINT_DIR}/{trial.number}"
+    os.makedirs(trial_checkpoint_dir, exist_ok=True)
+
+    checkpoint_path = os.path.join(trial_checkpoint_dir, "model.pt")
+    # A checkpoint may be corrupted when the process is killed during `torch.save`.
+    # Reduce the risk by first calling `torch.save` to a temporary file, then copy.
+    tmp_checkpoint_path = os.path.join(trial_checkpoint_dir, "tmp_model.pt")
+
+    print(f"Checkpoint path for trial is '{checkpoint_path}'.")
 
     # Training of the model.
     for epoch in range(epoch_begin, EPOCHS):
@@ -134,7 +148,9 @@ def objective(trial):
 
         # Save optimization status. We should save the objective value because the process may be
         # killed between saving the last model and recording the objective value to the storage.
-        tmp_path = os.path.join(path, "tmp_model.pt")
+
+        print(f"Saving a checkpoint in epoch {epoch}.")
+
         torch.save(
             {
                 "epoch": epoch,
@@ -142,9 +158,9 @@ def objective(trial):
                 "optimizer_state_dict": optimizer.state_dict(),
                 "accuracy": accuracy,
             },
-            tmp_path,
+            tmp_checkpoint_path,
         )
-        shutil.move(tmp_path, os.path.join(path, "model.pt"))
+        shutil.move(tmp_checkpoint_path, checkpoint_path)
 
         # Handle pruning based on the intermediate value.
         if trial.should_prune():
@@ -158,6 +174,7 @@ def restart_from_checkpoint(study, trial):
 
     path = f"pytorch_checkpoint/{trial.number}/model.pt"
     user_attrs = copy.deepcopy(trial.user_attrs)
+    user_attrs["trial_number"] = trial.number
     if os.path.exists(path):
         user_attrs["checkpoint_path"] = path
 
