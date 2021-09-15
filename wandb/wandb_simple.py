@@ -1,5 +1,5 @@
 """
-Optuna example that optimizes a classifier configuration for the Iris dataset usinng
+Optuna example that optimizes a classifier configuration for the Iris dataset using
 scikit-learn and records hyperparameters and metrics using Weights & Biases.
 
 In this example we optimize random forest classifier for the Iris dataset. All
