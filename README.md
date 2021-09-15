@@ -90,6 +90,10 @@ In addition, integration modules are available for the following libraries, prov
 
 * [Tracking optimization process with MLflow](./mlflow/keras_mlflow.py)
 
+### Examples of Weights & Biases
+
+* [Tracking optimization process with Weights & Biases](./wandb/wandb_simple.py)
+
 ### Examples of Hydra
 
 * [Optimization with Hydra](./hydra/simple.py)
