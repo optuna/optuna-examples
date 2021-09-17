@@ -16,8 +16,8 @@ and view the optimization results at http://127.0.0.1:5000.
 """
 
 import optuna
+from optuna.integration.mlflow import MLflowCallback
 
-import mlflow
 from sklearn.datasets import load_wine
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
@@ -58,13 +58,6 @@ def create_model(num_features, trial):
     return model
 
 
-def mlflow_callback(study, trial):
-    trial_value = trial.value if trial.value is not None else float("nan")
-    with mlflow.start_run(run_name=study.study_name):
-        mlflow.log_params(trial.params)
-        mlflow.log_metrics({"mean_squared_error": trial_value})
-
-
 def objective(trial):
     # Clear clutter from previous Keras session graphs.
     clear_session()
@@ -82,8 +75,9 @@ def objective(trial):
 
 
 if __name__ == "__main__":
+    mlflc = MLflowCallback(metric_name="mean_squared_error")
     study = optuna.create_study()
-    study.optimize(objective, n_trials=100, timeout=600, callbacks=[mlflow_callback])
+    study.optimize(objective, n_trials=100, timeout=600, callbacks=[mlflc])
 
     print("Number of finished trials: {}".format(len(study.trials)))
 
