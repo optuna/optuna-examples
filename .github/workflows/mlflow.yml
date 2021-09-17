@@ -32,6 +32,7 @@ jobs:
         pip install -r mlflow/requirements.txt
     - name: Run examples
       run: |
+        python mlflow/mlflow_simple.py
         python mlflow/keras_mlflow.py
       env:
         OMP_NUM_THREADS: 1
