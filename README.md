@@ -88,7 +88,7 @@ In addition, integration modules are available for the following libraries, prov
 
 ### Examples of MLflow
 
-* [Tracking optimization process with MLflow](./mlflow/keras_mlflow.py)
+* [Tracking optimization process with MLflow](./mlflow/mlflow_simple.py)
 
 ### Examples of Weights & Biases
 
