@@ -23,7 +23,7 @@ from torch.utils.data import DataLoader, random_split
 from torchvision import datasets, transforms
 
 import optuna
-from optuna.integration import PyTorchLightningDDPPruningCallback
+from optuna.integration import PyTorchLightningPruningCallback
 
 if version.parse(pl.__version__) < version.parse("1.4.0"):
     raise RuntimeError("PyTorch Lightning>=1.4.0 is required for this example.")
@@ -132,7 +132,7 @@ def objective(trial: optuna.trial.Trial) -> float:
         gpus=-1 if torch.cuda.is_available() else None,
         accelerator="ddp_cpu" if not torch.cuda.is_available() else None,
         num_processes=os.cpu_count() if not torch.cuda.is_available() else None,
-        callbacks=[PyTorchLightningDDPPruningCallback(trial, monitor="val_acc")],
+        callbacks=[PyTorchLightningPruningCallback(trial, monitor="val_acc")],
     )
     hyperparameters = dict(n_layers=n_layers, dropout=dropout, output_dims=output_dims)
     trainer.logger.log_hyperparams(hyperparameters)
