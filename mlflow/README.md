@@ -12,7 +12,7 @@ for the wine quality regression.
 You can run this example as follows:
 
 ```
-$ python mlflow_simple.py
+$ python keras_mlflow.py
 ```
 
 After the script finishes, run the MLflow UI:
