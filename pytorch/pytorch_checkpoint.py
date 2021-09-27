@@ -86,7 +86,7 @@ def objective(trial):
 
     if "failed_trial" in trial.system_attrs:
         trial_number = trial.system_attrs["failed_trial"]
-        trial_checkpoint_dir = os.path.join(CHECKPOINT_DIR, trial_number)
+        trial_checkpoint_dir = os.path.join(CHECKPOINT_DIR, str(trial_number))
         checkpoint_path = os.path.join(trial_checkpoint_dir, "model.pt")
         checkpoint = torch.load(checkpoint_path)
         epoch = checkpoint["epoch"]
@@ -98,7 +98,7 @@ def objective(trial):
         optimizer.load_state_dict(checkpoint["optimizer_state_dict"])
         accuracy = checkpoint["accuracy"]
     else:
-        trial_checkpoint_dir = os.path.join(CHECKPOINT_DIR, trial.number)
+        trial_checkpoint_dir = os.path.join(CHECKPOINT_DIR, str(trial.number))
         epoch_begin = 0
 
     # Get the FashionMNIST dataset.
