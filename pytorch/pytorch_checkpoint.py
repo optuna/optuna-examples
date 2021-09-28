@@ -84,10 +84,12 @@ def objective(trial):
     lr = trial.suggest_float("lr", 1e-5, 1e-1, log=True)
     optimizer = getattr(optim, optimizer_name)(model.parameters(), lr=lr)
 
-    if "failed_trial" in trial.system_attrs:
-        trial_number = trial.system_attrs["failed_trial"]
-        trial_checkpoint_dir = os.path.join(CHECKPOINT_DIR, str(trial_number))
-        checkpoint_path = os.path.join(trial_checkpoint_dir, "model.pt")
+    trial_number = RetryFailedTrialCallback.retried_trial_number(trial)
+    trial_checkpoint_dir = os.path.join(CHECKPOINT_DIR, str(trial_number))
+    checkpoint_path = os.path.join(trial_checkpoint_dir, "model.pt")
+    checkpoint_exists = os.path.isfile(checkpoint_path)
+
+    if trial_number is not None and checkpoint_exists:
         checkpoint = torch.load(checkpoint_path)
         epoch = checkpoint["epoch"]
         epoch_begin = epoch + 1
@@ -99,13 +101,13 @@ def objective(trial):
         accuracy = checkpoint["accuracy"]
     else:
         trial_checkpoint_dir = os.path.join(CHECKPOINT_DIR, str(trial.number))
+        checkpoint_path = os.path.join(trial_checkpoint_dir, "model.pt")
         epoch_begin = 0
 
     # Get the FashionMNIST dataset.
     train_loader, valid_loader = get_mnist()
 
     os.makedirs(trial_checkpoint_dir, exist_ok=True)
-    checkpoint_path = os.path.join(trial_checkpoint_dir, "model.pt")
     # A checkpoint may be corrupted when the process is killed during `torch.save`.
     # Reduce the risk by first calling `torch.save` to a temporary file, then copy.
     tmp_checkpoint_path = os.path.join(trial_checkpoint_dir, "tmp_model.pt")
