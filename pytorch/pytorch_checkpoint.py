@@ -13,11 +13,11 @@ previous saved checkpoint using heartbeat.
     $ python pytorch/pytorch_checkpoint.py
 """
 
-import copy
 import os
 import shutil
 
 import optuna
+from optuna.storages import RetryFailedTrialCallback
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -84,9 +84,12 @@ def objective(trial):
     lr = trial.suggest_float("lr", 1e-5, 1e-1, log=True)
     optimizer = getattr(optim, optimizer_name)(model.parameters(), lr=lr)
 
-    if "checkpoint_path" in trial.user_attrs:
-        checkpoint_path = trial.user_attrs["checkpoint_path"]
-        trial_number = trial.user_attrs["trial_number"]
+    trial_number = RetryFailedTrialCallback.retried_trial_number(trial)
+    trial_checkpoint_dir = os.path.join(CHECKPOINT_DIR, str(trial_number))
+    checkpoint_path = os.path.join(trial_checkpoint_dir, "model.pt")
+    checkpoint_exists = os.path.isfile(checkpoint_path)
+
+    if trial_number is not None and checkpoint_exists:
         checkpoint = torch.load(checkpoint_path)
         epoch = checkpoint["epoch"]
         epoch_begin = epoch + 1
@@ -97,15 +100,14 @@ def objective(trial):
         optimizer.load_state_dict(checkpoint["optimizer_state_dict"])
         accuracy = checkpoint["accuracy"]
     else:
+        trial_checkpoint_dir = os.path.join(CHECKPOINT_DIR, str(trial.number))
+        checkpoint_path = os.path.join(trial_checkpoint_dir, "model.pt")
         epoch_begin = 0
 
     # Get the FashionMNIST dataset.
     train_loader, valid_loader = get_mnist()
 
-    trial_checkpoint_dir = f"{CHECKPOINT_DIR}/{trial.number}"
     os.makedirs(trial_checkpoint_dir, exist_ok=True)
-
-    checkpoint_path = os.path.join(trial_checkpoint_dir, "model.pt")
     # A checkpoint may be corrupted when the process is killed during `torch.save`.
     # Reduce the risk by first calling `torch.save` to a temporary file, then copy.
     tmp_checkpoint_path = os.path.join(trial_checkpoint_dir, "tmp_model.pt")
@@ -169,29 +171,11 @@ def objective(trial):
     return accuracy
 
 
-def restart_from_checkpoint(study, trial):
-    # Enqueue trial with the same parameters as the stale trial to use saved information.
-
-    path = f"pytorch_checkpoint/{trial.number}/model.pt"
-    user_attrs = copy.deepcopy(trial.user_attrs)
-    user_attrs["trial_number"] = trial.number
-    if os.path.exists(path):
-        user_attrs["checkpoint_path"] = path
-
-    study.add_trial(
-        optuna.create_trial(
-            state=optuna.trial.TrialState.WAITING,
-            params=trial.params,
-            distributions=trial.distributions,
-            user_attrs=user_attrs,
-            system_attrs=trial.system_attrs,
-        )
-    )
-
-
 if __name__ == "__main__":
     storage = optuna.storages.RDBStorage(
-        "sqlite:///example.db", heartbeat_interval=1, failed_trial_callback=restart_from_checkpoint
+        "sqlite:///example.db",
+        heartbeat_interval=1,
+        failed_trial_callback=RetryFailedTrialCallback(),
     )
     study = optuna.create_study(
         storage=storage, study_name="pytorch_checkpoint", direction="maximize", load_if_exists=True
