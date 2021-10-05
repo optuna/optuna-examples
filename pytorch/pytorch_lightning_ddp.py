@@ -1,5 +1,6 @@
 """
-Optuna example that optimizes multi-layer perceptrons using PyTorch Lightning.
+Optuna example that optimizes multi-layer perceptrons using PyTorch Lightning's
+distributed data-parallel training.
 
 In this example, we optimize the validation accuracy of hand-written digit recognition using
 PyTorch Lightning, and FashionMNIST. We optimize the neural network architecture. As it is too time
@@ -7,7 +8,7 @@ consuming to use the whole FashionMNIST dataset, we here use a small subset of i
 
 You can run this example as follows, pruning can be turned on and off with the `--pruning`
 argument.
-    $ python pytorch_lightning_simple.py [--pruning]
+    $ python pytorch/pytorch_lightning_ddp.py [--pruning]
 
 """
 import argparse
