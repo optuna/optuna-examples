@@ -6,7 +6,7 @@ on:
   pull_request:
     paths:
       - 'tensorboard/**'
-      - '.github/workflows/tensorbloard.yml'
+      - '.github/workflows/tensorboard.yml'
 
 jobs:
   examples:
