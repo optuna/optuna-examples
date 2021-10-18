@@ -6,6 +6,8 @@ In this example, we optimize the cross-validated log loss of cancer detection.
 """
 import optuna.integration.lightgbm as lgb
 
+from lightgbm import early_stopping
+from lightgbm import log_evaluation
 import sklearn.datasets
 from sklearn.model_selection import KFold
 
@@ -22,7 +24,10 @@ if __name__ == "__main__":
     }
 
     tuner = lgb.LightGBMTunerCV(
-        params, dtrain, verbose_eval=100, early_stopping_rounds=100, folds=KFold(n_splits=3)
+        params,
+        dtrain,
+        folds=KFold(n_splits=3),
+        callbacks=[early_stopping(100), log_evaluation(100)],
     )
 
     tuner.run()
