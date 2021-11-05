@@ -1,7 +1,9 @@
 mpi4py
 plotly
 pytorch-ignite
-pytorch-lightning>=1.0.2
+# TODO(toshihikoyanase): remove the upper version constraint when the callback supports
+# pytorch-lightning==1.5.0.
+pytorch-lightning>=1.0.2,<1.5.0
 skorch
 torch==1.8.0
 torchvision==0.9.0
