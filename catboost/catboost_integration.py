@@ -10,6 +10,8 @@ You can run this example as follows:
 
 """
 
+from typing import Any
+
 import numpy as np
 import optuna
 
@@ -17,6 +19,45 @@ import catboost as cb
 from sklearn.datasets import load_breast_cancer
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
+
+
+class CatBoostPruningCallback(object):
+    def __init__(
+        self, trial: optuna.trial.Trial, metric: str, valid_name: str = "validation"
+    ) -> None:
+        self._trial = trial
+        self._metric = metric
+        self._valid_name = valid_name
+        self._pruned = False
+        self._message = ""
+
+    def after_iteration(self, info: Any) -> bool:
+        """Run after each iteration."""
+        step = info.iteration - 1
+        if self._valid_name not in info.metrics:
+            raise ValueError(
+                'The entry associated with the validation name "{}" '
+                "is not found in the evaluation result list {}.".format(self._valid_name, info)
+            )
+        metrics = info.metrics[self._valid_name]
+        if self._metric not in metrics:
+            raise ValueError(
+                'The entry associated with the metric name "{}" '
+                "is not found in the evaluation result list {}.".format(self._metric, info)
+            )
+        scores = metrics[self._metric]
+        current_score = scores[-1]
+        self._trial.report(current_score, step=step)
+        if self._trial.should_prune():
+            self._message = "Trial was pruned at iteration {}.".format(step)
+            self._pruned = True
+            return False
+        return True
+
+    def check_pruned(self) -> None:
+        """Check whether pruend."""
+        if self._pruned is True:
+            raise optuna.TrialPruned(self._message)
 
 
 def objective(trial):
