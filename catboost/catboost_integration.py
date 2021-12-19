@@ -21,6 +21,32 @@ from sklearn.model_selection import train_test_split
 
 
 class CatBoostPruningCallback(object):
+    """Callback for catboost to prune unpromising trials.
+
+    See `the example <https://github.com/optuna/optuna-examples/blob/main/
+    catboost/catboost_integration.py>`__
+    if you want to add a pruning callback which observes validation accuracy.
+
+    You must call check_pruned after training unlike other pruning callbacks.
+
+    Args:
+        trial:
+            A :class:`~optuna.trial.Trial` corresponding to the current evaluation of the
+            objective function.
+        metric:
+            An evaluation metric for pruning, e.g., ``Logloss`` and ``AUC``.
+            Please refer to
+            `CatBoost reference
+            <https://catboost.ai/docs/references/eval-metric__supported-metrics.html>`_
+            for further details.
+        valid_name:
+            The name of the target validation.
+            If you set only one ``eval_set``, ``validation`` is used.
+            If you set multiple datasets as ``eval_set``, the index number of ``eval_set`` must be
+            included in the valid_name, e.g., ``validation_0`` or ``validation_1``
+            when ``eval_set`` contains two datasets.
+    """
+
     def __init__(
         self, trial: optuna.trial.Trial, metric: str, valid_name: str = "validation"
     ) -> None:
