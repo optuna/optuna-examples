@@ -12,12 +12,11 @@ You can run this example as follows:
 
 from typing import Any
 
-import numpy as np
 import optuna
 
 import catboost as cb
 from sklearn.datasets import load_breast_cancer
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import train_test_split
 
 
@@ -62,7 +61,7 @@ class CatBoostPruningCallback(object):
 
 def objective(trial):
     data, target = load_breast_cancer(return_X_y=True)
-    train_x, valid_x, train_y, valid_y = train_test_split(data, target, test_size=0.3)
+    train_x, valid_x, train_y, valid_y = train_test_split(data, target, test_size=0.25)
 
     param = {
         "objective": trial.suggest_categorical("objective", ["Logloss", "CrossEntropy"]),
@@ -83,7 +82,7 @@ def objective(trial):
 
     gbm = cb.CatBoostClassifier(**param)
 
-    pruning_callback = optuna.integration.CatBoostPruningCallback(trial, "AUC", "validation")
+    pruning_callback = CatBoostPruningCallback(trial, "AUC", "validation")
     gbm.fit(
         train_x,
         train_y,
@@ -96,10 +95,9 @@ def objective(trial):
     pruning_callback.check_pruned()
 
     preds = gbm.predict(valid_x)
-    pred_labels = np.rint(preds)
-    accuracy = accuracy_score(valid_y, pred_labels)
+    auc = roc_auc_score(valid_y, preds)
 
-    return accuracy
+    return auc
 
 
 if __name__ == "__main__":
