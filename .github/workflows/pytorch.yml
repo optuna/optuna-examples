@@ -66,5 +66,6 @@ jobs:
     - name: Run PyTorch Lightning DDP examples
       run: |
         python pytorch/pytorch_lightning_ddp.py
+        python pytorch/pytorch_lightning_ddp.py -p
       env:
         OMP_NUM_THREADS: 1

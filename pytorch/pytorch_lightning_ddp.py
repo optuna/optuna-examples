@@ -128,7 +128,7 @@ def objective(trial: optuna.trial.Trial) -> float:
     trainer = pl.Trainer(
         logger=True,
         limit_val_batches=PERCENT_VALID_EXAMPLES,
-        checkpoint_callback=False,
+        enable_checkpointing=False,
         max_epochs=EPOCHS,
         gpus=-1 if torch.cuda.is_available() else None,
         accelerator="ddp_cpu" if not torch.cuda.is_available() else None,
