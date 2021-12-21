@@ -6,7 +6,7 @@ We optimize both the choice of booster model and their hyperparameters. Througho
 training of models, a pruner observes intermediate results and stop unpromising trials.
 
 You can run this example as follows:
-    $ python catboost_integration.py
+    $ python catboost_pruning.py
 
 """
 
@@ -23,11 +23,7 @@ from sklearn.model_selection import train_test_split
 class CatBoostPruningCallback(object):
     """Callback for catboost to prune unpromising trials.
 
-    See `the example <https://github.com/optuna/optuna-examples/blob/main/
-    catboost/catboost_integration.py>`__
-    if you want to add a pruning callback which observes validation accuracy.
-
-    You must call check_pruned after training unlike other pruning callbacks.
+    You must call `check_pruned` after training manually unlike other pruning callbacks.
 
     Args:
         trial:
@@ -57,7 +53,21 @@ class CatBoostPruningCallback(object):
         self._message = ""
 
     def after_iteration(self, info: Any) -> bool:
-        """Run after each iteration."""
+        """Run after each iteration.
+
+        Args:
+            info:
+                A simpleNamespace containing iteraion, validation_name, metric_name
+                and history of losses.
+                For example ``namespace(iteration=2, metrics= {
+                'learn': {'Logloss': [0.6, 0.5]},
+                'validation': {'Logloss': [0.7, 0.6], 'AUC': [0.8, 0.9]}
+                })``.
+
+        Returns:
+            A boolean value. If :obj:`True`, the trial should be pruned.
+            Otherwise, the trial should continue.
+        """
         step = info.iteration - 1
         if self._valid_name not in info.metrics:
             raise ValueError(
@@ -81,17 +91,17 @@ class CatBoostPruningCallback(object):
 
     def check_pruned(self) -> None:
         """Check whether pruend."""
-        if self._pruned is True:
+        if self._pruned:
             raise optuna.TrialPruned(self._message)
 
 
-def objective(trial):
+def objective(trial: optuna.Trial) -> float:
     data, target = load_breast_cancer(return_X_y=True)
     train_x, valid_x, train_y, valid_y = train_test_split(data, target, test_size=0.25)
 
     param = {
         "objective": trial.suggest_categorical("objective", ["Logloss", "CrossEntropy"]),
-        "colsample_bylevel": trial.suggest_float("colsample_bylevel", 0.01, 0.1),
+        "colsample_bylevel": trial.suggest_float("colsample_bylevel", 0.01, 0.1, log=True),
         "depth": trial.suggest_int("depth", 1, 12),
         "boosting_type": trial.suggest_categorical("boosting_type", ["Ordered", "Plain"]),
         "bootstrap_type": trial.suggest_categorical(
@@ -104,7 +114,7 @@ def objective(trial):
     if param["bootstrap_type"] == "Bayesian":
         param["bagging_temperature"] = trial.suggest_float("bagging_temperature", 0, 10)
     elif param["bootstrap_type"] == "Bernoulli":
-        param["subsample"] = trial.suggest_float("subsample", 0.1, 1)
+        param["subsample"] = trial.suggest_float("subsample", 0.1, 1, log=True)
 
     gbm = cb.CatBoostClassifier(**param)
 
@@ -118,6 +128,7 @@ def objective(trial):
         callbacks=[pruning_callback],
     )
 
+    # evoke pruning manually.
     pruning_callback.check_pruned()
 
     preds = gbm.predict(valid_x)

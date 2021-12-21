@@ -47,6 +47,7 @@ The following example demonstrates how to implement an objective function that u
 The following example demonstrates how to implement pruning logic with Optuna.
 
 * [Simple pruning (scikit-learn)](./simple_pruning.py)
+* [Pruning for CatBoost](./catboost/catboost_pruning.py)
 
 In addition, integration modules are available for the following libraries, providing simpler interfaces to utilize pruning.
 

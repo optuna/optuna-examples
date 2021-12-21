@@ -33,6 +33,6 @@ jobs:
     - name: Run examples
       run: |
         python catboost/catboost_simple.py
-        python catboost/catboost_integration.py
+        python catboost/catboost_pruning.py
       env:
         OMP_NUM_THREADS: 1
