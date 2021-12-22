@@ -143,7 +143,9 @@ def objective(trial: optuna.trial.Trial) -> float:
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="PyTorch Lightning example.")
+    parser = argparse.ArgumentParser(
+        description="PyTorch Lightning distributed data-parallel training example."
+    )
     parser.add_argument(
         "--pruning",
         "-p",
