@@ -1,3 +1,6 @@
+# TODO(HideakiImamura): Remove `nltk` after solving
+# https://github.com/allenai/allennlp/issues/5521
+nltk<3.6.6
 allennlp>=2.2.0
 numpy
 optuna
