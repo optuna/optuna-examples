@@ -2,7 +2,7 @@
 Optuna example that demonstrates a pruner for CatBoost.
 
 In this example, we optimize the validation accuracy of cancer detection using CatBoost.
-We optimize both the choice of booster model and their hyperparameters. Throughout
+We optimize both the choice of booster models and their hyperparameters. Throughout
 training of models, a pruner observes intermediate results and stop unpromising trials.
 
 You can run this example as follows:
@@ -12,11 +12,12 @@ You can run this example as follows:
 
 from typing import Any
 
+import numpy as np
 import optuna
 
 import catboost as cb
 from sklearn.datasets import load_breast_cancer
-from sklearn.metrics import roc_auc_score
+from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 
 
@@ -57,7 +58,7 @@ class CatBoostPruningCallback(object):
 
         Args:
             info:
-                A simpleNamespace containing iteraion, validation_name, metric_name
+                A ``simpleNamespace`` containing iteraion, ``validation_name``, ``metric_name``
                 and history of losses.
                 For example ``namespace(iteration=2, metrics= {
                 'learn': {'Logloss': [0.6, 0.5]},
@@ -80,8 +81,7 @@ class CatBoostPruningCallback(object):
                 'The entry associated with the metric name "{}" '
                 "is not found in the evaluation result list {}.".format(self._metric, info)
             )
-        scores = metrics[self._metric]
-        current_score = scores[-1]
+        current_score = metrics[self._metric][-1]
         self._trial.report(current_score, step=step)
         if self._trial.should_prune():
             self._message = "Trial was pruned at iteration {}.".format(step)
@@ -108,7 +108,7 @@ def objective(trial: optuna.Trial) -> float:
             "bootstrap_type", ["Bayesian", "Bernoulli", "MVS"]
         ),
         "used_ram_limit": "3gb",
-        "eval_metric": "AUC",
+        "eval_metric": "Accuracy",
     }
 
     if param["bootstrap_type"] == "Bayesian":
@@ -118,7 +118,7 @@ def objective(trial: optuna.Trial) -> float:
 
     gbm = cb.CatBoostClassifier(**param)
 
-    pruning_callback = CatBoostPruningCallback(trial, "AUC", "validation")
+    pruning_callback = CatBoostPruningCallback(trial, "Accuracy", "validation")
     gbm.fit(
         train_x,
         train_y,
@@ -132,9 +132,10 @@ def objective(trial: optuna.Trial) -> float:
     pruning_callback.check_pruned()
 
     preds = gbm.predict(valid_x)
-    auc = roc_auc_score(valid_y, preds)
+    pred_labels = np.rint(preds)
+    accuracy = accuracy_score(valid_y, pred_labels)
 
-    return auc
+    return accuracy
 
 
 if __name__ == "__main__":
