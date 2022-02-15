@@ -11,13 +11,13 @@ def objective(trial):
     # Constraints which are considered feasible if less than or equal to zero.
     # The feasible region is basically the intersection of a circle centered at (x=5, y=0)
     # and the complement to a circle centered at (x=8, y=-3).
-    c0 = (x - 5) ** 2 + y ** 2 - 25
+    c0 = (x - 5) ** 2 + y**2 - 25
     c1 = -((x - 8) ** 2) - (y + 3) ** 2 + 7.7
 
     # Store the constraints as user attributes so that they can be restored after optimization.
     trial.set_user_attr("constraint", (c0, c1))
 
-    v0 = 4 * x ** 2 + 4 * y ** 2
+    v0 = 4 * x**2 + 4 * y**2
     v1 = (x - 5) ** 2 + (y - 5) ** 2
 
     return v0, v1
