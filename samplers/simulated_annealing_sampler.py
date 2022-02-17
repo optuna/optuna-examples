@@ -112,7 +112,7 @@ class SimulatedAnnealingSampler(BaseSampler):
 def objective(trial):
     x = trial.suggest_float("x", -100, 100)
     y = trial.suggest_float("y", -1, 1)
-    return x ** 2 + y
+    return x**2 + y
 
 
 if __name__ == "__main__":
