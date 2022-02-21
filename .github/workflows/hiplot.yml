@@ -32,6 +32,6 @@ jobs:
         pip install -r hiplot/requirements.txt
     - name: Run examples
       run: |
-        jupyter nbconvert --to notebook --execute plot_study.ipynb
+        jupyter nbconvert --to notebook --execute hiplot/plot_study.ipynb
       env:
         OMP_NUM_THREADS: 1
