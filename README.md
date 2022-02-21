@@ -84,6 +84,7 @@ In addition, integration modules are available for the following libraries, prov
 ### Examples of Visualization
 
 * [Visualizing study](https://colab.research.google.com/github/optuna/optuna-examples/blob/main/visualization/plot_study.ipynb)
+* [Visualizing study with HiPlot](https://colab.research.google.com/github/optuna/optuna-examples/blob/main/hiplot/plot_study.ipynb)
 
 ### An example to enqueue trials with given parameter values
 
