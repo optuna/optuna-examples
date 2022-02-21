@@ -1,3 +1,4 @@
+hiplot
 jupyter
 sklearn
 pandas  # used in hiplot/plot_study.ipynb
