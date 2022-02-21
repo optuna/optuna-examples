@@ -1,7 +1,7 @@
 """
 Optuna example that demonstrates a pruner for ChainerMN.
 
-In this example, we optimize the validation accuracy of hand-written digit recognition using
+In this example, we optimize the validation accuracy of fashion product recognition using
 ChainerMN and FashionMNIST, where architecture of neural network is optimized.
 Throughout the training of neural networks,
 a pruner observes intermediate results and stops unpromising trials.

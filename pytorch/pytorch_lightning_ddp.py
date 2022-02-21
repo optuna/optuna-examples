@@ -2,7 +2,7 @@
 Optuna example that optimizes multi-layer perceptrons using PyTorch Lightning's
 distributed data-parallel training.
 
-In this example, we optimize the validation accuracy of hand-written digit recognition using
+In this example, we optimize the validation accuracy of fashion product recognition using
 PyTorch Lightning, and FashionMNIST. We optimize the neural network architecture. As it is too time
 consuming to use the whole FashionMNIST dataset, we here use a small subset of it.
 

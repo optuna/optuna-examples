@@ -1,7 +1,7 @@
 """
 Optuna example that optimizes multi-layer perceptrons using Catalyst.
 
-In this example, we optimize the validation accuracy of hand-written digit recognition using
+In this example, we optimize the validation accuracy of fashion product recognition using
 Catalyst, and FashionMNIST. We optimize the neural network architecture.
 
 You can run this example as follows, pruning can be turned on and off with the `--pruning`
