@@ -26,6 +26,7 @@ from keras.datasets import mnist
 from keras.layers import Dense
 from keras.layers import Dropout
 from keras.models import Sequential
+from tensorflow.keras.optimizers import RMSprop
 
 
 # TODO(crcrpar): Remove the below three lines once everything is ok.
@@ -60,7 +61,7 @@ def create_model(trial):
     lr = trial.suggest_float("lr", 1e-5, 1e-1, log=True)
     model.compile(
         loss="categorical_crossentropy",
-        optimizer=keras.optimizers.RMSprop(lr=lr),
+        optimizer=RMSprop(lr=lr),
         metrics=["accuracy"],
     )
 
