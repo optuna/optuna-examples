@@ -20,3 +20,5 @@ $ python wandb_simple.py
 ```
 
 Results and plots will be available in Weights & Biases UI once script finishes.
+
+See also our [Medium post](https://medium.com/optuna/optuna-meets-weights-and-biases-58fc6bab893) for additional use-case.
