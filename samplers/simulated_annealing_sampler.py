@@ -5,7 +5,7 @@ Annealing itself.
 
 Note that this implementation isn't intended to be used for production purposes and
 has the following limitations:
-- The sampler only supports `UniformDistribution`
+- The sampler only supports `FloatDistribution`
     (i.e., `Trial.suggest_float(low, high, step=None, log=False)` method).
 - The implementation prioritizes simplicity over optimization efficiency.
 
