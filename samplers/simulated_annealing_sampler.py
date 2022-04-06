@@ -64,6 +64,9 @@ class SimulatedAnnealingSampler(BaseSampler):
         params = {}
         for param_name, param_distribution in search_space.items():
             if isinstance(param_distribution, distributions.FloatDistribution):
+                assert param_distribution.step is None, "step is not supported"
+                assert not param_distribution.log, "log is not supported"
+
                 current_value = self._current_trial.params[param_name]
                 width = (
                     param_distribution.high - param_distribution.low
