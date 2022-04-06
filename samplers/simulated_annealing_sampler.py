@@ -63,7 +63,7 @@ class SimulatedAnnealingSampler(BaseSampler):
 
         params = {}
         for param_name, param_distribution in search_space.items():
-            if isinstance(param_distribution, distributions.UniformDistribution):
+            if isinstance(param_distribution, distributions.FloatDistribution):
                 current_value = self._current_trial.params[param_name]
                 width = (
                     param_distribution.high - param_distribution.low
