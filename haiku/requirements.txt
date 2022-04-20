@@ -1,9 +1,3 @@
-# TODO(himkt) Remove jax and jaxlib after the next version of chex is released.
-# https://github.com/google/jax/issues/10331
-# https://github.com/deepmind/chex/issues/156
-jax==0.3.6
-jaxlib==0.3.5
-
 dm-haiku
 numpy
 optax
