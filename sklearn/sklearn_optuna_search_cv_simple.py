@@ -16,7 +16,7 @@ if __name__ == "__main__":
     clf = SVC(gamma="auto")
 
     param_distributions = {
-        "C": optuna.distributions.FloatDistribution(1e-10, 1e10),
+        "C": optuna.distributions.FloatDistribution(1e-10, 1e10, log=True),
         "degree": optuna.distributions.IntDistribution(1, 5),
     }
 
