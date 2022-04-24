@@ -16,8 +16,8 @@ if __name__ == "__main__":
     clf = SVC(gamma="auto")
 
     param_distributions = {
-        "C": optuna.distributions.LogUniformDistribution(1e-10, 1e10),
-        "degree": optuna.distributions.IntUniformDistribution(1, 5),
+        "C": optuna.distributions.FloatDistribution(1e-10, 1e10),
+        "degree": optuna.distributions.IntDistribution(1, 5),
     }
 
     optuna_search = optuna.integration.OptunaSearchCV(
