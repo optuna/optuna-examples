@@ -1,9 +1,5 @@
-# TODO(HideakiImamura): Remove `nltk` after solving.
-# https://github.com/allenai/allennlp/issues/5521
-nltk<3.6.6
+nltk
 allennlp>=2.2.0
 numpy
 optuna
-# TODO(himkt): Remove after click problem being solved.
-# https://github.com/tiangolo/typer/pull/375
-click<8.1.0
+click
