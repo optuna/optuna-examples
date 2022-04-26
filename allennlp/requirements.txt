@@ -1,5 +1,3 @@
-nltk
 allennlp>=2.2.0
 numpy
 optuna
-click
