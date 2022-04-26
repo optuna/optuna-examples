@@ -2,7 +2,7 @@
 Optuna multi-objective optimization example that optimizes multi-layer perceptrons using PyTorch.
 
 In this example, we optimize the neural network architecture as well as the optimizer configuration
-by considering the validation accuracy of hand-written digit recognition (FashionMNIST dataset) and
+by considering the validation accuracy of fashion product recognition (FashionMNIST dataset) and
 the FLOPS of the PyTorch model. As it is too time consuming to use the whole FashionMNIST dataset,
 we here use a small subset of it.
 
