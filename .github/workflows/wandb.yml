@@ -33,6 +33,6 @@ jobs:
     - name: Run examples
       run: |
         wandb offline
-        python wandb/wandb_simple.py
+        python wandb/wandb_integration.py
       env:
         OMP_NUM_THREADS: 1

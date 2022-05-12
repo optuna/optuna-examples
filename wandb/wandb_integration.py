@@ -9,7 +9,7 @@ Before running this example, please make sure to create and login into wandb acc
 https://docs.wandb.ai/quickstart#1-set-up-wandb
 
 You can run this example as follows:
-    $ python wandb_simple.py
+    $ python wandb_integration.py
 
 Results and plots will be available in Weights & Biases UI once script finishes.
 """

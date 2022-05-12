@@ -96,7 +96,7 @@ In addition, integration modules are available for the following libraries, prov
 
 ### Examples of Weights & Biases
 
-* [Tracking optimization process with Weights & Biases](./wandb/wandb_simple.py)
+* [Tracking optimization process with Weights & Biases](./wandb/wandb_integration.py)
 
 ### Examples of Hydra
 
