@@ -1,1 +1,1 @@
-hydra-optuna-sweeper
+hydra-optuna-sweeper<=1.1.2
