@@ -1,1 +1,3 @@
-hydra-optuna-sweeper
+# TODO(c-bata): Remove the version constraint after fixed the above CI failure.
+# See https://github.com/optuna/optuna-examples/runs/6509897643?check_suite_focus=true
+hydra-optuna-sweeper<=1.1.2
