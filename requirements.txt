@@ -1,3 +1,4 @@
 jupyter  # used in quickstart.ipynb
 pandas  # used in max_trials_callback.py
-sklearn  # used in enqueue_trial.py
+plotly  # used in quickstart.ipynb
+sklearn  # used in enqueue_trial.py and quickstart.ipynb
