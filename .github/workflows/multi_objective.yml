@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.6', '3.7', '3.8', '3.9']
+        python-version: ['3.7', '3.8', '3.9']
 
     steps:
     - uses: actions/checkout@v2
@@ -32,9 +32,7 @@ jobs:
         pip install -r multi_objective/requirements.txt
     - name: Run examples
       run: |
-        if [[ ${{ matrix.python-version }} != 3.6 ]]; then
-            python multi_objective/botorch_simple.py
-        fi
+        python multi_objective/botorch_simple.py
         python multi_objective/pytorch_simple.py
       env:
         OMP_NUM_THREADS: 1
