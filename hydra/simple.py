@@ -16,7 +16,7 @@ from omegaconf import DictConfig
 import hydra
 
 
-@hydra.main(config_path="conf", config_name="config")
+@hydra.main(version_base=None, config_path="conf", config_name="config")
 def objective(cfg: DictConfig) -> float:
     x: float = cfg.x
     y: float = cfg.y
