@@ -1,4 +1,6 @@
 botorch
+onnx # TODO(nzw0301): Remove this if thop adds onnx to its dependencies.
+protobuf<=3.20.1 # TODO(nzw0301): Remove this after https://github.com/onnx/onnx/issues/4239 is resolved.
 thop
 torch
 torchaudio
