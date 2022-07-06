@@ -42,6 +42,7 @@ jobs:
         OMP_NUM_THREADS: 1
     - name: Run multi-node examples
       run: |
+        export OMPI_MCA_rmaps_base_oversubscribe=yes
         STORAGE_URL=sqlite:///example.db
         for file in `find chainer -name 'chainermn_*.py'`
         do
