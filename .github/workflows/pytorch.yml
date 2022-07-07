@@ -49,6 +49,7 @@ jobs:
         OMP_NUM_THREADS: 1
     - name: Run multi-node examples
       run: |
+        export OMPI_MCA_rmaps_base_oversubscribe=yes
         STORAGE_URL=sqlite:///example.db
         mpirun -n 2 -- python pytorch/pytorch_distributed_simple.py
       env:
