@@ -1,4 +1,4 @@
 tensorflow-estimator
-tensorflow
+tensorflow>=2.7.0
 tensorflow-datasets
 optuna
