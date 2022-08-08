@@ -7,8 +7,6 @@ scikit-learn. We optimize both the choice of classifier (between SVC and RandomF
 hyperparameters.
 
 """
-import logging
-
 import joblib
 import optuna
 
@@ -25,10 +23,7 @@ try:
     ray.init(address="auto")
 except ConnectionError:
     ray.init()
-# Disable the warning to suppress the log.
-# TODO(HideakiImamura): enable warning after https://github.com/ray-project/ray/pull/13865 is
-# released.
-ray.init(logging_level=logging.ERROR, ignore_reinit_error=True)
+ray.init(ignore_reinit_error=True)
 register_ray()
 
 
