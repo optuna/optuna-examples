@@ -14,6 +14,8 @@ import optuna
 import skimage.feature as ft
 from sklearn.datasets import fetch_olivetti_faces
 import sklearn.metrics
+from sklearn.metrics.pairwise import cosine_distances
+from sklearn.metrics.pairwise import euclidean_distances
 
 
 def load_data():
@@ -58,21 +60,7 @@ def log2matrix(p):
 
 
 def calc_kl_dist(p, q):
-    dist = np.matmul(p * log2matrix(p), np.where(q != 0, 1, 0).T) - np.matmul(p, log2matrix(q).T)
-    return dist.T
-
-
-def calc_euc_dist(p, q):
-    p_norm = np.diag(np.dot(p, p.T))
-    q_norm = np.vstack(np.diag(np.dot(q, q.T)))
-    dist = np.sqrt(-2 * np.matmul(q, p.T) + p_norm + q_norm)
-    return dist
-
-
-def calc_cos_dist(p, q):
-    p_norm = np.diag(np.dot(p, p.T))
-    q_norm = np.vstack(np.diag(np.dot(q, q.T)))
-    dist = 1 - np.matmul(q, p.T) / (np.sqrt(p_norm) * np.sqrt(q_norm))
+    dist = np.matmul(p * log2matrix(p), np.where(q > 0, 1, 0).T) - np.matmul(p, log2matrix(q).T)
     return dist
 
 
@@ -80,15 +68,15 @@ def calc_dist(p, q, metric):
     if metric == "kl":
         dist = calc_kl_dist(p, q)
     elif metric == "cos":
-        dist = calc_cos_dist(p, q)
+        dist = cosine_distances(p, q)
     elif metric == "euc":
-        dist = calc_euc_dist(p, q)
+        dist = euclidean_distances(p, q)
     return dist
 
 
 def objective(trial):
     # Get Olivetti faces dataset.
-    x_ref, x_valid, y_ref, y_valid = load_data()
+    x_ref, x_valid, _, y_valid = load_data()
 
     # We optimize parameters of local_binary_pattern function in skimage
     # and the choice of distance metric classes.
@@ -101,7 +89,7 @@ def objective(trial):
     x_valid_hist = img2hist(x_valid, P, R, method)
     dist = calc_dist(x_ref_hist, x_valid_hist, metric)
 
-    y_pred = np.argmin(dist, axis=1)
+    y_pred = np.argmin(dist, axis=0)
     accuracy = sklearn.metrics.accuracy_score(y_valid, y_pred)
     return accuracy
 
