@@ -1,4 +1,3 @@
 dask-ml
 dask[dataframe]
-# TODO(not522): Remove the constraint https://github.com/dask/dask-ml/pull/910.
-scikit-learn<1.1.0
+scikit-learn
