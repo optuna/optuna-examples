@@ -1,5 +1,4 @@
-# TODO(toshihikoyanase): Remove the constraints when tensorflow 2.7.0 is released.
-tensorflow-estimator<2.7.0
-tensorflow<2.7.0
+tensorflow-estimator
+tensorflow>=2.7.0
 tensorflow-datasets
 optuna

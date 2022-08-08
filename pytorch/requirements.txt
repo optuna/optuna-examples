@@ -3,10 +3,8 @@ plotly
 pytorch-ignite
 # todo(nzw0301): Remove the upper constraint https://github.com/optuna/optuna/issues/3418.
 pytorch-lightning>=1.5.0,<1.6.0
-# TODO(yanase): Remove protobuf after resolving https://github.com/PyTorchLightning/pytorch-lightning/issues/13159.
-protobuf<4.0.0
 skorch
-torch==1.10.0
-torchvision==0.11.1
-torchaudio==0.10.0
+torch==1.11.0
+torchvision==0.12.0
+torchaudio==0.11.0
 optuna
