@@ -1,4 +1,2 @@
-# TODO(nzw): Remove cached-path after allennllp supports v1.1.3
-cached-path<=1.1.2
 allennlp>=2.2.0
 optuna
