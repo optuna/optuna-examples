@@ -121,6 +121,7 @@ In addition, integration modules are available for the following libraries, prov
 * [Mozilla Voice STT](https://github.com/mozilla/DeepSpeech)
 * [neptune.ai](https://neptune.ai)
 * [OptGBM: A scikit-learn compatible LightGBM estimator with Optuna](https://github.com/Y-oHr-N/OptGBM)
+* [Optuna-distributed](https://github.com/xadrianzetx/optuna-distributed)
 * [PyKEEN](https://github.com/pykeen/pykeen)
 * [RL Baselines Zoo](https://github.com/DLR-RM/rl-baselines3-zoo)
 * [Hyperparameter Optimization for Machine Learning, code repository for online course](https://github.com/solegalli/hyperparameter-optimization)
