@@ -10,8 +10,8 @@ we here use a small subset of it.
 
 import os
 
+from fvcore.nn import FlopCountAnalysis
 import optuna
-import thop
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -109,7 +109,7 @@ def objective(trial):
 
     accuracy = correct / N_VAL_EXAMPLES
 
-    flops, _params = thop.profile(model, inputs=(torch.randn(1, 28 * 28),), verbose=False)
+    flops = FlopCountAnalysis(model, inputs=(torch.randn(1, 28 * 28).to(DEVICE),)).total()
     return flops, accuracy
 
 
