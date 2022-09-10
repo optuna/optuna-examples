@@ -1,6 +1,5 @@
 botorch
 fvcore
-gpytorch<1.9.0 # TODO(nzw0301): Remove this if botorch supports gpytorch>1.8.
 torch
 torchaudio
 torchvision
