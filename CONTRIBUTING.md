@@ -18,7 +18,7 @@ If you choose to write some code, we have some conventions as follows.
 
 ### Setup Optuna
 
-See the [optuna/optuna/CONTRIBUTIONS.MD](https://github.com/optuna/optuna/blob/master/CONTRIBUTING.md) file to see how to install Optuna.
+See the [optuna/optuna/CONTRIBUTING.MD](https://github.com/optuna/optuna/blob/master/CONTRIBUTING.md) file to see how to install Optuna.
 
 ### Checking the Format and Coding Style
 
