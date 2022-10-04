@@ -5,7 +5,7 @@ Annealing itself.
 
 Note that this implementation isn't intended to be used for production purposes and
 has the following limitations:
-- The sampler only supports `UniformDistribution` (i.e., `Trial.suggest_uniform` method).
+- The sampler only supports `Trial.suggest_float(low, high, step=None, log=False)` method.
 - The implementation prioritizes simplicity over optimization efficiency.
 
 You can run this example as follows:
@@ -62,7 +62,10 @@ class SimulatedAnnealingSampler(BaseSampler):
 
         params = {}
         for param_name, param_distribution in search_space.items():
-            if isinstance(param_distribution, distributions.UniformDistribution):
+            if isinstance(param_distribution, distributions.FloatDistribution):
+                assert param_distribution.step is None, "step is not supported"
+                assert not param_distribution.log, "log is not supported"
+
                 current_value = self._current_trial.params[param_name]
                 width = (
                     param_distribution.high - param_distribution.low
@@ -111,7 +114,7 @@ class SimulatedAnnealingSampler(BaseSampler):
 def objective(trial):
     x = trial.suggest_float("x", -100, 100)
     y = trial.suggest_float("y", -1, 1)
-    return x ** 2 + y
+    return x**2 + y
 
 
 if __name__ == "__main__":

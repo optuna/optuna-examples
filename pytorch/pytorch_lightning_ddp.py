@@ -1,5 +1,6 @@
 """
-Optuna example that optimizes multi-layer perceptrons using PyTorch Lightning.
+Optuna example that optimizes multi-layer perceptrons using PyTorch Lightning's
+distributed data-parallel training.
 
 In this example, we optimize the validation accuracy of fashion product recognition using
 PyTorch Lightning, and FashionMNIST. We optimize the neural network architecture. As it is too time
@@ -7,7 +8,7 @@ consuming to use the whole FashionMNIST dataset, we here use a small subset of i
 
 You can run this example as follows, pruning can be turned on and off with the `--pruning`
 argument.
-    $ python pytorch_lightning_simple.py [--pruning]
+    $ python pytorch/pytorch_lightning_ddp.py [--pruning]
 
 """
 import argparse
@@ -17,7 +18,6 @@ from typing import Optional
 
 import optuna
 from optuna.integration import PyTorchLightningPruningCallback
-from packaging import version
 import pytorch_lightning as pl
 import torch
 from torch import nn
@@ -28,9 +28,6 @@ from torch.utils.data import random_split
 from torchvision import datasets
 from torchvision import transforms
 
-
-if version.parse(pl.__version__) < version.parse("1.0.2"):
-    raise RuntimeError("PyTorch Lightning>=1.0.2 is required for this example.")
 
 PERCENT_VALID_EXAMPLES = 0.1
 BATCHSIZE = 128
@@ -78,8 +75,8 @@ class LightningNet(pl.LightningModule):
         output = self(data)
         pred = output.argmax(dim=1, keepdim=True)
         accuracy = pred.eq(target.view_as(pred)).float().mean()
-        self.log("val_acc", accuracy)
-        self.log("hp_metric", accuracy, on_step=False, on_epoch=True)
+        self.log("val_acc", accuracy, sync_dist=True)
+        self.log("hp_metric", accuracy, on_step=False, on_epoch=True, sync_dist=True)
 
     def configure_optimizers(self) -> optim.Optimizer:
         return optim.Adam(self.model.parameters())
@@ -133,7 +130,9 @@ def objective(trial: optuna.trial.Trial) -> float:
         limit_val_batches=PERCENT_VALID_EXAMPLES,
         enable_checkpointing=False,
         max_epochs=EPOCHS,
-        gpus=1 if torch.cuda.is_available() else None,
+        gpus=-1 if torch.cuda.is_available() else None,
+        accelerator="ddp_cpu" if not torch.cuda.is_available() else None,
+        num_processes=os.cpu_count() if not torch.cuda.is_available() else None,
         callbacks=[PyTorchLightningPruningCallback(trial, monitor="val_acc")],
     )
     hyperparameters = dict(n_layers=n_layers, dropout=dropout, output_dims=output_dims)
@@ -144,7 +143,9 @@ def objective(trial: optuna.trial.Trial) -> float:
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="PyTorch Lightning example.")
+    parser = argparse.ArgumentParser(
+        description="PyTorch Lightning distributed data-parallel training example."
+    )
     parser.add_argument(
         "--pruning",
         "-p",
@@ -158,7 +159,14 @@ if __name__ == "__main__":
         optuna.pruners.MedianPruner() if args.pruning else optuna.pruners.NopPruner()
     )
 
-    study = optuna.create_study(direction="maximize", pruner=pruner)
+    storage = "sqlite:///example.db"
+    study = optuna.create_study(
+        study_name="pl_ddp",
+        storage=storage,
+        direction="maximize",
+        pruner=pruner,
+        load_if_exists=True,
+    )
     study.optimize(objective, n_trials=100, timeout=600)
 
     print("Number of finished trials: {}".format(len(study.trials)))

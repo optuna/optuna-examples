@@ -1,12 +1,12 @@
-name: lightgbm
+name: visualization with hiplot
 
 on:
   schedule:
     - cron: '0 15 * * *'
   pull_request:
     paths:
-      - 'lightgbm/**'
-      - '.github/workflows/lightgbm.yml'
+      - 'hiplot/**'
+      - '.github/workflows/hiplot.yml'
 
 jobs:
   examples:
@@ -29,16 +29,9 @@ jobs:
         pip install git+https://github.com/optuna/optuna.git
         python -c 'import optuna'
 
-        pip install -r lightgbm/requirements.txt
-    - name: Run LightGBM examples
+        pip install -r hiplot/requirements.txt
+    - name: Run examples
       run: |
-        python lightgbm/lightgbm_simple.py
-        python lightgbm/lightgbm_integration.py
-      env:
-        OMP_NUM_THREADS: 1
-    - name: Run LightGBM Tuner examples
-      run: |
-        python lightgbm/lightgbm_tuner_simple.py
-        python lightgbm/lightgbm_tuner_cv.py
+        jupyter nbconvert --to notebook --execute hiplot/plot_study.ipynb
       env:
         OMP_NUM_THREADS: 1

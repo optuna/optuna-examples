@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.6, 3.7, 3.8, 3.9]
+        python-version: ['3.7', '3.8', '3.9', '3.10']
 
     steps:
     - uses: actions/checkout@v2
@@ -38,5 +38,6 @@ jobs:
         python quadratic_simple.py
         python simple_pruning.py
         python -m py_compile rapids_simple.py  # due to difficulty importing, compile only
+        jupyter nbconvert --to notebook --execute quickstart.ipynb
       env:
         OMP_NUM_THREADS: 1

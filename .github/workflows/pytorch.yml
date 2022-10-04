@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.6, 3.7, 3.8]
+        python-version: ['3.7', '3.8', '3.9', '3.10']
 
     steps:
     - uses: actions/checkout@v2
@@ -49,6 +49,7 @@ jobs:
         OMP_NUM_THREADS: 1
     - name: Run multi-node examples
       run: |
+        export OMPI_MCA_rmaps_base_oversubscribe=yes
         STORAGE_URL=sqlite:///example.db
         mpirun -n 2 -- python pytorch/pytorch_distributed_simple.py
       env:
@@ -61,5 +62,11 @@ jobs:
     - name: Run PyTorch Lightning examples
       run: |
         python pytorch/pytorch_lightning_simple.py
+      env:
+        OMP_NUM_THREADS: 1
+    - name: Run PyTorch Lightning DDP examples
+      run: |
+        python pytorch/pytorch_lightning_ddp.py
+        python pytorch/pytorch_lightning_ddp.py -p
       env:
         OMP_NUM_THREADS: 1

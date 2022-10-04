@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.6, 3.7, 3.8, 3.9]
+        python-version: ['3.7', '3.8', '3.9', '3.10']
 
     steps:
     - uses: actions/checkout@v2
@@ -33,5 +33,6 @@ jobs:
     - name: Run examples
       run: |
         python catboost/catboost_simple.py
+        python catboost/catboost_pruning.py
       env:
         OMP_NUM_THREADS: 1

@@ -26,6 +26,8 @@ from keras.datasets import mnist
 from keras.layers import Dense
 from keras.layers import Dropout
 from keras.models import Sequential
+from tensorflow.keras.optimizers import RMSprop
+from tensorflow.keras.utils import to_categorical
 
 
 # TODO(crcrpar): Remove the below three lines once everything is ok.
@@ -57,10 +59,10 @@ def create_model(trial):
     model.add(Dense(CLASSES, activation="softmax"))
 
     # We compile our model with a sampled learning rate.
-    lr = trial.suggest_float("lr", 1e-5, 1e-1, log=True)
+    learning_rate = trial.suggest_float("learning_rate", 1e-5, 1e-1, log=True)
     model.compile(
         loss="categorical_crossentropy",
-        optimizer=keras.optimizers.RMSprop(lr=lr),
+        optimizer=RMSprop(learning_rate=learning_rate),
         metrics=["accuracy"],
     )
 
@@ -77,8 +79,8 @@ def objective(trial):
     x_valid = x_valid.reshape(10000, 784)[:N_VALID_EXAMPLES].astype("float32") / 255
 
     # Convert class vectors to binary class matrices.
-    y_train = keras.utils.to_categorical(y_train[:N_TRAIN_EXAMPLES], CLASSES)
-    y_valid = keras.utils.to_categorical(y_valid[:N_VALID_EXAMPLES], CLASSES)
+    y_train = to_categorical(y_train[:N_TRAIN_EXAMPLES], CLASSES)
+    y_valid = to_categorical(y_valid[:N_VALID_EXAMPLES], CLASSES)
 
     # Generate our trial model.
     model = create_model(trial)
@@ -107,7 +109,9 @@ if __name__ == "__main__":
         "There is now only one Keras: tf.keras. "
         "There may be some breaking changes for some workflows by upgrading to keras 2.4.0. "
         "Test before upgrading. "
-        "REF:https://github.com/keras-team/keras/releases/tag/2.4.0"
+        "REF: https://github.com/keras-team/keras/releases/tag/2.4.0. "
+        "There is an alternative callback function that can be used instead: "
+        ":class:`~optuna.integration.TFKerasPruningCallback`",
     )
     study = optuna.create_study(direction="maximize", pruner=optuna.pruners.MedianPruner())
     study.optimize(objective, n_trials=100)

@@ -27,6 +27,7 @@ This page contains a list of example codes written with Optuna.
 * [PyTorch](./pytorch/pytorch_simple.py)
 * [PyTorch Ignite](./pytorch/pytorch_ignite_simple.py)
 * [PyTorch Lightning](./pytorch/pytorch_lightning_simple.py)
+* [PyTorch Lightning (DDP)](./pytorch/pytorch_lightning_ddp.py)
 * [RAPIDS](./rapids_simple.py)
 * [Scikit-learn](./sklearn/sklearn_simple.py)
 * [Scikit-learn OptunaSearchCV](./sklearn/sklearn_optuna_search_cv_simple.py)
@@ -51,6 +52,7 @@ The following example demonstrates how to implement pruning logic with Optuna.
 In addition, integration modules are available for the following libraries, providing simpler interfaces to utilize pruning.
 
 * [Pruning with Catalyst integration module](./pytorch/catalyst_simple.py)
+* [Pruning with CatBoost integration module](./catboost/catboost_pruning.py)
 * [Pruning with Chainer integration module](./chainer/chainer_integration.py)
 * [Pruning with ChainerMN integration module](./chainer/chainermn_integration.py)
 * [Pruning with FastAI V1 integration module](./fastai/fastaiv1_simple.py)
@@ -61,6 +63,7 @@ In addition, integration modules are available for the following libraries, prov
 * [Pruning with PyTorch integration module](./pytorch/pytorch_simple.py)
 * [Pruning with PyTorch Ignite integration module](./pytorch/pytorch_ignite_simple.py)
 * [Pruning with PyTorch Lightning integration module](./pytorch/pytorch_lightning_simple.py)
+* [Pruning with PyTorch Lightning integration module (DDP)](./pytorch/pytorch_lightning_ddp.py)
 * [Pruning with Tensorflow integration module](./tensorflow/tensorflow_estimator_integration.py)
 * [Pruning with XGBoost integration module](./xgboost/xgboost_integration.py)
 * [Pruning with XGBoost integration module (cross validation, XGBoost.cv)](./xgboost/xgboost_cv_integration.py)
@@ -81,6 +84,7 @@ In addition, integration modules are available for the following libraries, prov
 ### Examples of Visualization
 
 * [Visualizing study](https://colab.research.google.com/github/optuna/optuna-examples/blob/main/visualization/plot_study.ipynb)
+* [Visualizing study with HiPlot](https://colab.research.google.com/github/optuna/optuna-examples/blob/main/hiplot/plot_study.ipynb)
 
 ### An example to enqueue trials with given parameter values
 
@@ -89,6 +93,10 @@ In addition, integration modules are available for the following libraries, prov
 ### Examples of MLflow
 
 * [Tracking optimization process with MLflow](./mlflow/keras_mlflow.py)
+
+### Examples of Weights & Biases
+
+* [Tracking optimization process with Weights & Biases](./wandb/wandb_integration.py)
 
 ### Examples of Hydra
 
@@ -114,8 +122,10 @@ In addition, integration modules are available for the following libraries, prov
 * [Mozilla Voice STT](https://github.com/mozilla/DeepSpeech)
 * [neptune.ai](https://neptune.ai)
 * [OptGBM: A scikit-learn compatible LightGBM estimator with Optuna](https://github.com/Y-oHr-N/OptGBM)
+* [Optuna-distributed](https://github.com/xadrianzetx/optuna-distributed)
 * [PyKEEN](https://github.com/pykeen/pykeen)
 * [RL Baselines Zoo](https://github.com/DLR-RM/rl-baselines3-zoo)
+* [Hyperparameter Optimization for Machine Learning, code repository for online course](https://github.com/solegalli/hyperparameter-optimization)
 
 PRs to add additional projects welcome!
 

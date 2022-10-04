@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.6, 3.7, 3.8, 3.9]
+        python-version: ['3.7', '3.8', '3.9', '3.10']
 
     steps:
     - uses: actions/checkout@v2
@@ -42,6 +42,7 @@ jobs:
         OMP_NUM_THREADS: 1
     - name: Run multi-node examples
       run: |
+        export OMPI_MCA_rmaps_base_oversubscribe=yes
         STORAGE_URL=sqlite:///example.db
         for file in `find chainer -name 'chainermn_*.py'`
         do

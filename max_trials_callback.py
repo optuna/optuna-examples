@@ -18,8 +18,8 @@ from optuna.trial import TrialState
 
 def objective(trial):
     sleep(1)
-    x = trial.suggest_uniform("x", 0, 10)
-    return x ** 2
+    x = trial.suggest_float("x", 0, 10)
+    return x**2
 
 
 if __name__ == "__main__":

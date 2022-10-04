@@ -1,5 +1,5 @@
 botorch
-thop
+fvcore
 torch
 torchaudio
 torchvision

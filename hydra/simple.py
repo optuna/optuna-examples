@@ -16,12 +16,12 @@ from omegaconf import DictConfig
 import hydra
 
 
-@hydra.main(config_path="conf", config_name="config")
+@hydra.main(version_base=None, config_path="conf", config_name="config")
 def objective(cfg: DictConfig) -> float:
     x: float = cfg.x
     y: float = cfg.y
     z: int = cfg.z
-    return x ** 2 + y ** 2 + z
+    return x**2 + y**2 + z
 
 
 if __name__ == "__main__":

@@ -16,15 +16,15 @@ and view the optimization results at http://127.0.0.1:5000.
 """
 
 import optuna
+from optuna.integration.mlflow import MLflowCallback
 
-from keras.backend import clear_session
-from keras.layers import Dense
-from keras.models import Sequential
-from keras.optimizers import SGD
-import mlflow
 from sklearn.datasets import load_wine
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+from tensorflow.keras.backend import clear_session
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.optimizers import SGD
 
 
 TEST_SIZE = 0.25
@@ -51,18 +51,11 @@ def create_model(num_features, trial):
     model.add(Dense(1, kernel_initializer="normal", activation="linear"))
 
     optimizer = SGD(
-        lr=trial.suggest_float("lr", 1e-5, 1e-1, log=True),
+        learning_rate=trial.suggest_float("learning_rate", 1e-5, 1e-1, log=True),
         momentum=trial.suggest_float("momentum", 0.0, 1.0),
     )
     model.compile(loss="mean_squared_error", optimizer=optimizer)
     return model
-
-
-def mlflow_callback(study, trial):
-    trial_value = trial.value if trial.value is not None else float("nan")
-    with mlflow.start_run(run_name=study.study_name):
-        mlflow.log_params(trial.params)
-        mlflow.log_metrics({"mean_squared_error": trial_value})
 
 
 def objective(trial):
@@ -82,8 +75,9 @@ def objective(trial):
 
 
 if __name__ == "__main__":
+    mlflc = MLflowCallback(metric_name="mean_squared_error")
     study = optuna.create_study()
-    study.optimize(objective, n_trials=100, timeout=600, callbacks=[mlflow_callback])
+    study.optimize(objective, n_trials=100, timeout=600, callbacks=[mlflc])
 
     print("Number of finished trials: {}".format(len(study.trials)))
 

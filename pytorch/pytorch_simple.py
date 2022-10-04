@@ -1,7 +1,7 @@
 """
 Optuna example that optimizes multi-layer perceptrons using PyTorch.
 
-In this example, we optimize the validation accuracy of hand-written digit recognition using
+In this example, we optimize the validation accuracy of fashion product recognition using
 PyTorch and FashionMNIST. We optimize the neural network architecture as well as the optimizer
 configuration. As it is too time consuming to use the whole FashionMNIST dataset,
 we here use a small subset of it.
@@ -26,7 +26,6 @@ BATCHSIZE = 128
 CLASSES = 10
 DIR = os.getcwd()
 EPOCHS = 10
-LOG_INTERVAL = 10
 N_TRAIN_EXAMPLES = BATCHSIZE * 30
 N_VALID_EXAMPLES = BATCHSIZE * 10
 

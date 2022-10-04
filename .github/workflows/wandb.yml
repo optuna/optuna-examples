@@ -1,12 +1,12 @@
-name: lightgbm
+name: wandb
 
 on:
   schedule:
     - cron: '0 15 * * *'
   pull_request:
     paths:
-      - 'lightgbm/**'
-      - '.github/workflows/lightgbm.yml'
+      - 'wandb/**'
+      - '.github/workflows/wandb.yml'
 
 jobs:
   examples:
@@ -25,20 +25,14 @@ jobs:
     - name: Install (Python)
       run: |
         python -m pip install --upgrade pip
-        pip install --progress-bar off -U setuptools
+        pip install --progress-bar off -U setuptools wheel
         pip install git+https://github.com/optuna/optuna.git
         python -c 'import optuna'
 
-        pip install -r lightgbm/requirements.txt
-    - name: Run LightGBM examples
+        pip install -r wandb/requirements.txt
+    - name: Run examples
       run: |
-        python lightgbm/lightgbm_simple.py
-        python lightgbm/lightgbm_integration.py
-      env:
-        OMP_NUM_THREADS: 1
-    - name: Run LightGBM Tuner examples
-      run: |
-        python lightgbm/lightgbm_tuner_simple.py
-        python lightgbm/lightgbm_tuner_cv.py
+        wandb offline
+        python wandb/wandb_integration.py
       env:
         OMP_NUM_THREADS: 1

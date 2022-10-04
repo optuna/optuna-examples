@@ -1,8 +1,8 @@
 """
 Optuna example that demonstrates a pruner for Chainer.
 
-In this example, we optimize the hyperparameters of a neural network for hand-written
-digit recognition in terms of validation loss. The network is implemented by Chainer and
+In this example, we optimize the hyperparameters of a neural network for fashion
+product recognition in terms of validation loss. The network is implemented by Chainer and
 evaluated by FashionMNIST dataset. Throughout the training of neural networks, a pruner observes
 intermediate results and stops unpromising trials.
 

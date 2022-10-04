@@ -1,9 +1,10 @@
 mpi4py
 plotly
 pytorch-ignite
-pytorch-lightning>=1.0.2
+# todo(nzw0301): Remove the upper constraint https://github.com/optuna/optuna/issues/3418.
+pytorch-lightning>=1.5.0,<1.6.0
 skorch
-torch==1.8.0
-torchvision==0.9.0
-torchaudio==0.8.0
+torch==1.11.0
+torchvision==0.12.0
+torchaudio==0.11.0
 optuna

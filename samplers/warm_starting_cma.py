@@ -15,7 +15,7 @@ import optuna
 def sphere(trial):
     x = trial.suggest_float("x", -15, 15)
     y = trial.suggest_float("y", -15, 15)
-    return x ** 2 + y ** 2
+    return x**2 + y**2
 
 
 # 2-dimensional box-constrained sphere function
