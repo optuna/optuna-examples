@@ -14,6 +14,7 @@ To run this example:
 import optuna
 
 from dask.distributed import Client
+from dask.distributed import wait
 from sklearn.datasets import load_digits
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
@@ -38,7 +39,12 @@ if __name__ == "__main__":
 
     with Client() as client:
         print(f"Dask dashboard is available at {client.dashboard_link}")
-        study = optuna.integration.dask.create_study(direction="maximize")
-        study.optimize(objective, n_trials=100)
-
+        storage = optuna.integration.dask.DaskStorage()
+        study = optuna.create_study(storage=storage, direction="maximize")
+        # Submit 10 different optimization tasks, where each task runs 7 optimization trials
+        # for a total of 70 trials in all
+        futures = [
+            client.submit(study.optimize, objective, n_trials=7, pure=False) for _ in range(10)
+        ]
+        wait(futures)
         print(f"Best params: {study.best_params}")
