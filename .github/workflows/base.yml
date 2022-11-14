@@ -11,7 +11,7 @@ on:
 
 jobs:
   examples:
-
+    if: (github.event_name == 'schedule' && github.repository == 'optuna/optuna-examples') || (github.event_name != 'schedule')
     runs-on: ubuntu-latest
     strategy:
       matrix:
