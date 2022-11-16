@@ -7,12 +7,22 @@ We optimize the neural network architecture as well as the optimizer configurati
 As it is too time consuming to use the whole FashionMNIST dataset, we
 here use a small subset of it.
 
-You can execute this example with mpirun command as follows:
-    $ mpirun -n 2 python pytorch_distributed_simple.py
+You can execute this example with torchrun command as follows:
+    $ torchrun (--master_addr MASTER_ADDR --master_port MASTER_PORT --nnodes NNODES | --standalone) \
+    $    --nproc_per_node (cpu|gpu|n) python pytorch_distributed_simple.py
 
-Please note that you need to install PyTorch from source if you switch the communication backend
-of torch.distributed to "mpi". Please refer to the following document for further details:
-https://pytorch.org/tutorials/intermediate/dist_tuto.html#communication-backends
+For example, if you want to execute this example by multiple GPUs on a single node, the command:
+    $ torchrun --standalone --nproc_per_node gpu python pytorch_distributed_simple.py
+
+will use all gpu in the single node.
+
+If you want to execute this example by multiple nodes, the command could be:
+    $ torchrun --master_addr MASTER_ADDR --master_port MASTER_PORT --nnodes N --nproc_per_node 1
+      env OMP_NUM_THREADS=CPU_COUNT  python pytorch_distributed_simple.py
+
+Please refer to `torchrun` document for further details:
+
+https://pytorch.org/docs/stable/elastic/run.html
 """
 
 import os
@@ -38,7 +48,7 @@ opener.addheaders = [("User-agent", "Mozilla/5.0")]
 urllib.request.install_opener(opener)
 
 
-DEVICE = torch.device("cpu")
+DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 BATCHSIZE = 128
 CLASSES = 10
 DIR = os.getcwd()
@@ -151,23 +161,7 @@ def objective(single_trial):
 
 
 if __name__ == "__main__":
-    # Set environmental variables required by torch.distributed.
-    world_size = os.environ.get("OMPI_COMM_WORLD_SIZE")
-    if world_size is None:
-        world_size = os.environ.get("PMI_SIZE")
-    if world_size is None:
-        raise RuntimeError("Neither MPICH nor OpenMPI is avaliable.")
-    os.environ["WORLD_SIZE"] = str(world_size)
-
-    rank = os.environ.get("OMPI_COMM_WORLD_RANK")
-    if rank is None:
-        rank = os.environ.get("PMI_RANK")
-    os.environ["RANK"] = str(rank)
-
-    os.environ["MASTER_ADDR"] = "127.0.0.1"
-    os.environ["MASTER_PORT"] = "20000"
-
-    dist.init_process_group("gloo")
+    dist.init_process_group(backend="nccl" if torch.cuda.is_available() else "gloo")
     rank = dist.get_rank()
     if rank == 0:
         # Download dataset before starting the optimization.
