@@ -1,4 +1,5 @@
 dm-haiku
+jax<0.3.25
 numpy
 optax
 tensorflow
