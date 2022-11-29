@@ -97,7 +97,7 @@ def get_mnist():
 
 
 def objective(single_trial):
-    trial = optuna.integration.TorchDistributedTrial(single_trial)
+    trial = optuna.integration.TorchDistributedTrial(single_trial, device=DEVICE)
 
     # Generate the model.
     model = DDP(define_model(trial).to(DEVICE))
@@ -160,15 +160,24 @@ if __name__ == "__main__":
     os.environ["WORLD_SIZE"] = str(world_size)
 
     rank = os.environ.get("OMPI_COMM_WORLD_RANK")
+    local_rank = os.environ.get("OMPI_COMM_WORLD_LOCAL_RANK")
     if rank is None:
         rank = os.environ.get("PMI_RANK")
+        perhost = os.environ.get("I_MPI_PERHOST")
+        local_rank = int(rank) % int(perhost)
     os.environ["RANK"] = str(rank)
 
     os.environ["MASTER_ADDR"] = "127.0.0.1"
     os.environ["MASTER_PORT"] = "20000"
 
-    dist.init_process_group("gloo")
+    if torch.cuda.is_available():
+        dist.init_process_group("nccl")
+        DEVICE =  torch.device(f"cuda:{local_rank}")
+    else:
+        dist.init_process_group("gloo")
+
     rank = dist.get_rank()
+
     if rank == 0:
         # Download dataset before starting the optimization.
         datasets.FashionMNIST(DIR, train=True, download=True)
