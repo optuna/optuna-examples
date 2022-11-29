@@ -174,7 +174,7 @@ if __name__ == "__main__":
 
     if torch.cuda.is_available():
         dist.init_process_group("nccl")
-        DEVICE =  torch.device(f"cuda:{local_rank}")
+        DEVICE = torch.device(f"cuda:{local_rank}")
     else:
         dist.init_process_group("gloo")
 
