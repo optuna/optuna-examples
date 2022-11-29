@@ -180,7 +180,7 @@ if __name__ == "__main__":
 
     rank = dist.get_rank()
 
-    if rank == 0:
+    if local_rank == 0:
         # Download dataset before starting the optimization.
         datasets.FashionMNIST(DIR, train=True, download=True)
     dist.barrier()
