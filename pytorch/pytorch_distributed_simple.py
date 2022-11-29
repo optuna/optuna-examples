@@ -167,8 +167,10 @@ if __name__ == "__main__":
         local_rank = int(rank) % int(perhost)
     os.environ["RANK"] = str(rank)
 
-    os.environ["MASTER_ADDR"] = "127.0.0.1"
-    os.environ["MASTER_PORT"] = "20000"
+    if os.environ("MASTER_ADDR") is None:
+        os.environ["MASTER_ADDR"] = "127.0.0.1"
+    if os.environ("MASTER_PORT") is None:
+        os.environ["MASTER_PORT"] = "20000"
 
     if torch.cuda.is_available():
         dist.init_process_group("nccl")
