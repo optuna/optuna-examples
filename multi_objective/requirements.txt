@@ -1,5 +1,5 @@
 botorch>=0.4.0,< 0.8.0
 fvcore
-torch==1.11.0
-torchaudio==0.11.0
-torchvision==0.12.0
+torch
+torchaudio
+torchvision
