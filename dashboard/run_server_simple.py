@@ -8,7 +8,7 @@ def objective(trial):
     return x**2 + y
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     storage = optuna.storages.InMemoryStorage()
     study = optuna.create_study(storage=storage, study_name="dashboard-example")
     study.optimize(objective, n_trials=100)
