@@ -93,7 +93,7 @@ def get_mnist():
 
 
 def objective(single_trial, device_id):
-    device = torch.device('cuda', device_id)
+    device = torch.device("cuda", device_id)
     trial = optuna.integration.TorchDistributedTrial(single_trial, device=device)
 
     # Generate the model.
@@ -142,14 +142,14 @@ def objective(single_trial, device_id):
 
         # Handle pruning based on the intermediate value.
         if trial.should_prune():
-            raise optuna.exceptions.TrialPruned(f'Trial was pruned at epoch {epoch}.')
+            raise optuna.exceptions.TrialPruned(f"Trial was pruned at epoch {epoch}.")
 
     return accuracy
 
 
 def setup(rank, world_size):
-    os.environ['MASTER_ADDR'] = 'localhost'
-    os.environ['MASTER_PORT'] = '12355'
+    os.environ["MASTER_ADDR"] = "localhost"
+    os.environ["MASTER_PORT"] = "12355"
     dist.init_process_group("nccl", rank=rank, world_size=world_size)
 
 
@@ -186,7 +186,7 @@ if __name__ == "__main__":
     datasets.FashionMNIST(DIR, train=True, download=True)
 
     study = optuna.create_study(
-        storage='sqlite:///example.db',
+        storage="sqlite:///example.db",
         direction="maximize",
         study_name="pytorch_ddp",
         load_if_exists=True,
