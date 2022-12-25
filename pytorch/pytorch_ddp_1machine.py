@@ -17,17 +17,17 @@ of torch.distributed to "mpi". Please refer to the following document for furthe
 https://pytorch.org/tutorials/intermediate/dist_tuto.html#communication-backends
 """
 
-import os
 from functools import partial
+import os
 
 import optuna
 from optuna.trial import TrialState
 import torch
 import torch.distributed as dist
+import torch.multiprocessing as mp
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.nn.parallel import DistributedDataParallel as DDP
-import torch.multiprocessing as mp
 import torch.optim as optim
 import torch.utils.data
 from torchvision import datasets
