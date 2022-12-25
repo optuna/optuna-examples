@@ -3,7 +3,8 @@ Optuna example that optimizes multi-layer perceptrons using PyTorch distributed.
 
 In this example, we optimize the validation accuracy of fashion product recognition using
 PyTorch distributed data parallel and FashionMNIST.
-This example is dedicated to a use case of using one machine with multiple GPUs where no MPI is needed.
+This example is dedicated to a use case of using one machine with multiple GPUs
+where no MPI is needed.
 We optimize the neural network architecture as well as the optimizer configuration.
 As it is too time consuming to use the whole FashionMNIST dataset, we
 here use a small subset of it.
