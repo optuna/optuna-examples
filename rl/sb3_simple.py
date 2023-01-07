@@ -1,6 +1,6 @@
 """ Optuna example that optimizes the hyperparameters of
 a reinforcement learning agent using A2C implementation from Stable-Baselines3
-on a OpenAI Gym environment.
+on an OpenAI Gym environment.
 
 This is a simplified version of what can be found in https://github.com/DLR-RM/rl-baselines3-zoo.
 
@@ -17,6 +17,7 @@ from optuna.pruners import MedianPruner
 from optuna.samplers import TPESampler
 from stable_baselines3 import A2C
 from stable_baselines3.common.callbacks import EvalCallback
+from stable_baselines3.common.monitor import Monitor
 import torch
 import torch.nn as nn
 
@@ -48,7 +49,7 @@ def sample_a2c_params(trial: optuna.Trial) -> Dict[str, Any]:
     net_arch = trial.suggest_categorical("net_arch", ["tiny", "small"])
     activation_fn = trial.suggest_categorical("activation_fn", ["tanh", "relu"])
 
-    # Display true values
+    # Display true values.
     trial.set_user_attr("gamma_", gamma)
     trial.set_user_attr("gae_lambda_", gae_lambda)
     trial.set_user_attr("n_steps", n_steps)
@@ -103,7 +104,7 @@ class TrialEvalCallback(EvalCallback):
             super()._on_step()
             self.eval_idx += 1
             self.trial.report(self.last_mean_reward, self.eval_idx)
-            # Prune trial if need
+            # Prune trial if need.
             if self.trial.should_prune():
                 self.is_pruned = True
                 return False
@@ -113,14 +114,13 @@ class TrialEvalCallback(EvalCallback):
 def objective(trial: optuna.Trial) -> float:
 
     kwargs = DEFAULT_HYPERPARAMS.copy()
-    # Sample hyperparameters
+    # Sample hyperparameters.
     kwargs.update(sample_a2c_params(trial))
-    # Create the RL model
+    # Create the RL model.
     model = A2C(**kwargs)
-    # Create env used for evaluation
-    eval_env = gym.make(ENV_ID)
-    # Create the callback that will periodically evaluate
-    # and report the performance
+    # Create env used for evaluation.
+    eval_env = Monitor(gym.make(ENV_ID))
+    # Create the callback that will periodically evaluate and report the performance.
     eval_callback = TrialEvalCallback(
         eval_env, trial, n_eval_episodes=N_EVAL_EPISODES, eval_freq=EVAL_FREQ, deterministic=True
     )
@@ -129,15 +129,15 @@ def objective(trial: optuna.Trial) -> float:
     try:
         model.learn(N_TIMESTEPS, callback=eval_callback)
     except AssertionError as e:
-        # Sometimes, random hyperparams can generate NaN
+        # Sometimes, random hyperparams can generate NaN.
         print(e)
         nan_encountered = True
     finally:
-        # Free memory
+        # Free memory.
         model.env.close()
         eval_env.close()
 
-    # Tell the optimizer that the trial failed
+    # Tell the optimizer that the trial failed.
     if nan_encountered:
         return float("nan")
 
@@ -148,11 +148,11 @@ def objective(trial: optuna.Trial) -> float:
 
 
 if __name__ == "__main__":
-    # Set pytorch num threads to 1 for faster training
+    # Set pytorch num threads to 1 for faster training.
     torch.set_num_threads(1)
 
     sampler = TPESampler(n_startup_trials=N_STARTUP_TRIALS)
-    # Do not prune before 1/3 of the max budget is used
+    # Do not prune before 1/3 of the max budget is used.
     pruner = MedianPruner(n_startup_trials=N_STARTUP_TRIALS, n_warmup_steps=N_EVALUATIONS // 3)
 
     study = optuna.create_study(sampler=sampler, pruner=pruner, direction="maximize")
