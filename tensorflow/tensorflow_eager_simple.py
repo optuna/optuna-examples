@@ -23,8 +23,8 @@ opener.addheaders = [("User-agent", "Mozilla/5.0")]
 urllib.request.install_opener(opener)
 
 
-if version.parse(tf.__version__) < version.parse("2.0.0"):
-    raise RuntimeError("tensorflow>=2.0.0 is required for this example.")
+if version.parse(tf.__version__) < version.parse("2.11.0"):
+    raise RuntimeError("tensorflow>=2.11.0 is required for this example.")
 
 N_TRAIN_EXAMPLES = 3000
 N_VALID_EXAMPLES = 1000
@@ -63,7 +63,7 @@ def create_optimizer(trial):
         kwargs["learning_rate"] = trial.suggest_float(
             "rmsprop_learning_rate", 1e-5, 1e-1, log=True
         )
-        kwargs["decay"] = trial.suggest_float("rmsprop_decay", 0.85, 0.99)
+        kwargs["weight_decay"] = trial.suggest_float("rmsprop_weight_decay", 0.85, 0.99)
         kwargs["momentum"] = trial.suggest_float("rmsprop_momentum", 1e-5, 1e-1, log=True)
     elif optimizer_selected == "Adam":
         kwargs["learning_rate"] = trial.suggest_float("adam_learning_rate", 1e-5, 1e-1, log=True)
