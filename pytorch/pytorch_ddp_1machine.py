@@ -10,7 +10,7 @@ As it is too time consuming to use the whole FashionMNIST dataset, we
 here use a small subset of it.
 
 You can execute this example with a command as follows:
-    $ python pytorch_distributed_simple.py
+    $ python pytorch_ddp_1machine.py
 
 """
 
