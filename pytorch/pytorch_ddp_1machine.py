@@ -9,12 +9,9 @@ We optimize the neural network architecture as well as the optimizer configurati
 As it is too time consuming to use the whole FashionMNIST dataset, we
 here use a small subset of it.
 
-You can execute this example with mpirun command as follows:
-    $ mpirun -n 2 python pytorch_distributed_simple.py
+You can execute this example with a command as follows:
+    $ python pytorch_distributed_simple.py
 
-Please note that you need to install PyTorch from source if you switch the communication backend
-of torch.distributed to "mpi". Please refer to the following document for further details:
-https://pytorch.org/tutorials/intermediate/dist_tuto.html#communication-backends
 """
 
 from functools import partial
