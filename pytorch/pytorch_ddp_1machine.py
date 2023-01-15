@@ -9,11 +9,12 @@ We optimize the neural network architecture as well as the optimizer configurati
 As it is too time consuming to use the whole FashionMNIST dataset, we
 here use a small subset of it.
 
-You can execute this example with a command as follows:
-    $ python pytorch_ddp_1machine.py
+You can execute this example with a command as follows.
+Device ids such GPU ids can be specified with --device_ids argument:
+    $ python pytorch_ddp_1machine.py --device_ids 1 2
 
 """
-
+import argparse
 from functools import partial
 import os
 
@@ -32,7 +33,6 @@ from torchvision import transforms
 
 
 # Arbitrary GPUs can be selected
-DEVICE_IDS = [0, 1]
 BATCHSIZE = 128
 CLASSES = 10
 DIR = os.getcwd()
@@ -178,6 +178,18 @@ def run_optimize(rank, study, world_size, device_ids):
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description="PyTorch distributed data-parallel training example."
+    )
+    parser.add_argument(
+        "--device_ids",
+        "-d",
+        nargs="+",
+        type=int,
+        default=[0],
+        help="Specify device_ids (i.e. GPU IDs)",
+    )
+    args = parser.parse_args()
 
     # Download dataset before starting the optimization.
     datasets.FashionMNIST(DIR, train=True, download=True)
@@ -189,10 +201,10 @@ if __name__ == "__main__":
         load_if_exists=True,
     )
 
-    world_size = len(DEVICE_IDS)
+    world_size = len(args.device_ids)
     mp.spawn(
         run_optimize,
-        args=(study, world_size, DEVICE_IDS),
+        args=(study, world_size, args.device_ids),
         nprocs=world_size,
         join=True,
     )
