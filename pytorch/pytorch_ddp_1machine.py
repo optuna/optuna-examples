@@ -87,15 +87,14 @@ def get_mnist():
         shuffle=False,
     )
 
-    return train_loader, valid_loader, train_sampler, valid_sampler
+    return train_loader, valid_loader
 
 
 def objective(single_trial, device_id):
-    device = torch.device("cuda", device_id)
-    trial = optuna.integration.TorchDistributedTrial(single_trial, device=device)
+    trial = optuna.integration.TorchDistributedTrial(single_trial, device=device_id)
 
     # Generate the model.
-    model = DDP(define_model(trial).to(device), device_ids=[device])
+    model = DDP(define_model(trial).to(device_id), device_ids=[device_id])
 
     # Generate the optimizers.
     optimizer_name = trial.suggest_categorical("optimizer", ["Adam", "RMSprop", "SGD"])
@@ -103,16 +102,16 @@ def objective(single_trial, device_id):
     optimizer = getattr(optim, optimizer_name)(model.parameters(), lr=lr)
 
     # Get the FashionMNIST dataset.
-    train_loader, valid_loader, train_sampler, valid_sampler = get_mnist()
+    train_loader, valid_loader = get_mnist()
 
     accuracy = 0
     # Training of the model.
     for epoch in range(EPOCHS):
         model.train()
         # Shuffle train dataset.
-        train_sampler.set_epoch(epoch)
+        train_loader.sampler.set_epoch(epoch)
         for data, target in train_loader:
-            data, target = data.view(data.size(0), -1).to(device), target.to(device)
+            data, target = data.view(data.size(0), -1).to(device_id), target.to(device_id)
 
             optimizer.zero_grad()
             output = model(data)
@@ -125,13 +124,13 @@ def objective(single_trial, device_id):
         correct = 0
         with torch.no_grad():
             for data, target in valid_loader:
-                data, target = data.view(data.size(0), -1).to(device), target.to(device)
+                data, target = data.view(data.size(0), -1).to(device_id), target.to(device_id)
                 output = model(data)
                 # Get the index of the max log-probability.
                 pred = output.argmax(dim=1, keepdim=True)
                 correct += pred.eq(target.view_as(pred)).sum().item()
 
-        correct_tensor = torch.tensor([correct], dtype=torch.int).to(device)
+        correct_tensor = torch.tensor([correct], dtype=torch.int).to(device_id)
         dist.all_reduce(correct_tensor)
         total_correct = correct_tensor.item()
         accuracy = total_correct / len(valid_loader.dataset)
