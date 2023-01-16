@@ -12,6 +12,7 @@ here use a small subset of it.
 You can execute this example with a command as follows.
 Device ids such GPU ids can be specified with --device_ids argument:
     $ python pytorch_ddp_1machine.py --device_ids 1 2
+Otherwise, CPU will be used as default.
 
 """
 import argparse
@@ -94,7 +95,9 @@ def objective(single_trial, device_id):
     trial = optuna.integration.TorchDistributedTrial(single_trial, device=device_id)
 
     # Generate the model.
-    model = DDP(define_model(trial).to(device_id), device_ids=[device_id])
+    model = DDP(
+        define_model(trial).to(device_id), device_ids=None if device_id == "cpu" else [device_id]
+    )
 
     # Generate the optimizers.
     optimizer_name = trial.suggest_categorical("optimizer", ["Adam", "RMSprop", "SGD"])
@@ -144,10 +147,11 @@ def objective(single_trial, device_id):
     return accuracy
 
 
-def setup(rank, world_size):
+def setup(backend, rank, world_size):
     os.environ["MASTER_ADDR"] = "localhost"
     os.environ["MASTER_PORT"] = "12355"
-    dist.init_process_group("nccl", rank=rank, world_size=world_size)
+    dist.init_process_group(backend, rank=rank, world_size=world_size)
+    print(f"Using {backend} backend.")
 
 
 def cleanup():
@@ -155,11 +159,15 @@ def cleanup():
 
 
 def run_optimize(rank, study, world_size, device_ids):
-    devi = device_ids[rank]
+    devi = device_ids if device_ids == "cpu" else device_ids[rank]
     print(f"Running basic DDP example on rank {rank} device {devi}.")
 
     # Set environmental variables required by torch.distributed.
-    setup(rank, world_size)
+    backend = "gloo"
+    if torch.distributed.is_nccl_available():
+        if devi != "cpu":
+            backend = "nccl"
+    setup(backend, rank, world_size)
 
     if rank == 0:
         study.optimize(
@@ -185,11 +193,15 @@ if __name__ == "__main__":
         "--device_ids",
         "-d",
         nargs="+",
-        type=int,
-        default=[0],
-        help="Specify device_ids (i.e. GPU IDs)",
+        type=str,
+        default=["cpu"],
+        help="Specify device_ids if using GPUs.",
     )
     args = parser.parse_args()
+    if len(args.device_ids) == 1 and args.device_ids[0].lower() == "cpu":
+        device_ids = "cpu"
+    else:
+        device_ids = [int(i) for i in args.device_ids]
 
     # Download dataset before starting the optimization.
     datasets.FashionMNIST(DIR, train=True, download=True)
@@ -201,10 +213,10 @@ if __name__ == "__main__":
         load_if_exists=True,
     )
 
-    world_size = len(args.device_ids)
+    world_size = len(device_ids) if isinstance(device_ids, list) else 1
     mp.spawn(
         run_optimize,
-        args=(study, world_size, args.device_ids),
+        args=(study, world_size, device_ids),
         nprocs=world_size,
         join=True,
     )
