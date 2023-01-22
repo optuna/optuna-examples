@@ -14,6 +14,9 @@ Device ids such GPU ids can be specified with --device_ids argument:
     $ python pytorch_ddp_1machine.py --device_ids 1 2
 Otherwise, CPU will be used as default.
 
+Please note that this example only works with optuna >= 3.1.0.
+If you wish to use optuna < 3.1.0, you would need to pass
+`device=device_id` in TorchDistributedTrial.
 """
 import argparse
 from functools import partial
@@ -158,7 +161,7 @@ def cleanup():
     dist.destroy_process_group()
 
 
-def run_optimize(rank, study, world_size, device_ids):
+def run_optimize(rank, world_size, device_ids, return_dict):
     devi = device_ids if device_ids == "cpu" else device_ids[rank]
     print(f"Running basic DDP example on rank {rank} device {devi}.")
 
@@ -170,11 +173,13 @@ def run_optimize(rank, study, world_size, device_ids):
     setup(backend, rank, world_size)
 
     if rank == 0:
+        study = optuna.create_study(direction="maximize")
         study.optimize(
             partial(objective, device_id=devi),
             n_trials=N_TRIALS,
             timeout=300,
         )
+        return_dict['study'] = study
     else:
         for _ in range(N_TRIALS):
             try:
@@ -206,20 +211,16 @@ if __name__ == "__main__":
     # Download dataset before starting the optimization.
     datasets.FashionMNIST(DIR, train=True, download=True)
 
-    study = optuna.create_study(
-        storage="sqlite:///example.db",
-        direction="maximize",
-        study_name="pytorch_ddp",
-        load_if_exists=True,
-    )
-
     world_size = len(device_ids) if isinstance(device_ids, list) else 1
+    manager = mp.Manager()
+    return_dict = manager.dict()
     mp.spawn(
         run_optimize,
-        args=(study, world_size, device_ids),
+        args=(world_size, device_ids, return_dict),
         nprocs=world_size,
         join=True,
     )
+    study = return_dict['study']
 
     pruned_trials = study.get_trials(deepcopy=False, states=[TrialState.PRUNED])
     complete_trials = study.get_trials(deepcopy=False, states=[TrialState.COMPLETE])
