@@ -179,7 +179,7 @@ def run_optimize(rank, world_size, device_ids, return_dict):
             n_trials=N_TRIALS,
             timeout=300,
         )
-        return_dict['study'] = study
+        return_dict["study"] = study
     else:
         for _ in range(N_TRIALS):
             try:
@@ -220,7 +220,7 @@ if __name__ == "__main__":
         nprocs=world_size,
         join=True,
     )
-    study = return_dict['study']
+    study = return_dict["study"]
 
     pruned_trials = study.get_trials(deepcopy=False, states=[TrialState.PRUNED])
     complete_trials = study.get_trials(deepcopy=False, states=[TrialState.COMPLETE])
