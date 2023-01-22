@@ -92,7 +92,7 @@ def get_mnist():
 
 
 def objective(single_trial, device_id):
-    trial = optuna.integration.TorchDistributedTrial(single_trial, device=device_id)
+    trial = optuna.integration.TorchDistributedTrial(single_trial)
 
     # Generate the model.
     model = DDP(
