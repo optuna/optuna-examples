@@ -36,7 +36,6 @@ from torchvision import datasets
 from torchvision import transforms
 
 
-# Arbitrary GPUs can be selected
 BATCHSIZE = 128
 CLASSES = 10
 DIR = os.getcwd()
@@ -198,15 +197,18 @@ if __name__ == "__main__":
         "--device_ids",
         "-d",
         nargs="+",
-        type=str,
-        default=["cpu"],
+        type=int,
+        default=[0],
         help="Specify device_ids if using GPUs.",
     )
+    parser.add_argument(
+        "--no-cuda", action="store_true", default=False, help="Disables CUDA training."
+    )
     args = parser.parse_args()
-    if len(args.device_ids) == 1 and args.device_ids[0].lower() == "cpu":
+    if args.no_cuda:
         device_ids = "cpu"
     else:
-        device_ids = [int(i) for i in args.device_ids]
+        device_ids = args.device_ids
 
     # Download dataset before starting the optimization.
     datasets.FashionMNIST(DIR, train=True, download=True)
