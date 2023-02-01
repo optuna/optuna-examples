@@ -78,7 +78,7 @@ def create_classifier(trial):
         hidden_units=hidden_units,
         model_dir=model_dir,
         n_classes=10,
-        optimizer=lambda: tf.keras.optimizers.Adam(learning_rate=0.01),
+        optimizer=lambda: tf.keras.optimizers.legacy.Adam(learning_rate=0.01),
         config=config,
     )
 

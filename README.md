@@ -38,6 +38,12 @@ This page contains a list of example codes written with Optuna.
 * [XGBoost](./xgboost/xgboost_simple.py)
 
 
+### An example of Optuna Dashboard
+
+The following example demonstrates how to use [Optuna Dashboard](https://github.com/optuna/optuna-dashboard).
+
+* [Starting Optuna Dashboard with in-memory storage](./dashboard/run_server_simple.py)
+
 ### An example where an objective function uses additional arguments
 
 The following example demonstrates how to implement an objective function that uses additional arguments other than `trial`.
