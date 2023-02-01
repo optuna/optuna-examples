@@ -27,7 +27,6 @@ def biased_sphere(trial):
 
 
 if __name__ == "__main__":
-
     # Perform optimization on a source task
     cma = optuna.samplers.CmaEsSampler()
     source_study = optuna.create_study(sampler=cma)

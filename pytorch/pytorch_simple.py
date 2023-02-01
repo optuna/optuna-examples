@@ -67,7 +67,6 @@ def get_mnist():
 
 
 def objective(trial):
-
     # Generate the model.
     model = define_model(trial).to(DEVICE)
 

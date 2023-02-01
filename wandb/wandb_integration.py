@@ -24,7 +24,6 @@ from sklearn.model_selection import train_test_split
 
 
 def objective(trial):
-
     data = load_iris()
     x_train, x_valid, y_train, y_valid = train_test_split(data["data"], data["target"])
 

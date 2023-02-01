@@ -38,7 +38,6 @@ VALIDATION_STEPS = 30
 
 
 def train_dataset():
-
     ds = tfds.load("mnist", split=tfds.Split.TRAIN, shuffle_files=True)
     ds = ds.map(lambda x: (tf.cast(x["image"], tf.float32) / 255.0, x["label"]))
     ds = ds.repeat().shuffle(1024).batch(BATCHSIZE)
@@ -48,7 +47,6 @@ def train_dataset():
 
 
 def eval_dataset():
-
     ds = tfds.load("mnist", split=tfds.Split.TEST, shuffle_files=False)
     ds = ds.map(lambda x: (tf.cast(x["image"], tf.float32) / 255.0, x["label"]))
     ds = ds.repeat().batch(BATCHSIZE)
@@ -58,7 +56,6 @@ def eval_dataset():
 
 
 def create_model(trial):
-
     # Hyperparameters to be tuned by Optuna.
     learning_rate = trial.suggest_float("learning_rate", 1e-4, 1e-1, log=True)
     momentum = trial.suggest_float("momentum", 0.0, 1.0)
@@ -119,7 +116,6 @@ def objective(trial):
 
 
 def show_result(study):
-
     pruned_trials = study.get_trials(deepcopy=False, states=[TrialState.PRUNED])
     complete_trials = study.get_trials(deepcopy=False, states=[TrialState.COMPLETE])
 
@@ -139,7 +135,6 @@ def show_result(study):
 
 
 def main():
-
     study = optuna.create_study(
         direction="maximize", pruner=optuna.pruners.MedianPruner(n_startup_trials=2)
     )

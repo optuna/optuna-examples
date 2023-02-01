@@ -36,7 +36,6 @@ def objective(trial):
 
 
 if __name__ == "__main__":
-
     with Client() as client:
         print(f"Dask dashboard is available at {client.dashboard_link}")
         storage = optuna.integration.dask.DaskStorage()
