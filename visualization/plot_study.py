@@ -35,7 +35,6 @@ urllib.request.install_opener(opener)
 
 
 def objective(trial):
-
     fmnist = fetch_openml(name="Fashion-MNIST", version=1)
     classes = list(set(fmnist.target))
 
@@ -68,7 +67,6 @@ def objective(trial):
 
 
 if __name__ == "__main__":
-
     study = optuna.create_study(direction="maximize", pruner=optuna.pruners.MedianPruner())
     study.optimize(objective, n_trials=100, timeout=600)
 

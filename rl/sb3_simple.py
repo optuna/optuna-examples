@@ -87,7 +87,6 @@ class TrialEvalCallback(EvalCallback):
         deterministic: bool = True,
         verbose: int = 0,
     ):
-
         super().__init__(
             eval_env=eval_env,
             n_eval_episodes=n_eval_episodes,
@@ -112,7 +111,6 @@ class TrialEvalCallback(EvalCallback):
 
 
 def objective(trial: optuna.Trial) -> float:
-
     kwargs = DEFAULT_HYPERPARAMS.copy()
     # Sample hyperparameters.
     kwargs.update(sample_a2c_params(trial))

@@ -117,7 +117,6 @@ class FashionMNISTDataModule(pl.LightningDataModule):
 
 
 def objective(trial: optuna.trial.Trial) -> float:
-
     # We optimize the number of layers, hidden units in each layer and dropouts.
     n_layers = trial.suggest_int("n_layers", 1, 3)
     dropout = trial.suggest_float("dropout", 0.2, 0.5)
