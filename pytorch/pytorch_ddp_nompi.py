@@ -161,7 +161,7 @@ def cleanup():
 
 
 def run_optimize(rank, world_size, device_ids, return_dict):
-    devi = device_ids if device_ids == "cpu" else device_ids[rank]
+    devi = "cpu" if len(device_ids) == 0 else device_ids[rank]
     print(f"Running basic DDP example on rank {rank} device {devi}.")
 
     # Set environmental variables required by torch.distributed.
@@ -194,7 +194,7 @@ if __name__ == "__main__":
         description="PyTorch distributed data-parallel training example."
     )
     parser.add_argument(
-        "--device_ids",
+        "--device-ids",
         "-d",
         nargs="+",
         type=int,
@@ -206,14 +206,14 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
     if args.no_cuda:
-        device_ids = "cpu"
+        device_ids = []
     else:
         device_ids = args.device_ids
 
     # Download dataset before starting the optimization.
     datasets.FashionMNIST(DIR, train=True, download=True)
 
-    world_size = len(device_ids) if isinstance(device_ids, list) else 1
+    world_size = max(len(device_ids), 1)
     manager = mp.Manager()
     return_dict = manager.dict()
     mp.spawn(
