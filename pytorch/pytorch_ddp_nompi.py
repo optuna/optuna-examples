@@ -207,9 +207,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--no-cuda", action="store_true", default=False, help="Disables CUDA training."
     )
-    parser.add_argument(
-        "--master-port", type=int, default=12355, help="To specify port number."
-    )
+    parser.add_argument("--master-port", type=int, default=12355, help="To specify port number.")
     args = parser.parse_args()
     if args.no_cuda:
         device_ids = []
