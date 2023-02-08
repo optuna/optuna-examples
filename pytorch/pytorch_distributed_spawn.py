@@ -11,11 +11,11 @@ here use a small subset of it.
 
 You can execute this example with a command as follows.
 Device ids such GPU ids can be specified with --device_ids argument:
-    $ python pytorch_ddp_nompi.py --device_ids 1 2
+    $ python pytorch_distributed_spawn.py --device_ids 1 2
 Otherwise, CPU will be used as default.
 
 To run more than 1 instances on the same machine, different port number must be passed:
-    $ python pytorch_ddp_nompi.py --device_ids 3 --master-port 12356
+    $ python pytorch_distributed_spawn.py --device_ids 3 --master-port 12356
 
 Please note that this example only works with optuna >= 3.1.0.
 If you wish to use optuna < 3.1.0, you would need to pass
