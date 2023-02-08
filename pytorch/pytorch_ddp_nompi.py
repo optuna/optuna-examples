@@ -14,6 +14,9 @@ Device ids such GPU ids can be specified with --device_ids argument:
     $ python pytorch_ddp_nompi.py --device_ids 1 2
 Otherwise, CPU will be used as default.
 
+To run more than 1 instances on the same machine, different port number must be passed:
+    $ python pytorch_ddp_nompi.py --device_ids 3 --master-port 12356
+
 Please note that this example only works with optuna >= 3.1.0.
 If you wish to use optuna < 3.1.0, you would need to pass
 `device=device_id` in TorchDistributedTrial.
@@ -149,9 +152,9 @@ def objective(single_trial, device_id):
     return accuracy
 
 
-def setup(backend, rank, world_size):
+def setup(backend, rank, world_size, master_port):
     os.environ["MASTER_ADDR"] = "localhost"
-    os.environ["MASTER_PORT"] = "12355"
+    os.environ["MASTER_PORT"] = str(master_port)
     dist.init_process_group(backend, rank=rank, world_size=world_size)
     print(f"Using {backend} backend.")
 
@@ -160,7 +163,7 @@ def cleanup():
     dist.destroy_process_group()
 
 
-def run_optimize(rank, world_size, device_ids, return_dict):
+def run_optimize(rank, world_size, device_ids, return_dict, master_port):
     devi = "cpu" if len(device_ids) == 0 else device_ids[rank]
     print(f"Running basic DDP example on rank {rank} device {devi}.")
 
@@ -169,7 +172,7 @@ def run_optimize(rank, world_size, device_ids, return_dict):
     if torch.distributed.is_nccl_available():
         if devi != "cpu":
             backend = "nccl"
-    setup(backend, rank, world_size)
+    setup(backend, rank, world_size, master_port)
 
     if rank == 0:
         study = optuna.create_study(direction="maximize")
@@ -204,6 +207,9 @@ if __name__ == "__main__":
     parser.add_argument(
         "--no-cuda", action="store_true", default=False, help="Disables CUDA training."
     )
+    parser.add_argument(
+        "--master-port", type=int, default=12355, help="To specify port number."
+    )
     args = parser.parse_args()
     if args.no_cuda:
         device_ids = []
@@ -218,7 +224,7 @@ if __name__ == "__main__":
     return_dict = manager.dict()
     mp.spawn(
         run_optimize,
-        args=(world_size, device_ids, return_dict),
+        args=(world_size, device_ids, return_dict, args.master_port),
         nprocs=world_size,
         join=True,
     )
