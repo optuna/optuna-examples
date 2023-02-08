@@ -15,7 +15,6 @@ argument.
 """
 
 import argparse
-import urllib
 
 import optuna
 from optuna.integration import FastAIPruningCallback
@@ -29,14 +28,6 @@ from fastai.vision.all import untar_data
 from fastai.vision.all import URLs
 
 
-# TODO(crcrpar): Remove the below three lines once fastai gets compatible with torchvision v0.9.
-# Register a global custom opener to avoid HTTP Error 403: Forbidden when downloading MNIST.
-# This is a temporary fix until torchvision v0.9 is released.
-opener = urllib.request.build_opener()
-opener.addheaders = [("User-agent", "Mozilla/5.0")]
-urllib.request.install_opener(opener)
-
-
 BATCHSIZE = 128
 EPOCHS = 10
 
@@ -45,7 +36,7 @@ path = untar_data(URLs.MNIST_SAMPLE)
 
 
 def objective(trial):
-    # Data Augmentation
+    # Data Augmentation.
     apply_tfms = trial.suggest_categorical("apply_tfms", [True, False])
     if apply_tfms:
         # MNIST is a hand-written digit dataset. Thus horizontal and vertical flipping are
@@ -76,12 +67,12 @@ def objective(trial):
         data,
         model,
         metrics=[accuracy],
-        # You could as FastAIPruningCallback in the fit function
+        # You could as FastAIPruningCallback in the fit function.
         cbs=FastAIPruningCallback(trial, monitor="accuracy"),
     )
 
     # See https://forums.fast.ai/t/how-to-diable-progress-bar-completely/65249/3
-    # to disable progress bar and logging info
+    # to disable progress bar and logging info.
     with learn.no_bar():
         with learn.no_logging():
             learn.fit(EPOCHS)
