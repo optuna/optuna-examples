@@ -1,6 +1,6 @@
 # Tracking optimization process with [`aim`](https://aimstack.io/)
 
-![aimui]()
+![aimui](https://user-images.githubusercontent.com/7121753/217423402-87c8c728-510b-487c-8a91-550a1e854851.png)
 
 Optuna example that optimizes a classifier configuration for the Iris dataset using
 scikit-learn and records hyperparameters and metrics using aim.
