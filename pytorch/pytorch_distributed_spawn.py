@@ -194,7 +194,7 @@ def run_optimize(rank, world_size, device_ids, return_dict, master_port):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="PyTorch distributed data-parallel training example."
+        description="PyTorch distributed data-parallel training with spawn example."
     )
     parser.add_argument(
         "--device-ids",
