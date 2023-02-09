@@ -11,7 +11,7 @@ here use a small subset of it.
 
 You can execute this example with a command as follows.
 Device ids such GPU ids can be specified with --device_ids argument:
-    $ python pytorch_distributed_spawn.py --device_ids 1 2
+    $ python pytorch_distributed_spawn.py --device-ids 1 2
 Otherwise, CPU will be used as default.
 
 To run more than 1 instances on the same machine, different port number must be passed:
