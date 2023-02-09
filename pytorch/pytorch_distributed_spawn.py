@@ -205,7 +205,7 @@ if __name__ == "__main__":
         help="Specify device_ids if using GPUs.",
     )
     parser.add_argument(
-        "--no-cuda", action="store_true", default=False, help="Disables CUDA training."
+        "--no-cuda", action="store_true", default=False, help="Disable CUDA training."
     )
     parser.add_argument("--master-port", type=int, default=12355, help="Specify port number.")
     args = parser.parse_args()
