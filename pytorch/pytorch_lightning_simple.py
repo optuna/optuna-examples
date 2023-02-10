@@ -68,12 +68,12 @@ class LightningNet(pl.LightningModule):
     def forward(self, data: torch.Tensor) -> torch.Tensor:
         return self.model(data.view(-1, 28 * 28))
 
-    def training_step(self, batch: torch.Tensor, batch_idx: int) -> torch.Tensor:
+    def training_step(self, batch: List[torch.Tensor], batch_idx: int) -> torch.Tensor:
         data, target = batch
         output = self(data)
         return F.nll_loss(output, target)
 
-    def validation_step(self, batch: torch.Tensor, batch_idx: int) -> None:
+    def validation_step(self, batch: List[torch.Tensor], batch_idx: int) -> None:
         data, target = batch
         output = self(data)
         pred = output.argmax(dim=1, keepdim=True)
