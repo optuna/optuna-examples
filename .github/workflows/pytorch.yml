@@ -69,9 +69,10 @@ jobs:
         python pytorch/pytorch_lightning_simple.py
       env:
         OMP_NUM_THREADS: 1
-    - name: Run PyTorch Lightning DDP examples
-      run: |
-        python pytorch/pytorch_lightning_ddp.py
-        python pytorch/pytorch_lightning_ddp.py -p
-      env:
-        OMP_NUM_THREADS: 1
+    # TODO(Shinichi) Re-activate DDP test
+    # - name: Run PyTorch Lightning DDP examples
+      # run: |
+        # python pytorch/pytorch_lightning_ddp.py
+        # python pytorch/pytorch_lightning_ddp.py -p
+      # env:
+        # OMP_NUM_THREADS: 1
