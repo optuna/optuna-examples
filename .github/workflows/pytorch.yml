@@ -54,6 +54,11 @@ jobs:
         mpirun -n 2 -- python pytorch/pytorch_distributed_simple.py
       env:
         OMP_NUM_THREADS: 1
+    - name: Run PyTorch spawn examples
+      run: |
+        python pytorch/pytorch_distributed_spawn.py --no-cuda
+      env:
+        OMP_NUM_THREADS: 1
     - name: Run PyTorch Ignite examples
       run: |
         python pytorch/pytorch_ignite_simple.py
