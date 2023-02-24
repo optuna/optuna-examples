@@ -9,7 +9,7 @@ You can run this example as follows:
     $ python aim_integration.py
 
 Results and plots will be available in aim ui once script finishes:
-    $ aim ui
+    $ aim up
 
 and view the optimization results at http://127.0.0.1:43800.
 """
