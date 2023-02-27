@@ -154,7 +154,7 @@ def objective(single_trial, device_id):
 
 def setup(backend, rank, world_size, master_port):
     os.environ["MASTER_ADDR"] = "localhost"
-    os.environ["MASTER_PORT"] = str(master_port)
+    os.environ["MASTER_PORT"] = master_port
     dist.init_process_group(backend, rank=rank, world_size=world_size)
     print(f"Using {backend} backend.")
 
@@ -164,20 +164,20 @@ def cleanup():
 
 
 def run_optimize(rank, world_size, device_ids, return_dict, master_port):
-    devi = "cpu" if len(device_ids) == 0 else device_ids[rank]
-    print(f"Running basic DDP example on rank {rank} device {devi}.")
+    device = "cpu" if len(device_ids) == 0 else device_ids[rank]
+    print(f"Running basic DDP example on rank {rank} device {device}.")
 
     # Set environmental variables required by torch.distributed.
     backend = "gloo"
     if torch.distributed.is_nccl_available():
-        if devi != "cpu":
+        if device != "cpu":
             backend = "nccl"
     setup(backend, rank, world_size, master_port)
 
     if rank == 0:
         study = optuna.create_study(direction="maximize")
         study.optimize(
-            partial(objective, device_id=devi),
+            partial(objective, device_id=device),
             n_trials=N_TRIALS,
             timeout=300,
         )
@@ -185,7 +185,7 @@ def run_optimize(rank, world_size, device_ids, return_dict, master_port):
     else:
         for _ in range(N_TRIALS):
             try:
-                objective(None, devi)
+                objective(None, device)
             except optuna.TrialPruned:
                 pass
 
@@ -207,7 +207,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--no-cuda", action="store_true", default=False, help="Disable CUDA training."
     )
-    parser.add_argument("--master-port", type=int, default=12355, help="Specify port number.")
+    parser.add_argument("--master-port", type=str, default="12355", help="Specify port number.")
     args = parser.parse_args()
     if args.no_cuda:
         device_ids = []
