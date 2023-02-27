@@ -96,6 +96,10 @@ In addition, integration modules are available for the following libraries, prov
 
 * [Enqueuing trials with given parameters](./enqueue_trial.py)
 
+### Examples of aim
+
+* [Tracking optimization process with aim](./aim/aim_integration.py)
+
 ### Examples of MLflow
 
 * [Tracking optimization process with MLflow](./mlflow/keras_mlflow.py)

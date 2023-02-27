@@ -16,7 +16,7 @@ $ wandb offline
 
 You can run this example as follows:
 ```
-$ python wandb_simple.py
+$ python wandb_integration.py
 ```
 
 Results and plots will be available in Weights & Biases UI once script finishes.
