@@ -1,8 +1,8 @@
 """
-Optuna example that optimizes a configuration for Olivetti faces dataset using
+Optuna example that optimizes a configuration for hand-written digits dataset using
 skimage.
 
-In this example, we optimize a classifier configuration for Olivetti faces dataset.
+In this example, we optimize a classifier configuration for hand-written digits dataset.
 We optimize parameters of local_binary_pattern function in skimage and the
 choice of distance metric classes.
 
@@ -12,7 +12,7 @@ import numpy as np
 import optuna
 
 import skimage.feature as ft
-from sklearn.datasets import fetch_olivetti_faces
+from sklearn.datasets import load_digits
 import sklearn.metrics
 from sklearn.metrics.pairwise import cosine_distances
 from sklearn.metrics.pairwise import euclidean_distances
@@ -20,18 +20,18 @@ from sklearn.metrics.pairwise import euclidean_distances
 
 def load_data():
     rng = np.random.RandomState(0)
-    dataset = fetch_olivetti_faces(shuffle=True, random_state=rng)
-    faces = dataset.images
+    dataset = load_digits()
+    digits = dataset.images.astype(np.uint8)
     target = dataset.target
     classes = np.unique(target)
     classes.sort()
 
     ref_index = np.argmax(target == classes[:, None], axis=1)
-    valid_index = np.delete(np.arange(len(faces)), ref_index)
+    valid_index = np.delete(np.arange(len(digits)), ref_index)
 
-    x_ref = faces[ref_index]
+    x_ref = digits[ref_index]
     y_ref = target[ref_index]
-    x_valid = faces[valid_index]
+    x_valid = digits[valid_index]
     y_valid = target[valid_index]
     return x_ref, x_valid, y_ref, y_valid
 
@@ -75,7 +75,7 @@ def calc_dist(p, q, metric):
 
 
 def objective(trial):
-    # Get Olivetti faces dataset.
+    # Get digits dataset.
     x_ref, x_valid, _, y_valid = load_data()
 
     # We optimize parameters of local_binary_pattern function in skimage
