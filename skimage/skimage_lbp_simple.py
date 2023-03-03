@@ -19,7 +19,6 @@ from sklearn.metrics.pairwise import euclidean_distances
 
 
 def load_data():
-    rng = np.random.RandomState(0)
     dataset = load_digits()
     digits = dataset.images.astype(np.uint8)
     target = dataset.target
