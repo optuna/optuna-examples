@@ -19,6 +19,7 @@ from typing import Optional
 import optuna
 from optuna.integration import PyTorchLightningPruningCallback
 import pytorch_lightning as pl
+from pytorch_lightning.strategies.ddp_spawn import DDPSpawnStrategy
 import torch
 from torch import nn
 from torch import optim
@@ -123,20 +124,23 @@ def objective(trial: optuna.trial.Trial) -> float:
 
     model = LightningNet(dropout, output_dims)
     datamodule = FashionMNISTDataModule(data_dir=DIR, batch_size=BATCHSIZE)
+    callback = PyTorchLightningPruningCallback(trial, monitor="val_acc")
 
     trainer = pl.Trainer(
         logger=True,
         limit_val_batches=PERCENT_VALID_EXAMPLES,
         enable_checkpointing=False,
         max_epochs=EPOCHS,
-        gpus=-1 if torch.cuda.is_available() else None,
-        accelerator="ddp_cpu" if not torch.cuda.is_available() else None,
-        num_processes=os.cpu_count() if not torch.cuda.is_available() else None,
-        callbacks=[PyTorchLightningPruningCallback(trial, monitor="val_acc")],
+        accelerator="auto" if torch.cuda.is_available() else 'cpu',
+        devices="auto" if not torch.cuda.is_available() else os.cpu_count(),
+        callbacks=[callback],
+        strategy=DDPSpawnStrategy(find_unused_parameters=False),
     )
     hyperparameters = dict(n_layers=n_layers, dropout=dropout, output_dims=output_dims)
     trainer.logger.log_hyperparams(hyperparameters)
     trainer.fit(model, datamodule=datamodule)
+
+    callback.check_pruned()
 
     return trainer.callback_metrics["val_acc"].item()
 
