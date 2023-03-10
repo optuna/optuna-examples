@@ -28,8 +28,10 @@ jobs:
         pip install --progress-bar off -U setuptools
         pip install git+https://github.com/optuna/optuna.git
         python -c 'import optuna'
+
+        pip install -r ray/requirements.txt
     - name: Run examples
       run: |
-        python -m py_compile ray/ray_joblib.py  # due to difficulty importing, compile only
+        python ray/ray_joblib.py
       env:
         OMP_NUM_THREADS: 1
