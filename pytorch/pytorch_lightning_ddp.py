@@ -131,7 +131,7 @@ def objective(trial: optuna.trial.Trial) -> float:
         limit_val_batches=PERCENT_VALID_EXAMPLES,
         enable_checkpointing=False,
         max_epochs=EPOCHS,
-        accelerator="auto" if torch.cuda.is_available() else 'cpu',
+        accelerator="auto" if torch.cuda.is_available() else "cpu",
         devices="auto" if not torch.cuda.is_available() else os.cpu_count(),
         callbacks=[callback],
         strategy=DDPSpawnStrategy(find_unused_parameters=False),
