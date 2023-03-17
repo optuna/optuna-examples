@@ -1,8 +1,7 @@
 mpi4py
 plotly
 pytorch-ignite
-# TODO(Shinichi): Remove the version constraint on PyTorch Lightning
-pytorch-lightning>=1.6.0,<2.0.0
+pytorch-lightning>=1.6.0,
 skorch
 torch==1.11.0
 torchvision==0.12.0

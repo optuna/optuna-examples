@@ -19,7 +19,6 @@ from typing import Optional
 import optuna
 from optuna.integration import PyTorchLightningPruningCallback
 import pytorch_lightning as pl
-from pytorch_lightning.strategies.ddp_spawn import DDPSpawnStrategy
 import torch
 from torch import nn
 from torch import optim
@@ -134,7 +133,7 @@ def objective(trial: optuna.trial.Trial) -> float:
         accelerator="auto" if torch.cuda.is_available() else "cpu",
         devices="auto" if not torch.cuda.is_available() else os.cpu_count(),
         callbacks=[callback],
-        strategy=DDPSpawnStrategy(find_unused_parameters=False),
+        strategy="ddp_spawn",
     )
     hyperparameters = dict(n_layers=n_layers, dropout=dropout, output_dims=output_dims)
     trainer.logger.log_hyperparams(hyperparameters)
