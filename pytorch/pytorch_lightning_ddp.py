@@ -131,7 +131,7 @@ def objective(trial: optuna.trial.Trial) -> float:
         enable_checkpointing=False,
         max_epochs=EPOCHS,
         accelerator="auto" if torch.cuda.is_available() else "cpu",
-        devices="auto" if not torch.cuda.is_available() else os.cpu_count(),
+        devices=2,
         callbacks=[callback],
         strategy="ddp_spawn",
     )
