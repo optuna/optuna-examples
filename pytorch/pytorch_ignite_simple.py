@@ -104,7 +104,6 @@ def objective(trial):
 
     trainer.run(train_loader, max_epochs=EPOCHS)
 
-    evaluator.run(val_loader)
     return evaluator.state.metrics["accuracy"]
 
 
