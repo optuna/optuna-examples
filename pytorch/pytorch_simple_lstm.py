@@ -36,7 +36,7 @@ class CustomModel(nn.Sequential):
         for i in range(n_layers):
             self.add_module("lstm{}".format(i), nn.LSTM(self.input_dim,self.n_hidden, self.n_layers, batch_first=True))
             self.add_module("dropout{}".format(i), nn.Dropout(self.dropout_ps[i]))
-        
+
         self.add_module("linear", nn.Linear(self.n_hidden, out_features=self.out_features))
 
     def forward(self, x):
@@ -60,9 +60,9 @@ def define_model(trial):
     # We optimize the number of layers, hidden units and dropout ratio in each layer.
     n_layers = trial.suggest_int("n_layers", 1, 15)
     n_hidden = trial.suggest_int("n_hidden", 1, 50)
-    dropout_ps = [trial.suggest_float("dropout_l{}".format(i), 0.2, 0.5) for i in range(n_layers)]
+    dropout_ps = [trial.suggest_float("dropout_l{}".format(i), 0.2, 0.5) for i  in range(n_layers)]
 
-    return CustomModel(n_layers, n_hidden, dropout_ps)
+    return CustomModel(n_layers, n_hidden, dropout_ps,out_features=1)
   
 def objective(self,trial):
     # Generate the model
