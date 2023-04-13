@@ -68,18 +68,18 @@ def define_model(trial):
     n_layers = trial.suggest_int("n_layers", 1, 15)
     n_hidden = trial.suggest_int("n_hidden", 1, 50)
     dropout_ps = [trial.suggest_float("dropout_l{}".format(i), 0.2, 0.5) for i in range(n_layers)]
+    input_dim = 200  # the input dimension depends on the length of your sequences
+    return CustomModel(n_layers, n_hidden, input_dim, dropout_ps, out_features=1)
 
-    return CustomModel(n_layers, n_hidden, dropout_ps, out_features=1)
 
-
-def objective(self, trial):
+def objective(trial):
     # Generate the model
-    model = self.define_model(trial).to(DEVICE)
+    model = define_model(trial).to(DEVICE)
     # Generate the optimizers.
     optimizer_name = trial.suggest_categorical("optimizer", ["Adam", "RMSprop", "SGD"])
     lr = trial.suggest_float("lr", 1e-8, 1e-1, log=True)
     optimizer = getattr(optim, optimizer_name)(model.parameters(), lr=lr)
-    train_loader, test_loader = self.get_data()
+    train_loader, test_loader = get_data()
     early_stopping = EarlyStopping(patience=10, verbose=True)
 
     for epoch in tqdm(range(EPOCHS)):
