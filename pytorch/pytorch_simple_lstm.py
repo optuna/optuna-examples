@@ -40,7 +40,7 @@ class CustomModel(nn.Sequential):
         self.add_module("linear", nn.Linear(self.n_hidden, out_features=self.out_features))
 
     def forward(self, x):
-        h0 = torch.zeros(self.n_layers, x.size(2),self.n_hidden).requires_grad_().to(DEVICE) # 
+        h0 = torch.zeros(self.n_layers, x.size(2),self.n_hidden).requires_grad_().to(DEVICE)
         c0 = torch.zeros(self.n_layers, x.size(2),self.n_hidden).requires_grad_().to(DEVICE)
         x = torch.permute(x, (2,0,1)) # permute the input to match The desired ordering of dimensions for lstm layer
         for module in self._modules.values():
@@ -50,7 +50,7 @@ class CustomModel(nn.Sequential):
         out = self._modules["linear"](out)
         return out
 
-# your dataset depends on your specific task 
+# your sequential dataset depends on your specific task 
 def get_data(train_dataset,test_dataset):
     train = DataLoader(train_dataset,batch_size = BATCH_SIZE)
     test = DataLoader(test_dataset,batch_size = BATCH_SIZE)
@@ -79,7 +79,7 @@ def objective(self,trial):
       train_loss = 0.0
       for train_batch in train_loader :
           
-          data = train_batch['sequence'].to(DEVICE) # 32, 200, 5
+          data = train_batch['sequence'].to(DEVICE) # data.shape = (batch_size, sequence_length, features)
           optimizer.zero_grad()
           output = model.forward(data)
           loss = criterion(output, train_batch['label'].to(DEVICE))
