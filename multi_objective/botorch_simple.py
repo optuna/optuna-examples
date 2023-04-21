@@ -1,4 +1,3 @@
-from botorch.settings import suppress_botorch_warnings
 from botorch.settings import validate_input_scaling
 import optuna
 
@@ -29,7 +28,6 @@ def constraints(trial):
 
 if __name__ == "__main__":
     # Show warnings from BoTorch such as unnormalized input data warnings.
-    suppress_botorch_warnings(False)
     validate_input_scaling(True)
 
     sampler = optuna.integration.BoTorchSampler(
