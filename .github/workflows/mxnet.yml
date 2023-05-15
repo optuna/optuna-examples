@@ -32,6 +32,8 @@ jobs:
         pip install --progress-bar off -U setuptools
         pip install git+https://github.com/optuna/optuna.git
         python -c 'import optuna'
+        pip install git+https://github.com/optuna/optuna-integration.git
+        python -c 'import optuna_integration'
 
         pip install -r mxnet/requirements.txt
     - name: Run examples

@@ -28,6 +28,8 @@ jobs:
         pip install --progress-bar off -U setuptools
         pip install git+https://github.com/optuna/optuna.git
         python -c 'import optuna'
+        pip install git+https://github.com/optuna/optuna-integration.git
+        python -c 'import optuna_integration'
 
         #TODO(not522): Remove pre option after stable-baselines3 v2.0.0 is released.
         pip install --pre -r rl/requirements.txt
