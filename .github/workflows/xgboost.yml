@@ -28,6 +28,8 @@ jobs:
         pip install --progress-bar off -U setuptools
         pip install git+https://github.com/optuna/optuna.git
         python -c 'import optuna'
+        pip install git+https://github.com/optuna/optuna-integration.git
+        python -c 'import optuna_integration'
 
         pip install -r xgboost/requirements.txt
     - name: Run XGBoost examples

@@ -29,6 +29,8 @@ jobs:
         pip install --progress-bar off -U setuptools==65.5.0
         pip install git+https://github.com/optuna/optuna.git
         python -c 'import optuna'
+        pip install git+https://github.com/optuna/optuna-integration.git
+        python -c 'import optuna_integration'
 
         pip install -r rl/requirements.txt
     - name: Run examples
