@@ -82,6 +82,10 @@ In addition, integration modules are available for the following libraries, prov
 
 * [SimulatedAnnealingSampler](./samplers/simulated_annealing_sampler.py)
 
+### Examples of Terminator
+
+* [Optuna Terminator](./terminator/terminator_simple.py)
+
 ### Examples of Multi-Objective Optimization
 
 * [Optimization with BoTorch](./multi_objective/botorch_simple.py)
