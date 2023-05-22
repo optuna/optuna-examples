@@ -1,6 +1,6 @@
 """ Optuna example that optimizes the hyperparameters of
 a reinforcement learning agent using A2C implementation from Stable-Baselines3
-on an OpenAI Gym environment.
+on a Gymnasium environment.
 
 This is a simplified version of what can be found in https://github.com/DLR-RM/rl-baselines3-zoo.
 
@@ -11,7 +11,7 @@ You can run this example as follows:
 from typing import Any
 from typing import Dict
 
-import gym
+import gymnasium
 import optuna
 from optuna.pruners import MedianPruner
 from optuna.samplers import TPESampler
@@ -80,7 +80,7 @@ class TrialEvalCallback(EvalCallback):
 
     def __init__(
         self,
-        eval_env: gym.Env,
+        eval_env: gymnasium.Env,
         trial: optuna.Trial,
         n_eval_episodes: int = 5,
         eval_freq: int = 10000,
@@ -117,7 +117,7 @@ def objective(trial: optuna.Trial) -> float:
     # Create the RL model.
     model = A2C(**kwargs)
     # Create env used for evaluation.
-    eval_env = Monitor(gym.make(ENV_ID))
+    eval_env = Monitor(gymnasium.make(ENV_ID))
     # Create the callback that will periodically evaluate and report the performance.
     eval_callback = TrialEvalCallback(
         eval_env, trial, n_eval_episodes=N_EVAL_EPISODES, eval_freq=EVAL_FREQ, deterministic=True
