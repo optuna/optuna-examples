@@ -37,5 +37,9 @@ def objective(trial):
     return scores.mean()
 
 
-study = optuna.create_study(direction="maximize")
-study.optimize(objective, callbacks=[TerminatorCallback()])
+if __name__ == "__main__":
+    study = optuna.create_study(direction="maximize")
+    study.optimize(objective, callbacks=[TerminatorCallback()])
+
+    print(f"The number of trials: {len(study.trials)}")
+    print(f"Best value: {study.best_value} (params: {study.best_params})")

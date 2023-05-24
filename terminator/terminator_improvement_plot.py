@@ -39,11 +39,9 @@ def objective(trial):
     return scores.mean()
 
 
-study = optuna.create_study()
-study.optimize(
-    objective,
-    n_trials=50,
-)
+if __name__ == "__main__":
+    study = optuna.create_study()
+    study.optimize(objective, n_trials=50)
 
-fig = plot_terminator_improvement(study, plot_error=True)
-fig.show()
+    fig = plot_terminator_improvement(study, plot_error=True)
+    fig.show()
