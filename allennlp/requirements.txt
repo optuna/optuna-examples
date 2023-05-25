@@ -1,2 +1,5 @@
 allennlp>=2.2.0
+# This constraint is necessary to use the old Pydantic.
+# See https://github.com/pydantic/pydantic/issues/5821.
+typing_extensions<4.6.0
 optuna
