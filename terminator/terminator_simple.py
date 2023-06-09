@@ -39,7 +39,7 @@ def objective(trial):
 
 if __name__ == "__main__":
     study = optuna.create_study(direction="maximize")
-    study.optimize(objective, callbacks=[TerminatorCallback()])
+    study.optimize(objective, n_trials=50, callbacks=[TerminatorCallback()])
 
     print(f"The number of trials: {len(study.trials)}")
     print(f"Best value: {study.best_value} (params: {study.best_params})")
