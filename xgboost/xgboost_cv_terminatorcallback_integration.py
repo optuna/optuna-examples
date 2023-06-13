@@ -47,7 +47,7 @@ def objective(trial):
     history = xgb.cv(param, dtrain, num_boost_round=100, callbacks=[pruning_callback])
 
     report_cross_validation_score(trial, history["test-auc-mean"])
-    
+
     mean_auc = history["test-auc-mean"].values[-1]
     return mean_auc
 
