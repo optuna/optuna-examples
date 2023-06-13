@@ -43,8 +43,7 @@ def objective(trial):
         param["rate_drop"] = trial.suggest_float("rate_drop", 1e-8, 1.0, log=True)
         param["skip_drop"] = trial.suggest_float("skip_drop", 1e-8, 1.0, log=True)
 
-    pruning_callback = optuna.integration.XGBoostPruningCallback(trial, "test-auc")
-    history = xgb.cv(param, dtrain, num_boost_round=100, callbacks=[pruning_callback])
+    history = xgb.cv(param, dtrain, num_boost_round=100)
 
     report_cross_validation_score(trial, history["test-auc-mean"])
 
