@@ -27,7 +27,7 @@ def objective(trial):
         "verbosity": 0,
         "objective": "binary:logistic",
         "eval_metric": "auc",
-        "booster": "gblinear",
+        "booster": "gbtree",
         "lambda": trial.suggest_float("lambda", 1e-8, 1.0, log=True),
         "alpha": trial.suggest_float("alpha", 1e-8, 1.0, log=True),
     }
