@@ -42,5 +42,6 @@ jobs:
       run: |
         python xgboost/xgboost_cv.py
         python xgboost/xgboost_cv_integration.py
+        python xgboost/xgboost_cv_terminator.py
       env:
         OMP_NUM_THREADS: 1
