@@ -3,3 +3,4 @@ optuna
 pandas
 scikit-learn
 xgboost
+botorch
