@@ -7,7 +7,7 @@ training of models, a pruner observes intermediate results and stops unpromising
 and a terminator observes studies and stops optimizations with insignificant changes.
 
 You can run this example as follows:
-    $ python xgboost_cv_integration.py
+    $ python xgboost_cv_terminator.py
 
 """
 
