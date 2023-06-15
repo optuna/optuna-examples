@@ -48,8 +48,8 @@ def objective(trial):
 if __name__ == "__main__":
     pruner = optuna.pruners.MedianPruner(n_warmup_steps=5)
     terminator = TerminatorCallback()
-    study = optuna.create_study(pruner=pruner, direction="maximize", callbacks=[terminator])
-    study.optimize(objective, n_trials=100)
+    study = optuna.create_study(pruner=pruner, direction="maximize")
+    study.optimize(objective, n_trials=100, callbacks=[terminator])
 
     print("Number of finished trials: {}".format(len(study.trials)))
 
