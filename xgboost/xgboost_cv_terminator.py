@@ -3,8 +3,8 @@ Optuna example that demonstrates a pruner for XGBoost.cv.
 
 In this example, we optimize the validation auc of cancer detection using XGBoost.
 We optimize both the choice of booster model and their hyperparameters. Throughout
-training of models, a pruner observes intermediate results and stops unpromising trials,
-and a terminator observes studies and stops optimizations with insignificant changes.
+training of models, a terminator observes trials and stops studies after insignificant
+improvement.
 
 You can run this example as follows:
     $ python xgboost_cv_terminator.py
