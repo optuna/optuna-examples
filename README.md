@@ -128,6 +128,7 @@ In addition, integration modules are available for the following libraries, prov
 
 ### External projects using Optuna
 
+* [Hugging Face Trainer's hyperparameter search](https://huggingface.co/docs/transformers/main/main_classes/trainer#transformers.Trainer.hyperparameter_search)
 * [Allegro Trains](https://github.com/allegroai/trains)
 * [BBO-Rietveld: Automated crystal structure refinement](https://github.com/quantumbeam/BBO-Rietveld)
 * [Catalyst](https://github.com/catalyst-team/catalyst)
