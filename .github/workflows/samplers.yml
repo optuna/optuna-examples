@@ -29,6 +29,7 @@ jobs:
         pip install git+https://github.com/optuna/optuna.git
         python -c 'import optuna'
 
+        pip install -r samplers/requirements.txt
     - name: Run examples
       run: |
         python samplers/simulated_annealing_sampler.py
