@@ -36,6 +36,7 @@ jobs:
       run: |
         python lightgbm/lightgbm_simple.py
         python lightgbm/lightgbm_integration.py
+        python lightgbm/lightgbm_terminator.py
       env:
         OMP_NUM_THREADS: 1
     - name: Run LightGBM Tuner examples
