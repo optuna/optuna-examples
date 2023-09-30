@@ -2,7 +2,7 @@
 Optuna example showcasing the new Optuna Terminator feature.
 
 In this example, we utilize the Optuna Terminator for hyperparameter
-optimization on a lightgbm using the wine dataset.
+optimization on a LightGBM using the wine dataset.
 The Terminator automatically stops the optimization process based
 on the potential for further improvement.
 
