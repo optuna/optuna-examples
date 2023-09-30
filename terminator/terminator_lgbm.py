@@ -2,13 +2,13 @@
 Optuna example showcasing the new Optuna Terminator feature.
 
 In this example, we utilize the Optuna Terminator for hyperparameter
-optimization on a RandomForestClassifier using the wine dataset.
+optimization on a lighgbm using the wine dataset.
 The Terminator automatically stops the optimization process based
 on the potential for further improvement.
 
 To run this example:
 
-    $ python terminator_simple.py
+    $ python terminator_lgbm.py
 
 """
 
