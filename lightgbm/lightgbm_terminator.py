@@ -16,8 +16,8 @@ import optuna
 from optuna.terminator.callback import TerminatorCallback
 from optuna.terminator.erroreval import report_cross_validation_scores
 
-from sklearn.datasets import load_wine
 import lightgbm as lgb
+from sklearn.datasets import load_wine
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import KFold
 
