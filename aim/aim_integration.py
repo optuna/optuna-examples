@@ -16,7 +16,7 @@ and view the optimization results at http://127.0.0.1:43800.
 
 import optuna
 
-from aim.optuna import AimCallback
+from aimstack.optuna_tracker.callbacks import BaseCallback as AimCallback
 from sklearn.datasets import load_iris
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
