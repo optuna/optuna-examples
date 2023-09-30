@@ -1,3 +1,5 @@
 botorch
 scikit-learn
 plotly
+lightgbm
+optuna

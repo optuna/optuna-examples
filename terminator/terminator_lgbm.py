@@ -18,6 +18,7 @@ from optuna.terminator.erroreval import report_cross_validation_scores
 
 from sklearn.datasets import load_wine
 from sklearn.ensemble import RandomForestClassifier
+import lightgbm as lgb
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import KFold
 
@@ -25,11 +26,21 @@ from sklearn.model_selection import KFold
 def objective(trial):
     X, y = load_wine(return_X_y=True)
 
-    clf = RandomForestClassifier(
-        max_depth=trial.suggest_int("max_depth", 2, 32),
-        min_samples_split=trial.suggest_float("min_samples_split", 0, 1),
-        criterion=trial.suggest_categorical("criterion", ("gini", "entropy")),
-    )
+    params = {
+        'objective': 'multiclass',   
+        'num_class': 3,  
+        "verbosity": -1,
+        "boosting_type": "gbdt",
+        "lambda_l1": trial.suggest_float("lambda_l1", 1e-8, 10.0, log=True),
+        "lambda_l2": trial.suggest_float("lambda_l2", 1e-8, 10.0, log=True),
+        "num_leaves": trial.suggest_int("num_leaves", 2, 256),
+        "feature_fraction": trial.suggest_float("feature_fraction", 0.4, 1.0),
+        "bagging_fraction": trial.suggest_float("bagging_fraction", 0.4, 1.0),
+        "bagging_freq": trial.suggest_int("bagging_freq", 1, 7),
+        "min_child_samples": trial.suggest_int("min_child_samples", 5, 100),
+    }
+    
+    clf = lgb.LGBMClassifier(**params)
 
     scores = cross_val_score(clf, X, y, cv=KFold(n_splits=5, shuffle=True))
     report_cross_validation_scores(trial, scores)
