@@ -2,3 +2,4 @@ lightgbm>=3.3.0
 numpy
 optuna
 scikit-learn
+botorch
