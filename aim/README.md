@@ -11,15 +11,15 @@ hyperparameters and metrics will be logged to `.aim` directory via integration c
 You can run this example as follows:
 
 ```sh
-$ python aim_integration.py
+python aim_integration.py
 ```
 
 After the script finishes, run the aim UI:
 
 ```sh
-$ aim up
+aim ui
 ```
 
-and view the optimization results at http://127.0.0.1:43800.
+and view the optimization results at <http://127.0.0.1:43800>.
 
 See also the [official example provided by aim](https://github.com/aimhubio/aim/blob/main/examples/optuna_track.py).
