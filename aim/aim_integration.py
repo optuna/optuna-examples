@@ -14,7 +14,6 @@ Results and plots will be available in aim ui once script finishes:
 and view the optimization results at http://127.0.0.1:43800.
 """
 
-from aimstack.optuna_tracker.callbacks import BaseCallback as AimCallback
 import optuna
 
 from aim.optuna import AimCallback
