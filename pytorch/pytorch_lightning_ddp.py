@@ -18,7 +18,7 @@ from typing import Optional
 
 import optuna
 from optuna.integration import PyTorchLightningPruningCallback
-import pytorch_lightning as pl
+import lightning.pytorch as pl
 import torch
 from torch import nn
 from torch import optim
