@@ -1,9 +1,9 @@
 import os
 
-import optuna
-from optuna.integration.mlflow import MLflowCallback
 import lightning.pytorch as pl
 from lightning.pytorch import Callback
+import optuna
+from optuna.integration.mlflow import MLflowCallback
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
