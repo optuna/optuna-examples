@@ -6,6 +6,8 @@ This page contains a list of example codes written with Optuna.
 ### Simple Black-box Optimization
 
 * [Quadratic function](./quadratic_simple.py)
+- [Quadratic multi-objective function](./quadratic_simple_multi_objective.py)
+- [Quadratic function with constraints](./quadratic_simple_constraint.py)
 
 ### Examples with ML Libraries
 
