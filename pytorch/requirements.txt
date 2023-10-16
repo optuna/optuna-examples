@@ -1,9 +1,9 @@
 mpi4py
 plotly
 pytorch-ignite
-pytorch-lightning>=2.0
+pytorch-lightning
 skorch
-torch>=1.11.0
-torchvision>=0.12.0
-torchaudio>=0.11.0
+torch
+torchvision
+torchaudio
 optuna
