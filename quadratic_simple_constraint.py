@@ -7,6 +7,10 @@ For example, we would like to maximize the accuracy of a deep neural networks wh
 deep neural networks fit on your hardware, e.g. 8GB of memory consumption.
 In this case, constrained optimization aims to yield an optimal solution that satisfied such constraints.
 
+Note that Optuna cannot optimize an objective that will not return any results when some constraints violate.
+For example, when we run a memory-intensive algorithm and user sets the memory constraint very close to the limit,
+we may not get any results if the memory constraint is violated.
+However, Optuna cannot handle such situations. 
 Please also check https://optuna.readthedocs.io/en/stable/faq.html#id16 as well.
 
 """
@@ -33,6 +37,7 @@ def constraints(trial):
 
 
 if __name__ == "__main__":
+    # Let us minimize the objective function with soft constraints above.
     sampler = optuna.samplers.TPESampler(constraints_func=constraints)
     study = optuna.create_study(sampler=sampler)
     study.optimize(objective, n_trials=500, timeout=1)
@@ -52,5 +57,5 @@ if __name__ == "__main__":
         print(f"Best trial was found at Trial#{best_trial_id}")
         print(f"  Params: {best_trial.params}")
         print(f"  Value: {best_trial.value}")
-        c1, c2 = best_trial.system_attrs['constraints']
+        c1, c2 = best_trial.system_attrs["constraints"]
         print(f"  Constraints: {c1=}, {c2=}")
