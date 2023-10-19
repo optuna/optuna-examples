@@ -26,6 +26,8 @@ The examples below provide codeblocks similar to the example above for various d
 ### Simple Black-box Optimization
 
 * [Quadratic function](./quadratic_simple.py)
+- [Quadratic multi-objective function](./multi_objective/quadratic_simple.py)
+- [Quadratic function with constraints](./quadratic_simple_constraint.py)
 
 ### Examples with ML Libraries
 
