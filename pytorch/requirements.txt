@@ -3,7 +3,7 @@ plotly
 pytorch-ignite
 pytorch-lightning
 skorch
-torch==2.0.0
-torchvision==0.15.1
-torchaudio==2.0.1
+torch
+torchvision
+torchaudio
 optuna
