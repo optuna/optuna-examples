@@ -28,7 +28,7 @@ def constraints(trial):
 
 
 if __name__ == "__main__":
-    # We minimize obj1 and maximize obj2.
+    # Let us minimize the objective function with soft constraint above.
     sampler = optuna.samplers.TPESampler(constraints_func=constraints)
     study = optuna.create_study(sampler=sampler)
     study.optimize(objective, n_trials=500, timeout=1)
