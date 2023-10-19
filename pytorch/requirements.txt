@@ -1,7 +1,7 @@
 mpi4py
 plotly
 pytorch-ignite
-pytorch-lightning>=1.6.0
+pytorch-lightning
 skorch
 torch==2.0.0
 torchvision==0.15.1

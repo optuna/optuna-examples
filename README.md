@@ -3,6 +3,26 @@ Optuna Examples
 
 This page contains a list of example codes written with Optuna.
 
+The simplest codeblock looks like this:
+
+```python
+import optuna
+
+
+def objective(trial):
+    x = trial.suggest_float("x", -100, 100)
+    return x ** 2
+
+
+if __name__ == "__main__":
+    study = optuna.create_study()
+    # The optimization finishes after evaluating 1000 times or 3 seconds.
+    study.optimize(objective, n_trials=1000, timeout=3)
+    print(f"Best params is {study.best_params} with value {study.best_value}")
+```
+
+The examples below provide codeblocks similar to the example above for various different scenarios.
+
 ### Simple Black-box Optimization
 
 * [Quadratic function](./quadratic_simple.py)
