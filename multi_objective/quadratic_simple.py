@@ -11,13 +11,13 @@ import optuna
 
 
 # Define two objective functions.
-# We would like to minimize obj1 and maximize obj2.
+# We would like to minimize f1 and maximize f2.
 def objective(trial):
     x = trial.suggest_float("x", -100, 100)
     y = trial.suggest_categorical("y", [-1, 0, 1])
-    obj1 = x**2 + y
-    obj2 = -((x - 2) ** 2 + y)
-    return obj1, obj2
+    f1 = x**2 + y
+    f2 = -((x - 2) ** 2 + y)
+    return f1, f2
 
 
 if __name__ == "__main__":
@@ -30,4 +30,5 @@ if __name__ == "__main__":
     for i, best_trial in enumerate(study.best_trials):
         print(f"The {i}-th Pareto solution was found at Trial#{best_trial.number}.")
         print(f"  Params: {best_trial.params}")
-        print(f"  Values: {best_trial.values}")
+        f1, f2 = best_trial.values
+        print(f"  Values: {f1=}, {f2=}")

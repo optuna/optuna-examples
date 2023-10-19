@@ -29,20 +29,7 @@ def constraints(trial):
     x, y = params["x"], params["y"]
     c1 = 3 * x * y + 10
     c2 = x * y + 30
-    return [c1, c2]
-
-
-def get_feasible_trial_ids(trials):
-    feasible_indices = []
-    best_trial_id, best_value, best_params = None, float("inf"), None
-    for t in study.trials:
-        infeasible = any(c > 0.0 for c in t.system_attrs["constraints"])
-        if infeasible:
-            continue
-        if best_value > t.value:
-            best_value = t.value
-            best_params = t.params.copy()
-            best_trial_id = t._trial_id
+    return c1, c2
 
 
 if __name__ == "__main__":
@@ -52,17 +39,18 @@ if __name__ == "__main__":
 
     print("Number of finished trials: ", len(study.trials))
 
-    feasible_indices = [
+    feasible_trial_ids = [
         trial.number
         for trial in study.trials
         if all(c <= 0.0 for c in trial.system_attrs["constraints"])
     ]
-    if len(feasible_indices) == 0:
+    if len(feasible_trial_ids) == 0:
         print("No trials satisfied all the constraints.")
     else:
-        best_trial_id = sorted(feasible_indices, key=lambda i: study.trials[i].value)[0]
+        best_trial_id = sorted(feasible_trial_ids, key=lambda i: study.trials[i].value)[0]
         best_trial = study.trials[best_trial_id]
         print(f"Best trial was found at Trial#{best_trial_id}")
         print(f"  Params: {best_trial.params}")
         print(f"  Value: {best_trial.value}")
-        print(f"  Constraints: {best_trial.system_attrs['constraints']}")
+        c1, c2 = best_trial.system_attrs['constraints']
+        print(f"  Constraints: {c1=}, {c2=}")
