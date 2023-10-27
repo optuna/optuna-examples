@@ -2,15 +2,16 @@
 Optuna example that optimizes a simple quadratic function with constraints.
 
 This setup is called `constrained optimization`.
-Constrained optimization is useful when we would like to optimize some metrics under some constraints.
-For example, we would like to maximize the accuracy of a deep neural networks while guaranteeing that
-deep neural networks fit on your hardware, e.g. 8GB of memory consumption.
-In this case, constrained optimization aims to yield an optimal solution that satisfied such constraints.
+Constrained optimization is useful when we would like to optimize some metrics under
+some constraints. For example, we would like to maximize the accuracy of a deep neural networks
+while guaranteeing that deep neural networks fit on your hardware, e.g. 8GB of memory consumption.
+In this case, constrained optimization aims to yield an optimal solution that satisfied
+such constraints.
 
-Note that Optuna cannot optimize an objective that will not return any results when some constraints violate.
-For example, when we run a memory-intensive algorithm and user sets the memory constraint very close to the limit,
-we may not get any results if the memory constraint is violated.
-However, Optuna cannot handle such situations. 
+Note that Optuna cannot optimize an objective that will not return any results when some
+constraints violate. For example, when we run a memory-intensive algorithm and user sets
+the memory constraint very close to the limit, we may not get any results if the memory constraint
+is violated. However, Optuna cannot handle such situations.
 Please also check https://optuna.readthedocs.io/en/stable/faq.html#id16 as well.
 
 """
@@ -27,7 +28,8 @@ def objective(trial):
 
 # Define a function that returns constraints.
 # The constraints are to satisfy `c1 <= 0` and `c2 <= 0` simultaneously.
-# If we would like to make the constraint like `c1 <= a`, we simply need to return `c1 - a` instead of `c1`.
+# If we would like to make the constraint like `c1 <= a`,
+# we simply need to return `c1 - a` instead of `c1`.
 def constraints(trial):
     params = trial.params
     x, y = params["x"], params["y"]
