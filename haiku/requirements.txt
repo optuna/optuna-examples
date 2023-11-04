@@ -3,5 +3,6 @@ jax
 jaxlib
 numpy
 optax
+optuna
 tensorflow
 tensorflow-datasets
