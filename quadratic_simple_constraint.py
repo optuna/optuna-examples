@@ -46,17 +46,17 @@ if __name__ == "__main__":
 
     print("Number of finished trials: ", len(study.trials))
 
-    feasible_trial_ids = [
+    feasible_trial_numbers = [
         trial.number
         for trial in study.trials
         if all(c <= 0.0 for c in trial.system_attrs["constraints"])
     ]
-    if len(feasible_trial_ids) == 0:
+    if len(feasible_trial_numbers) == 0:
         print("No trials satisfied all the constraints.")
     else:
-        best_trial_id = sorted(feasible_trial_ids, key=lambda i: study.trials[i].value)[0]
-        best_trial = study.trials[best_trial_id]
-        print(f"Best trial was found at Trial#{best_trial_id}")
+        best_trial_number = sorted(feasible_trial_numbers, key=lambda i: study.trials[i].value)[0]
+        best_trial = study.trials[best_trial_number]
+        print(f"Best trial was found at Trial#{best_trial_number}")
         print(f"  Params: {best_trial.params}")
         print(f"  Value: {best_trial.value}")
         c1, c2 = best_trial.system_attrs["constraints"]

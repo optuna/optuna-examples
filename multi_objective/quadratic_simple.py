@@ -2,8 +2,8 @@
 Optuna example that optimizes simple quadratic functions.
 
 In this example, we optimize two objective values.
-Unlike a single-objective optimization, an optimization gives the trade-off between two objectives.
-As a result, we get best trade-offs between two objectives, a.k.a Pareto solutions.
+Unlike single-objective optimization, an optimization gives a trade-off between two objectives.
+As a result, we get the best trade-offs between two objectives, a.k.a Pareto solutions.
 
 """
 
