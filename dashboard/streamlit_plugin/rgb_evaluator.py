@@ -10,7 +10,6 @@ from optuna.trial import TrialState
 from optuna_dashboard.artifact.file_system import FileSystemBackend
 from optuna_dashboard.streamlit import render_objective_form_widgets
 from optuna_dashboard.streamlit import render_trial_note
-
 import streamlit as st
 
 
