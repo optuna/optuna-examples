@@ -1,7 +1,7 @@
 mpi4py
 plotly
 pytorch-ignite
-pytorch-lightning
+lightning
 skorch
 torch
 torchvision

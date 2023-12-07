@@ -15,10 +15,10 @@ import os
 from typing import List
 from typing import Optional
 
+import lightning.pytorch as pl
 import optuna
 from optuna.integration import PyTorchLightningPruningCallback
 from packaging import version
-import pytorch_lightning as pl
 import torch
 from torch import nn
 from torch import optim

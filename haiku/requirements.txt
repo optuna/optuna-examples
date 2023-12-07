@@ -1,8 +1,8 @@
 dm-haiku
-# TODO(c-bata): Support jax v0.3.25 or newer
-jax==0.3.24
-jaxlib==0.3.24
+jax
+jaxlib
 numpy
 optax
+optuna
 tensorflow
 tensorflow-datasets

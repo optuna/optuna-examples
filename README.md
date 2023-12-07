@@ -59,7 +59,6 @@ The examples below provide codeblocks similar to the example above for various d
 * [Tensorflow (eager)](./tensorflow/tensorflow_eager_simple.py)
 * [XGBoost](./xgboost/xgboost_simple.py)
 
-
 ### An example of Optuna Dashboard
 
 The following example demonstrates how to use [Optuna Dashboard](https://github.com/optuna/optuna-dashboard).
@@ -69,6 +68,7 @@ The following example demonstrates how to use [Optuna Dashboard](https://github.
 ### An example where an objective function uses additional arguments
 
 The following example demonstrates how to implement an objective function that uses additional arguments other than `trial`.
+
 * [Scikit-learn (callable class version)](./sklearn/sklearn_additional_args.py)
 
 ### Examples of Pruning
@@ -107,6 +107,7 @@ In addition, integration modules are available for the following libraries, prov
 ### Examples of Terminator
 
 * [Optuna Terminator](./terminator/terminator_simple.py)
+* [OptunaSearchCV with Terminator](./terminator/terminator_search_cv.py)
 
 ### Examples of Multi-Objective Optimization
 
@@ -167,6 +168,7 @@ In addition, integration modules are available for the following libraries, prov
 PRs to add additional projects welcome!
 
 ### Running with Optuna's Docker images?
+
 You can use our docker images with the tag ending with `-dev` to run most of the examples.
 For example, you can run [PyTorch Simple](./pytorch/pytorch_simple.py) via `docker run --rm -v $(pwd):/prj -w /prj optuna/optuna:py3.7-dev python pytorch/pytorch_simple.py`.
 Also, you can try our visualization example in Jupyter Notebook by opening `localhost:8888` in your browser after executing this:
