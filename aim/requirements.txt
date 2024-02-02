@@ -1,3 +1,4 @@
 aim<4
 optuna
 scikit-learn
+segment-analytics-python<2.3.0
