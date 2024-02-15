@@ -21,6 +21,7 @@ Please note that this example only works with optuna >= 3.1.0.
 If you wish to use optuna < 3.1.0, you would need to pass
 `device=device_id` in TorchDistributedTrial.
 """
+
 import argparse
 from functools import partial
 import os

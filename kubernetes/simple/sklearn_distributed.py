@@ -10,6 +10,7 @@ in order to avoid errors when the code is run from multiple workers.
 2 - It sets the storage address to the postgres pod deployed with the workers.
 
 """
+
 import os
 
 import optuna

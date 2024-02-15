@@ -8,6 +8,7 @@ You can run this example as follows:
     $ python sb3_simple.py
 
 """
+
 from typing import Any
 from typing import Dict
 

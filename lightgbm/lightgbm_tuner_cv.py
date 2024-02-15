@@ -4,6 +4,7 @@ Optuna example that optimizes a classifier configuration for cancer dataset usin
 In this example, we optimize the cross-validated log loss of cancer detection.
 
 """
+
 import optuna.integration.lightgbm as lgb
 
 from lightgbm import early_stopping

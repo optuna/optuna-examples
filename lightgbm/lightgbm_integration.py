@@ -9,6 +9,7 @@ You can run this example as follows:
     $ python lightgbm_integration.py
 
 """
+
 import numpy as np
 import optuna
 

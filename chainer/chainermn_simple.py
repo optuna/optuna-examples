@@ -11,6 +11,7 @@ as follows:
     $ mpirun -n 2 -- python chainermn_simple.py $STUDY_NAME $STORAGE_URL
 
 """
+
 import sys
 
 import chainermn

@@ -14,7 +14,6 @@ To run this example:
 
 """
 
-
 import optuna
 from optuna.terminator.erroreval import report_cross_validation_scores
 from optuna.visualization import plot_terminator_improvement

@@ -10,6 +10,7 @@ argument.
     $ python pytorch_lightning_simple.py [--pruning]
 
 """
+
 import argparse
 import os
 from typing import List
