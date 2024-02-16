@@ -6,6 +6,7 @@ In this example, we optimize the validation accuracy of MNIST classification usi
 Keras. We optimize the filter and kernel size, kernel stride and layer activation.
 
 """
+
 import urllib
 import warnings
 

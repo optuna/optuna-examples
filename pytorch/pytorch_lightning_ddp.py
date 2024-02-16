@@ -11,6 +11,7 @@ argument.
     $ python pytorch/pytorch_lightning_ddp.py [--pruning]
 
 """
+
 import argparse
 import os
 from typing import List

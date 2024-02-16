@@ -11,6 +11,7 @@ To run this example:
 
 Learn more about rapids: https://rapids.ai/
 """
+
 import cudf
 from cuml.ensemble import RandomForestClassifier
 from cuml.metrics import accuracy_score
