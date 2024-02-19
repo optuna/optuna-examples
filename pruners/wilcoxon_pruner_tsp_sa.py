@@ -99,13 +99,13 @@ def objective(trial):
 
         trial.report(result_cost, i)
         if trial.should_prune():
-            # Wilcoxon pruner found that this trial was 
+            # Wilcoxon pruner found that this trial was
             # probably worse than the current best trial.
             # However, this trial may be in top 10% trials.
             # So I return the current average score instead of
             # raise optuna.TrialPruned().
             # It provides additional information to TPESampler.
-            sum(results) / len(results)  
+            sum(results) / len(results)
 
     return sum(results) / len(results)
 
