@@ -25,9 +25,7 @@ def simulated_annealing(vertices, initial_idxs, options: SAOptions):
     N = len(vertices)
     assert len(idxs) == N
 
-    cost = sum(
-        [norm(vertices[idxs[i]] - vertices[idxs[(i + 1) % N]]) for i in range(N)]
-    )
+    cost = sum([norm(vertices[idxs[i]] - vertices[idxs[(i + 1) % N]]) for i in range(N)])
     best_idxs = idxs.copy()
     best_cost = cost
 
