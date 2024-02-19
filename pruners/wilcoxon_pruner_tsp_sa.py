@@ -3,8 +3,8 @@ from typing import NamedTuple
 
 import numba
 import numpy as np
-import optuna
 from numpy.linalg import norm
+import optuna
 
 
 class SAOptions(NamedTuple):
