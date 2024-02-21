@@ -41,7 +41,7 @@ def simulated_annealing(vertices, initial_idxs, options: SAOptions):
             + norm(vertices[idxs[(i + 1) % N]] - vertices[idxs[(j + 1) % N]])
         )
         temp = temperature(iter / options.max_iter)
-        if np.random.rand() < math.exp(-delta_cost / temp):
+        if delta_cost <= 0.0 or np.random.rand() < math.exp(-delta_cost / temp):
             cost += delta_cost
             idxs[i + 1 : j + 1] = idxs[i + 1 : j + 1][::-1]
             if cost < best_cost:
