@@ -78,6 +78,7 @@ count = 0
 
 
 def objective(trial):
+    global count
     patience = trial.suggest_int("patience", 10, 1000, log=True)
     T0 = trial.suggest_float("T0", 0.1, 10.0, log=True)
     alpha = trial.suggest_float("alpha", 1.1, 10.0, log=True)
