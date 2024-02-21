@@ -1,7 +1,6 @@
 import math
 from typing import NamedTuple
 
-import numba
 import numpy as np
 from numpy.linalg import norm
 import optuna
@@ -14,7 +13,6 @@ class SAOptions(NamedTuple):
     patience: int = 300
 
 
-@numba.njit
 def simulated_annealing(vertices, initial_idxs, options: SAOptions):
 
     def temperature(t: float):
@@ -73,18 +71,21 @@ def make_dataset(num_vertex, num_problem, seed):
     return dataset
 
 
-dataset = make_dataset(200, 20, seed=33333)
+N_DATAPOINTS, N_TRIALS = 20, 100
+dataset = make_dataset(200, N_DATAPOINTS, seed=33333)
 rng = np.random.default_rng(seed=44444)
+count = 0
 
 
 def objective(trial):
-    patience = trial.suggest_int("patience", 10, 10000, log=True)
+    patience = trial.suggest_int("patience", 10, 1000, log=True)
     T0 = trial.suggest_float("T0", 0.1, 10.0, log=True)
     alpha = trial.suggest_float("alpha", 1.1, 10.0, log=True)
-    options = SAOptions(max_iter=10000000, patience=patience, T0=T0, alpha=alpha)
+    options = SAOptions(max_iter=10000, patience=patience, T0=T0, alpha=alpha)
     ordering = rng.permutation(range(len(dataset)))
     results = []
     for i in ordering:
+        count += 1
         d = dataset[i]
         result_idxs = simulated_annealing(d["vertices"], d["idxs"], options)
         result_cost = 0.0
@@ -97,13 +98,8 @@ def objective(trial):
 
         trial.report(result_cost, i)
         if trial.should_prune():
-            # Wilcoxon pruner found that this trial was
-            # probably worse than the current best trial.
-            # However, this trial may be in top 10% trials.
-            # So I return the current average score instead of
-            # raise optuna.TrialPruned().
-            # It provides additional information to TPESampler.
-            sum(results) / len(results)
+            sum(results) / len(results)  # An advanced technique
+            # raise optuna.TrialPruned()
 
     return sum(results) / len(results)
 
@@ -113,6 +109,7 @@ if __name__ == "__main__":
     pruner = optuna.pruners.WilcoxonPruner(p_threshold=0.05)
     study = optuna.create_study(direction="minimize", sampler=sampler, pruner=pruner)
     study.enqueue_trial({"patience": 300, "T0": 1.0, "alpha": 1.8})  # default params
-    study.optimize(objective, n_trials=100)
+    study.optimize(objective, n_trials=N_TRIALS)
     print(f"The number of trials: {len(study.trials)}")
     print(f"Best value: {study.best_value} (params: {study.best_params})")
+    print(f"Number of evaluations: {count} / {N_DATAPOINTS * N_TRIALS}")
