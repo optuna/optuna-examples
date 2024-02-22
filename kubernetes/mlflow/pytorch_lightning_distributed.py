@@ -96,7 +96,6 @@ class LightningNet(pl.LightningModule):
 
 
 def objective(trial):
-    # Clear clutter from previous Keras session graphs.
     metrics_callback = MetricsCallback()
     trainer = pl.Trainer(
         logger=False,
