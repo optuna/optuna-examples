@@ -129,9 +129,7 @@ def objective(trial: optuna.Trial) -> float:
             # current TPE sampler cannot utilize pruned trials effectively.
             return sum(results) / len(results)
 
-    print(
-        f"[{trial.number}] Not pruned ({len(results)}/{len(dataset)})", file=sys.stderr
-    )
+    print(f"[{trial.number}] Not pruned ({len(results)}/{len(dataset)})", file=sys.stderr)
     return sum(results) / len(results)
 
 
