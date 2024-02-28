@@ -99,7 +99,7 @@ def objective(trial):
 
         trial.report(result_cost, i)
         if trial.should_prune():
-            sum(results) / len(results)  # An advanced technique
+            return sum(results) / len(results)  # An advanced workaround
             # raise optuna.TrialPruned()
 
     return sum(results) / len(results)
