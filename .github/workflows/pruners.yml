@@ -1,0 +1,37 @@
+name: pruners
+
+on:
+  schedule:
+    - cron: '0 15 * * *'
+  pull_request:
+    paths:
+      - 'pruners/**'
+      - '.github/workflows/wilcoxon_pruner.yml'
+
+jobs:
+  examples:
+    if: (github.event_name == 'schedule' && github.repository == 'optuna/optuna-examples') || (github.event_name != 'schedule')
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.7', '3.8', '3.9', '3.10', '3.11']
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: setup-python${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install (Python)
+      run: |
+        python -m pip install --upgrade pip
+        pip install --progress-bar off -U setuptools
+        pip install git+https://github.com/optuna/optuna.git
+        python -c 'import optuna'
+
+        pip install -r pruners/requirements.txt
+    - name: Run examples
+      run: |
+        python pruners/wilcoxon_pruner_tsp_sa.py
+      env:
+        OMP_NUM_THREADS: 1
