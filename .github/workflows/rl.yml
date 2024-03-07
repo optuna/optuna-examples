@@ -29,8 +29,7 @@ jobs:
         pip install git+https://github.com/optuna/optuna.git
         python -c 'import optuna'
 
-        #TODO(not522): Remove pre option after stable-baselines3 v2.0.0 is released.
-        pip install --pre -r rl/requirements.txt
+        pip install -r rl/requirements.txt
     - name: Run examples
       run: |
         python rl/sb3_simple.py
