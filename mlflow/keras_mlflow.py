@@ -18,13 +18,14 @@ and view the optimization results at http://127.0.0.1:5000.
 import optuna
 from optuna.integration.mlflow import MLflowCallback
 
+from keras.backend import clear_session
+from keras.layers import Dense
+from keras.layers import Input
+from keras.models import Sequential
+from keras.optimizers import SGD
 from sklearn.datasets import load_wine
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from tensorflow.keras.backend import clear_session
-from tensorflow.keras.layers import Dense
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.optimizers import SGD
 
 
 TEST_SIZE = 0.25
@@ -38,12 +39,12 @@ def standardize(data):
 
 def create_model(num_features, trial):
     model = Sequential()
+    model.add(Input(shape=(num_features,)))
     model.add(
         Dense(
             num_features,
             activation="relu",
             kernel_initializer="normal",
-            input_shape=(num_features,),
         )
     ),
     model.add(Dense(16, activation="relu", kernel_initializer="normal"))
