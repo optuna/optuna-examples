@@ -8,7 +8,6 @@ Keras. We optimize the filter and kernel size, kernel stride and layer activatio
 """
 
 import urllib
-import warnings
 
 import optuna
 
@@ -17,8 +16,9 @@ from keras.datasets import mnist
 from keras.layers import Conv2D
 from keras.layers import Dense
 from keras.layers import Flatten
+from keras.layers import Input
 from keras.models import Sequential
-from tensorflow.keras.optimizers import RMSprop
+from keras.optimizers import RMSprop
 
 
 # TODO(crcrpar): Remove the below three lines once everything is ok.
@@ -48,13 +48,13 @@ def objective(trial):
     input_shape = (img_x, img_y, 1)
 
     model = Sequential()
+    model.add(Input(shape=input_shape))
     model.add(
         Conv2D(
             filters=trial.suggest_categorical("filters", [32, 64]),
             kernel_size=trial.suggest_categorical("kernel_size", [3, 5]),
             strides=trial.suggest_categorical("strides", [1, 2]),
             activation=trial.suggest_categorical("activation", ["relu", "linear"]),
-            input_shape=input_shape,
         )
     )
     model.add(Flatten())
@@ -84,14 +84,6 @@ def objective(trial):
 
 
 if __name__ == "__main__":
-    warnings.warn(
-        "Recent Keras release (2.4.0) simply redirects all APIs "
-        "in the standalone keras package to point to tf.keras. "
-        "There is now only one Keras: tf.keras. "
-        "There may be some breaking changes for some workflows by upgrading to keras 2.4.0. "
-        "Test before upgrading. "
-        "REF:https://github.com/keras-team/keras/releases/tag/2.4.0"
-    )
     study = optuna.create_study(direction="maximize")
     study.optimize(objective, n_trials=100, timeout=600)
 

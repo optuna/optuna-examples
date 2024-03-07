@@ -16,7 +16,6 @@ see the following link:
 """
 
 import urllib
-import warnings
 
 import optuna
 from optuna.integration import KerasPruningCallback
@@ -27,8 +26,8 @@ from keras.datasets import mnist
 from keras.layers import Dense
 from keras.layers import Dropout
 from keras.models import Sequential
-from tensorflow.keras.optimizers import RMSprop
-from tensorflow.keras.utils import to_categorical
+from keras.optimizers import RMSprop
+from keras.utils import to_categorical
 
 
 # TODO(crcrpar): Remove the below three lines once everything is ok.
@@ -104,16 +103,6 @@ def objective(trial):
 
 
 if __name__ == "__main__":
-    warnings.warn(
-        "Recent Keras release (2.4.0) simply redirects all APIs "
-        "in the standalone keras package to point to tf.keras. "
-        "There is now only one Keras: tf.keras. "
-        "There may be some breaking changes for some workflows by upgrading to keras 2.4.0. "
-        "Test before upgrading. "
-        "REF: https://github.com/keras-team/keras/releases/tag/2.4.0. "
-        "There is an alternative callback function that can be used instead: "
-        ":class:`~optuna.integration.TFKerasPruningCallback`",
-    )
     study = optuna.create_study(direction="maximize", pruner=optuna.pruners.MedianPruner())
     study.optimize(objective, n_trials=100)
     pruned_trials = study.get_trials(deepcopy=False, states=[TrialState.PRUNED])
