@@ -30,7 +30,7 @@ jobs:
         python -c 'import optuna'
 
         # TODO(nabenabe0928): Remove this constraint once it is fine.
-        pip install "dask[dataframe]<3.0"
+        pip install "dask[dataframe]<2024.3.0"
         pip install -r dask_ml/requirements.txt
     - name: Run examples
       run: |
