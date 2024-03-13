@@ -31,7 +31,7 @@ jobs:
         pip install git+https://github.com/optuna/optuna-integration.git
         python -c 'import optuna_integration'
 
-        # TODO(nabenabe0928): Remove this constraint once it is fine.
+        # NOTE(nabenabe0928): Got "AttributeError: module 'tensorflow' has no attribute 'estimator'".
         pip install "tensorflow<2.16.1"
         pip install -r tensorflow/requirements.txt
     - name: Run examples
