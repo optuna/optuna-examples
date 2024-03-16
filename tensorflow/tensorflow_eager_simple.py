@@ -132,7 +132,7 @@ def objective(trial):
         accuracy = learn(model, optimizer, valid_ds, "eval")
 
     # Return last validation accuracy.
-    return accuracy.result()
+    return accuracy.result().numpy()
 
 
 if __name__ == "__main__":
