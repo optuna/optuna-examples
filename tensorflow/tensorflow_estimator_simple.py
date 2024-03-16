@@ -13,10 +13,14 @@ import tempfile
 import urllib
 
 import optuna
+from packaging import version
 import tensorflow_datasets as tfds
 
 import tensorflow as tf
 
+
+if version.parse(tf.__version__) >= version.parse("2.16.0"):
+    raise RuntimeError("tensorflow<2.16.0 is required for this example.")
 
 # TODO(crcrpar): Remove the below three lines once everything is ok.
 # Register a global custom opener to avoid HTTP Error 403: Forbidden when downloading MNIST.
