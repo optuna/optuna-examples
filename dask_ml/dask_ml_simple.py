@@ -38,7 +38,7 @@ def objective(trial):
     X_train, X_valid, y_train, y_valid = train_test_split(X, y)
     classifier.fit(X_train, y_train)
 
-    score = classifier.score(X_valid, y_valid)
+    score = classifier.score(X_valid, y_valid).compute()
     return score
 
 
