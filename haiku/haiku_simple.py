@@ -154,7 +154,7 @@ def objective(trial):
         # Do SGD on a batch of training examples.
         params, opt_state = update(params, opt_state, next(train))
 
-    return best_test_accuracy.item()
+    return best_test_accuracy
 
 
 if __name__ == "__main__":
