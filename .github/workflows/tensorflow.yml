@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.7', '3.8', '3.9', '3.10', '3.11']
+        python-version: ['3.7', '3.8', '3.9', '3.10', '3.11', '3.12']
 
     steps:
     - uses: actions/checkout@v3
@@ -31,14 +31,18 @@ jobs:
         pip install git+https://github.com/optuna/optuna-integration.git
         python -c 'import optuna_integration'
 
-        # NOTE(nabenabe0928): Got "AttributeError: module 'tensorflow' has no attribute 'estimator'".
-        # TODO(nabenabe0928): Remove this version constraint.
-        pip install "tensorflow<2.16.1"
         pip install -r tensorflow/requirements.txt
-    - name: Run examples
+    - name: Run example of TensorFlow eager
       run: |
         python tensorflow/tensorflow_eager_simple.py
-        python tensorflow/tensorflow_estimator_simple.py
-        python tensorflow/tensorflow_estimator_integration.py
+      env:
+        OMP_NUM_THREADS: 1
+    - name: Run examples of TensorFlow estimator
+      run: |
+        if [ "${{ matrix.python-version }}" != "3.12" ] ; then
+          pip install "tensorflow<2.16.0"
+          python tensorflow/tensorflow_estimator_simple.py
+          python tensorflow/tensorflow_estimator_integration.py
+        fi
       env:
         OMP_NUM_THREADS: 1
