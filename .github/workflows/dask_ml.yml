@@ -29,10 +29,6 @@ jobs:
         pip install git+https://github.com/optuna/optuna.git
         python -c 'import optuna'
 
-        # TODO(nabenabe0928/2024/03/12): Remove this version constraint once the following PR is merged.
-        # https://github.com/dask/distributed/pull/8575
-        # NOTE(nabenabe0928): dask-expr supports only python>=3.9.
-        pip install "dask[dataframe]<2024.3.0"
         pip install -r dask_ml/requirements.txt
     - name: Run examples
       run: |
