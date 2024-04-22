@@ -34,7 +34,7 @@ jobs:
         pip install -r fastai/requirements.txt
     - name: Run examples
       run: |
-        python fastai/fastaiv2_simple.py
-        python fastai/fastaiv2_simple.py --pruning
+        python fastai/fastai_simple.py
+        python fastai/fastai_simple.py --pruning
       env:
         OMP_NUM_THREADS: 1
