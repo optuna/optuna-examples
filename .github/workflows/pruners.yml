@@ -6,7 +6,7 @@ on:
   pull_request:
     paths:
       - 'pruners/**'
-      - '.github/workflows/wilcoxon_pruner.yml'
+      - '.github/workflows/pruners.yml'
 
 jobs:
   examples:
