@@ -1,4 +1,4 @@
 keras
 optuna
-tensorflow
+tensorflow-cpu
 tensorflow-datasets
