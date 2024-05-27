@@ -4,10 +4,13 @@ import pandas as pd
 import os
 from functools import cached_property
 from timeit import default_timer as timer
-from datetime import datetime, timedelta
 import humanize
 import logging
-from trainkit import get_splits, compute_loss, train_valid_splits_by_counts
+from datetime import datetime
+from datetime import timedelta
+from trainkit import get_splits
+from trainkit import compute_loss
+from trainkit import train_valid_splits_by_counts
 from sklearn.metrics import root_mean_squared_error
 from collections import namedtuple
 from functools import total_ordering
