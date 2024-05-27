@@ -97,11 +97,17 @@ def feature_removal_cv(
 
         with open(featurelist_path, "w") as optuna_fp:
             optuna_fp.write(
-                objective.study_report() + "\n\nloss %, loss, removed count, removed\n"
+                objective.study_report() + "\n\nrelative-loss-%, "
+                "loss, "
+                "removed-count, "
+                "removed\n"
             )
             for loss, removed_features in objective.removal_rank:
                 optuna_fp.write(
-                    f"{objective.loss_improvement_percent(loss): 07.5f}, {loss:18.14f}, {len(removed_features)}, {removed_features}\n"
+                    f"{objective.loss_improvement_percent(loss): 07.5f}, "
+                    f"{loss:18.14f}, "
+                    f"{len(removed_features)}, "
+                    f"{removed_features}\n"
                 )
 
 
@@ -113,6 +119,7 @@ TrialInfoBase.__new__.__defaults__ = (None, 0, 0, [])
 
 @total_ordering
 class TrialInfo(TrialInfoBase):
+
     def __lt__(self, other):
         return self.loss > other.loss
 
@@ -130,7 +137,12 @@ class TrialInfo(TrialInfoBase):
               #0132 (47.06%):   1.8287% (173.9296) [08 removed]
 
         """
-        return f"#{self.trial:04n} (valid #{self.valid_trials} ({100 * self.valid_trials / (1 + self.trial):05.2f}%)): {self.improvement_percent: 8.4f}% ({self.loss:.4f}) [{self.removed_count:02n} removed]"
+        return (
+            f"#{self.trial:04n} (valid #{self.valid_trials} "
+            f"({100 * self.valid_trials / (1 + self.trial):05.2f}%)): "
+            f"{self.improvement_percent: 8.4f}% ({self.loss:.4f}) "
+            f"[{self.removed_count:02n} removed]"
+        )
 
     @property
     def valid_trial_percent(self):
@@ -146,10 +158,11 @@ T = TypeVar("T")
 
 class OptunaFeatureSelectionObjective:
     """
-    Provides an Optuna objective function to help you choose the best subset of features
-    from a given dataset that minimizes the loss of a model.
-    Also provide an ETA, and generates a final report of the feature selection process, including the best and last improvement trials,
-    and the overall feature selection statistics. This allows you to get an understanding of the most and least important features.
+    Provides an Optuna objective function to help you choose the best subset of features.
+
+    Also provide an ETA, and generates a final report of the feature selection process,
+    including the best and last improvement trials, and the overall feature selection statistics.
+    This allows you to get a better understanding of the most and least important features.
 
     Attributes:
         model_params (dict): Parameters of the model to be optimized.
@@ -157,18 +170,9 @@ class OptunaFeatureSelectionObjective:
         y (pd.Series): The target variable series.
         splits (list): A list of tuples containing train and validation indices.
         trial_count (int): The number of trials to perform.
-        max_removal_count (int): The maximum number of features to consider removing in one trial.
-        always_keep (set): A set of feature names that should always be retained and not considered for removal.
-        loss_fn (function): The loss function to be used for evaluating the performance of the model.
-
-    Methods:
-        __call__(trial): Called by the Optuna framework for each trial, to evaluate the loss of a model with a specific set of features.
-            This method computes the loss for the model using the features not flagged for removal. The method returns the loss which Optuna uses to determine
-            the best set of features.
-
-        __enter__(): Prepares logging and timing information at the start of the optimization process.
-            This method logs the initial state of the feature selection process, including the target variable and the total number of features.
-            It is designed to provide a clear starting point for the optimization logs, helping in debugging and tracking the progress of the feature selection.
+        max_removal_count (int): The maximum number of features to consider removing in a trial.
+        always_keep (set): Set of feature names not to be considered for removal.
+        loss_fn (function): Used for evaluating model performance.
     """
 
     def __init__(
@@ -198,7 +202,23 @@ class OptunaFeatureSelectionObjective:
         self.best_improvement_trial: TrialInfo = None
         self.last_improvement_trial: TrialInfo = None
 
-    def __call__(self, trial: optuna.trial.Trial):
+    def __call__(self, trial: optuna.trial.Trial) -> float:
+        """
+        Evaluates the loss of a model with a specific set of features.
+
+        Called by the Optuna framework for each trial.
+
+
+        Parameters
+        ----------
+        trial : optuna.trial.Trial
+
+        Returns
+        -------
+        float
+            Returns the loss which Optuna uses to determine the best set of features.
+
+        """
         removed_features = self._early_stop(self._compute_removed_features(trial))
 
         loss = self._compute_loss(removed_features)
@@ -206,8 +226,20 @@ class OptunaFeatureSelectionObjective:
         return self._handle_current_trial(trial, removed_features, loss).loss
 
     def __enter__(self):
+        """
+        Prepares logging and timing information at the start of the optimization process.
+        This method logs the initial state of the feature selection process,
+        including the target variable and the total number of features.
+
+        Returns
+        -------
+        TYPE
+            DESCRIPTION.
+
+        """
         logger.info(
-            f"[OptunaFeatureSelectionObjective] Target: {self.y.name}; Size: {self.y.shape[0]}"
+            f"[OptunaFeatureSelectionObjective] Target: {self.y.name}; "
+            f"Size: {self.y.shape[0]}"
             f"\n  {len(list(self.X))} features: {self.features}"
         )
         self.start_time = timer()
@@ -299,9 +331,9 @@ class OptunaFeatureSelectionObjective:
 
     def loss_improvement_percent(self, loss: float) -> float:
         """
-        Compares a loss against the original loss (with no features dropped).
-        NEGATIVE values indicate an INCREASE in loss compared to the original loss.
-        POSITIVE values indicate  a DECREASE in loss compared to the original loss.
+        Compares a loss against the baseline loss (with no features dropped).
+        NEGATIVE values indicate an INCREASE in loss.
+        POSITIVE values indicate  a DECREASE in loss.
 
         Parameters
         ----------
@@ -383,14 +415,14 @@ class OptunaFeatureSelectionObjective:
             f"\n    Last+: {self.last_improvement_trial.removed_features}" if show_last else ""
         )
         logger.info(
-            f"## [ETA {self.eta(current_trial.trial)}] Valid trials: {100 * self.combination_count / (1 + current_trial.trial):02.2f}% ({self.combination_count})"
+            f"## [ETA {self.eta(current_trial.trial)}] Valid trials: "
+            f"{100 * self.combination_count / (1 + current_trial.trial):02.2f}% "
+            f"({self.combination_count})"
             f"\n   Trials:"
-            f"{show_best_str}"
-            f"{show_last_str}"
+            f"{show_best_str}{show_last_str}"
             f"\n     Cur.: {current_trial}"
             f"\n   Removals:"
-            f"{show_best_removal_str}"
-            f"{show_last_removal_str}"
+            f"{show_best_removal_str}{show_last_removal_str}"
             f"\n     Cur.: {current_trial.removed_features}"
         )
 
@@ -402,7 +434,8 @@ class OptunaFeatureSelectionObjective:
             f"\nMax removal: {self.max_removal_count}"
             f"\nTrials     : {self.trial_count}"
             f"\n  Repeated : {100 * self.optuna_repeated_count / self.trial_count:02.1f}%"
-            f"\n  Valid    : {100 * self.combination_count / self.trial_count:02.2f}% ({self.combination_count})"
+            f"\n  Valid    : {100 * self.combination_count / self.trial_count:02.2f}% "
+            f"({self.combination_count})"
             f"\n  Mean time: {self.valid_trial_mean_time}"
             f"\nImprovement:"
             f"\n  Best: {self.best_improvement_trial}"
@@ -412,5 +445,12 @@ class OptunaFeatureSelectionObjective:
             f"\nremoved count, loss rank, element count, loss %, loss, removed\n"
         )
         for _, row in self.removal_rank_by_removal_count.iterrows():
-            report += f"{len(row.removed_features):02n}, {row.rank_by_loss:02n}, {row.element_count:03n}, {self.loss_improvement_percent(row.loss): 08.5f}, {row.loss:18.14f}, {row.removed_features}\n"
+            report += (
+                f"{len(row.removed_features):02n}, "
+                f"{row.rank_by_loss:02n}, "
+                f"{row.element_count:03n}, "
+                f"{self.loss_improvement_percent(row.loss): 08.5f}, "
+                f"{row.loss:18.14f}, "
+                f"{row.removed_features}\n"
+            )
         return report

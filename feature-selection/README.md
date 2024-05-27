@@ -4,7 +4,7 @@ Feature selection is a critical step in machine learning to enhance model perfor
 
 ## Example
 
-Example feature removal report:
+Example feature removal report from the fetch_california_housing dataset, using LightGBM as the model:
 
 ```
 Target     : MedHouseVal; Rows: 20640
