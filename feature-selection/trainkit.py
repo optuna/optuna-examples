@@ -2,11 +2,10 @@ import logging
 from typing import Callable
 import warnings
 
-
 import numpy as np
 import pandas as pd
-import lightgbm as lgb
 
+import lightgbm as lgb
 from sklearn.metrics import root_mean_squared_error
 from sklearn.model_selection import KFold
 
