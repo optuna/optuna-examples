@@ -1,5 +1,12 @@
-```
+## Introduction
 
+Feature selection is a critical step in machine learning to enhance model performance and reduce overfitting. However, evaluating every possible combination of features can be computationally expensive. This example introduces an efficient approach to feature selection using Optuna, which significantly reduces the search space and computation time.
+
+## Example
+
+Example feature removal report:
+
+```
 Target     : MedHouseVal; Rows: 20640
 Time       : 3 minutes and 54.60 seconds
 Max removal: 5
