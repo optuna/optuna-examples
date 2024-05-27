@@ -318,6 +318,7 @@ class OptunaFeatureSelectionObjective:
 
     def loss_improvement_percent(self, loss: float) -> float:
         """Compares a loss against the baseline loss (with no features dropped).
+
         NEGATIVE values indicate an INCREASE in loss.
         POSITIVE values indicate  a DECREASE in loss.
 
