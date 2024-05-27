@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
-
 import logging
 import warnings
+from typing import Callable
 
 from sklearn.metrics import root_mean_squared_error
 
@@ -73,8 +72,8 @@ def compute_loss(
     X: pd.DataFrame,
     y: pd.Series,
     splits: list[tuple],
-    selected_feature_names: list[str] = None,
-    loss_fn=root_mean_squared_error,
+    selected_feature_names: list[str] | None = None,
+    loss_fn: Callable[[pd.Series, pd.Series], float] = root_mean_squared_error,
 ) -> float:
     """
     Compute the loss for a given model configuration and dataset
