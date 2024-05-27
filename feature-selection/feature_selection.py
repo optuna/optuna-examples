@@ -18,7 +18,6 @@ from trainkit import train_valid_splits_by_counts
 
 from sklearn.metrics import root_mean_squared_error
 
-
 optuna.logging.set_verbosity(optuna.logging.WARNING)
 logging.getLogger("trainkit").setLevel(logging.INFO)
 logger = logging.getLogger("feature_selection")
@@ -103,8 +102,8 @@ def feature_removal_cv(
 
         with open(featurelist_path, "w") as optuna_fp:
             optuna_fp.write(
-                objective.study_report() +
-                "\n\n---\nRelative loss percent ranking, from best to worst:"
+                objective.study_report()
+                + "\n\n---\nRelative loss percent ranking, from best to worst:"
                 "\n  - Relative to the baseline (no features removed)"
                 "\n\nrelative-loss-%, loss, removed-count, removed\n"
             )
