@@ -1,25 +1,31 @@
 
 Target     : MedHouseVal; Rows: 20640
-Time       : 3 minutes and 56.01 seconds
+Time       : 4 minutes and 7.79 seconds
 Max removal: 5
-Trials     : 800
-  Repeated : 85.4%
-  Valid    : 12.75% (102)
-  Mean time: 2.31 seconds
+Trials     : 1000
+  Repeated : 87.1%
+  Valid    : 11.10% (111)
+  Mean time: 2.23 seconds
 Improvement:
   Best: #0012 (valid #12 (92.31%)):   0.5640% (0.4470) [02 removed]
   Last: #0012 (valid #12 (92.31%)):   0.5640% (0.4470) [02 removed]
 
+---
 Removal count ranking (showing best entry for each removal count)
-  Best is always at 'loss rank' 1
-removed count, loss rank, element count, loss %, loss, removed
-05, 06, 013, -4.66230,   0.47045773007001, ('HouseAge', 'AveRooms', 'AveBedrms', 'Population', 'AveOccup')
-04, 05, 027, -4.21248,   0.46843579420832, ('HouseAge', 'AveBedrms', 'Population', 'AveOccup')
-03, 04, 031, -1.03054,   0.45413293903588, ('HouseAge', 'AveBedrms', 'Population')
-02, 01, 022,  0.56401,   0.44696545144867, ('AveBedrms', 'Population')
+  - Best is always at 'loss-rank'=1
+
+removed-count, loss-rank, element-count, relative-loss-%, loss, removed
+05, 06, 016, -4.66230,   0.47045773007001, ('HouseAge', 'AveRooms', 'AveBedrms', 'Population', 'AveOccup')
+04, 05, 030, -4.21248,   0.46843579420832, ('HouseAge', 'AveBedrms', 'Population', 'AveOccup')
+03, 04, 032, -1.03054,   0.45413293903588, ('HouseAge', 'AveBedrms', 'Population')
+02, 01, 024,  0.56401,   0.44696545144867, ('AveBedrms', 'Population')
 01, 02, 008,  0.16590,   0.44875497579740, ('Population',)
 00, 03, 001,  0.00000,   0.44950067535113, ()
 
+
+---
+Relative loss percent ranking, from best to worst:
+  - Relative to the baseline (no features removed)
 
 relative-loss-%, loss, removed-count, removed
  0.56401,   0.44696545144867, 2, ('AveBedrms', 'Population')
@@ -85,18 +91,24 @@ relative-loss-%, loss, removed-count, removed
 -29.95871,   0.58416527803826, 3, ('AveRooms', 'AveBedrms', 'Longitude')
 -30.78791,   0.58789252613351, 2, ('MedInc', 'AveRooms')
 -32.07312,   0.59366956094864, 4, ('MedInc', 'HouseAge', 'AveRooms', 'Population')
+-32.66674,   0.59633788722049, 4, ('HouseAge', 'AveBedrms', 'Population', 'Latitude')
 -32.75321,   0.59672656085596, 5, ('MedInc', 'HouseAge', 'AveRooms', 'AveBedrms', 'AveOccup')
 -32.86823,   0.59724360912042, 4, ('MedInc', 'HouseAge', 'AveRooms', 'AveBedrms')
 -33.73193,   0.60112592645904, 3, ('MedInc', 'HouseAge', 'AveRooms')
 -33.74887,   0.60120205882995, 4, ('MedInc', 'AveRooms', 'AveBedrms', 'AveOccup')
 -34.97764,   0.60672539730386, 4, ('HouseAge', 'AveRooms', 'Population', 'Latitude')
+-35.41009,   0.60866927817798, 4, ('HouseAge', 'AveBedrms', 'Population', 'Longitude')
 -35.66525,   0.60981622219018, 5, ('HouseAge', 'AveRooms', 'AveBedrms', 'Population', 'Latitude')
 -36.76957,   0.61478012261011, 4, ('MedInc', 'HouseAge', 'AveRooms', 'AveOccup')
 -36.80242,   0.61492780263808, 3, ('HouseAge', 'AveRooms', 'Longitude')
 -37.80189,   0.61942040462466, 4, ('HouseAge', 'AveRooms', 'AveBedrms', 'Longitude')
 -37.91647,   0.61993544414150, 4, ('HouseAge', 'AveRooms', 'Population', 'Longitude')
+-38.47016,   0.62242429219966, 5, ('HouseAge', 'AveRooms', 'AveBedrms', 'Population', 'Longitude')
+-39.59685,   0.62748878981688, 2, ('AveOccup', 'Latitude')
 -40.65759,   0.63225683442081, 2, ('Latitude', 'Longitude')
 -42.37149,   0.63996082283022, 3, ('Population', 'Latitude', 'Longitude')
+-43.18696,   0.64362636179336, 2, ('AveOccup', 'Longitude')
+-43.22096,   0.64377920005569, 3, ('AveBedrms', 'Latitude', 'Longitude')
 -43.80332,   0.64639691374347, 4, ('AveBedrms', 'Population', 'AveOccup', 'Latitude')
 -43.87200,   0.64670560924455, 3, ('AveBedrms', 'AveOccup', 'Latitude')
 -44.34598,   0.64883615376219, 3, ('Population', 'AveOccup', 'Longitude')
@@ -106,13 +118,16 @@ relative-loss-%, loss, removed-count, removed
 -47.07703,   0.66111225482940, 4, ('HouseAge', 'Population', 'AveOccup', 'Latitude')
 -47.74738,   0.66412547514768, 4, ('AveBedrms', 'Population', 'AveOccup', 'Longitude')
 -49.16841,   0.67051300238039, 3, ('MedInc', 'Population', 'Latitude')
+-49.69176,   0.67286549232064, 4, ('AveRooms', 'Population', 'AveOccup', 'Longitude')
 -49.79569,   0.67333265521987, 4, ('AveRooms', 'AveBedrms', 'Latitude', 'Longitude')
+-50.02319,   0.67435526750837, 5, ('HouseAge', 'AveBedrms', 'Population', 'AveOccup', 'Latitude')
 -50.77163,   0.67771948267529, 3, ('HouseAge', 'AveOccup', 'Longitude')
 -50.84316,   0.67804101425540, 2, ('MedInc', 'Longitude')
 -51.96104,   0.68306592313965, 3, ('HouseAge', 'Latitude', 'Longitude')
 -52.67413,   0.68627126128431, 5, ('HouseAge', 'AveRooms', 'AveBedrms', 'AveOccup', 'Latitude')
 -52.83002,   0.68697195897298, 4, ('HouseAge', 'Population', 'AveOccup', 'Longitude')
 -52.83559,   0.68699699230203, 5, ('AveRooms', 'AveBedrms', 'Population', 'Latitude', 'Longitude')
+-54.87442,   0.69616156721228, 5, ('HouseAge', 'AveBedrms', 'Population', 'Latitude', 'Longitude')
 -55.11743,   0.69725388310838, 4, ('MedInc', 'HouseAge', 'Population', 'Latitude')
 -56.04720,   0.70143320037677, 4, ('MedInc', 'AveBedrms', 'Population', 'Latitude')
 -61.36219,   0.72532414110002, 5, ('HouseAge', 'AveRooms', 'Population', 'Latitude', 'Longitude')

@@ -103,10 +103,10 @@ def feature_removal_cv(
 
         with open(featurelist_path, "w") as optuna_fp:
             optuna_fp.write(
-                objective.study_report() + "\n\nrelative-loss-%, "
-                "loss, "
-                "removed-count, "
-                "removed\n"
+                objective.study_report() +
+                "\n\n---\nRelative loss percent ranking, from best to worst:"
+                "\n  - Relative to the baseline (no features removed)"
+                "\n\nrelative-loss-%, loss, removed-count, removed\n"
             )
             for loss, removed_features in objective.removal_rank:
                 optuna_fp.write(
@@ -433,9 +433,9 @@ class OptunaFeatureSelectionObjective:
             f"\nImprovement:"
             f"\n  Best: {self.best_improvement_trial}"
             f"\n  Last: {self.last_improvement_trial}"
-            f"\n\nRemoval count ranking (showing best entry for each removal count)"
-            f"\n  Best is always at 'loss rank' 1"
-            f"\nremoved count, loss rank, element count, loss %, loss, removed\n"
+            f"\n\n---\nRemoval count ranking (showing best entry for each removal count)"
+            f"\n  - Best is always at 'loss-rank'=1"
+            f"\n\nremoved-count, loss-rank, element-count, relative-loss-%, loss, removed\n"
         )
         for _, row in self.removal_rank_by_removal_count.iterrows():
             report += (
