@@ -128,6 +128,8 @@ class TrialInfo(TrialInfoBase):
 
     def __str__(self):
         """
+        String representation.
+
         Returns
         -------
         str
@@ -135,7 +137,6 @@ class TrialInfo(TrialInfoBase):
               #trial (percent valid trial):   percent improvement (loss) [removed count]
             Example:
               #0132 (47.06%):   1.8287% (173.9296) [08 removed]
-
         """
         return (
             f"#{self.trial:04n} (valid #{self.valid_trials} "
