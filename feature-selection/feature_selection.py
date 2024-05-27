@@ -14,9 +14,8 @@ from functools import total_ordering
 from typing import TypeVar
 
 optuna.logging.set_verbosity(optuna.logging.WARNING)
-logging.getLogger('trainkit').setLevel(logging.INFO)
-logger = logging.getLogger('feature_selection')
-
+logging.getLogger("trainkit").setLevel(logging.INFO)
+logger = logging.getLogger("feature_selection")
 
 
 def feature_removal(
@@ -35,9 +34,7 @@ def feature_removal(
         model_params,
         pd.concat([X_train, X_valid], axis=0),
         pd.concat([y_train, y_valid], axis=0),
-        split_count=train_valid_splits_by_counts(
-            X_train.shape[0], X_valid.shape[0]
-        ),
+        split_count=train_valid_splits_by_counts(X_train.shape[0], X_valid.shape[0]),
         data_dir=data_dir,
         trial_count=trial_count,
         max_removal_count=max_removal_count,
@@ -63,28 +60,20 @@ def feature_removal_cv(
 
     logger.warning("[feature_removal] (%s) Data size: %d", y.name, y.shape[0])
 
-    study = optuna.create_study(
-        direction="minimize", sampler=TPESampler(seed=42)
-    )
+    study = optuna.create_study(direction="minimize", sampler=TPESampler(seed=42))
 
     # We first try the model using all features
     features = list(X.columns)
     study.enqueue_trial({ft: True for ft in features})
-    logger.info(
-        "[feature_removal] Original suggestions: %d", len(removal_suggestions)
-    )
+    logger.info("[feature_removal] Original suggestions: %d", len(removal_suggestions))
     removal_suggestions += [(ft,) for ft in features]
     removal_suggestions = list(dict.fromkeys(removal_suggestions))
-    logger.info(
-        "[feature_removal] Final suggestions: %d", len(removal_suggestions)
-    )
+    logger.info("[feature_removal] Final suggestions: %d", len(removal_suggestions))
     for removals in removal_suggestions:
         suggestion = {ft: ft not in removals for ft in features}
         suggested_count = sum(suggestion.values())
         if suggested_count == 0 or suggested_count == len(features):
-            logger.warning(
-                "[feature_removal] Suggestion count == %d; Skipped", suggested_count
-            )
+            logger.warning("[feature_removal] Suggestion count == %d; Skipped", suggested_count)
         else:
             logger.info(
                 "[feature_removal] Enqueue removal suggestion: %s",
@@ -96,11 +85,7 @@ def feature_removal_cv(
         model_params=model_params,
         X=X,
         y=y,
-        splits=(
-            get_splits(X, split_count)
-            if isinstance(split_count, int)
-            else split_count
-        ),
+        splits=(get_splits(X, split_count) if isinstance(split_count, int) else split_count),
         trial_count=trial_count,
         max_removal_count=max_removal_count,
         always_keep=always_keep,
@@ -112,8 +97,7 @@ def feature_removal_cv(
 
         with open(featurelist_path, "w") as optuna_fp:
             optuna_fp.write(
-                objective.study_report()
-                + "\n\nloss %, loss, removed count, removed\n"
+                objective.study_report() + "\n\nloss %, loss, removed count, removed\n"
             )
             for loss, removed_features in objective.removal_rank:
                 optuna_fp.write(
@@ -163,7 +147,7 @@ T = TypeVar("T")
 class OptunaFeatureSelectionObjective:
     """
     Provides an Optuna objective function to help you choose the best subset of features
-    from a given dataset that minimizes the loss of a model. 
+    from a given dataset that minimizes the loss of a model.
     Also provide an ETA, and generates a final report of the feature selection process, including the best and last improvement trials,
     and the overall feature selection statistics. This allows you to get an understanding of the most and least important features.
 
@@ -181,7 +165,7 @@ class OptunaFeatureSelectionObjective:
         __call__(trial): Called by the Optuna framework for each trial, to evaluate the loss of a model with a specific set of features.
             This method computes the loss for the model using the features not flagged for removal. The method returns the loss which Optuna uses to determine
             the best set of features.
-            
+
         __enter__(): Prepares logging and timing information at the start of the optimization process.
             This method logs the initial state of the feature selection process, including the target variable and the total number of features.
             It is designed to provide a clear starting point for the optimization logs, helping in debugging and tracking the progress of the feature selection.
@@ -215,16 +199,11 @@ class OptunaFeatureSelectionObjective:
         self.last_improvement_trial: TrialInfo = None
 
     def __call__(self, trial: optuna.trial.Trial):
-        removed_features = self._early_stop(
-            self._compute_removed_features(trial)
-        )
+        removed_features = self._early_stop(self._compute_removed_features(trial))
 
         loss = self._compute_loss(removed_features)
 
-        return self._handle_current_trial(
-            trial, removed_features, loss
-        ).loss
-
+        return self._handle_current_trial(trial, removed_features, loss).loss
 
     def __enter__(self):
         logger.info(
@@ -236,9 +215,7 @@ class OptunaFeatureSelectionObjective:
 
     def __exit__(self, exc_type, exc_value, traceback):
         self._update_stats()
-        logger.info(
-            "[OptunaFeatureSelectionObjective] %s", self.study_report()
-        )
+        logger.info("[OptunaFeatureSelectionObjective] %s", self.study_report())
 
     def _early_stop(self, removed_features: T) -> T:
         if len(removed_features) > self.max_removal_count:
@@ -252,12 +229,10 @@ class OptunaFeatureSelectionObjective:
             logger.debug("### TrialPruned: No features left.")
             raise optuna.exceptions.TrialPruned()
 
-        if self.always_keep and len(
-            set(removed_features) & self.always_keep
-        ) == len(self.always_keep):
-            logger.debug(
-                "### TrialPruned: All required features were removed"
-            )
+        if self.always_keep and len(set(removed_features) & self.always_keep) == len(
+            self.always_keep
+        ):
+            logger.debug("### TrialPruned: All required features were removed")
             raise optuna.exceptions.TrialPruned()
 
         if removed_features in self.known_losses:
@@ -268,9 +243,7 @@ class OptunaFeatureSelectionObjective:
 
     def _compute_loss(self, removed_features: tuple[str]) -> float:
         selected_features = [
-            feature_name
-            for feature_name in self.features
-            if feature_name not in removed_features
+            feature_name for feature_name in self.features if feature_name not in removed_features
         ]
 
         loss = compute_loss(
@@ -286,9 +259,7 @@ class OptunaFeatureSelectionObjective:
             self.original_loss = loss
         return loss
 
-    def _handle_current_trial(
-        self, trial, removed_features: tuple[str], loss: float
-    ) -> TrialInfo:
+    def _handle_current_trial(self, trial, removed_features: tuple[str], loss: float) -> TrialInfo:
         improvement_percent = self.loss_improvement_percent(loss)
         current_trial = TrialInfo(
             trial.number,
@@ -311,15 +282,11 @@ class OptunaFeatureSelectionObjective:
         if self.duration != 0:
             return
         self.duration = timer() - self.start_time
-        self.hduration = humanize.precisedelta(
-            timedelta(seconds=self.duration)
-        )
+        self.hduration = humanize.precisedelta(timedelta(seconds=self.duration))
         self.valid_trial_mean_time = humanize.precisedelta(
             timedelta(
                 seconds=(
-                    (self.duration / self.combination_count)
-                    if self.combination_count > 0
-                    else 0
+                    (self.duration / self.combination_count) if self.combination_count > 0 else 0
                 )
             )
         )
@@ -356,13 +323,10 @@ class OptunaFeatureSelectionObjective:
 
     def _compute_removed_features(self, trial) -> tuple[str]:
         feature_selection = [
-            trial.suggest_categorical(name, [True, False])
-            for name in self.features
+            trial.suggest_categorical(name, [True, False]) for name in self.features
         ]
         return tuple(
-            name
-            for name, selected in zip(self.features, feature_selection)
-            if not selected
+            name for name, selected in zip(self.features, feature_selection) if not selected
         )
 
     @property
@@ -384,10 +348,7 @@ class OptunaFeatureSelectionObjective:
 
     @cached_property
     def removal_rank_by_removal_count(self) -> pd.DataFrame:
-        data = (
-            (loss, removed_features)
-            for loss, removed_features in self.removal_rank
-        )
+        data = ((loss, removed_features) for loss, removed_features in self.removal_rank)
         df = pd.DataFrame(data, columns=["loss", "removed_features"])
         df["rcount"] = df["removed_features"].apply(len)
 
@@ -411,24 +372,15 @@ class OptunaFeatureSelectionObjective:
         )
         show_last = (
             self.best_improvement_trial is None
-            or self.best_improvement_trial.trial
-            != self.last_improvement_trial.trial
+            or self.best_improvement_trial.trial != self.last_improvement_trial.trial
         ) and current_trial.trial != self.last_improvement_trial.trial
-        show_best_str = (
-            f"\n     Best: {self.best_improvement_trial}" if show_best else ""
-        )
+        show_best_str = f"\n     Best: {self.best_improvement_trial}" if show_best else ""
         show_best_removal_str = (
-            f"\n     Best: {self.best_improvement_trial.removed_features}"
-            if show_best
-            else ""
+            f"\n     Best: {self.best_improvement_trial.removed_features}" if show_best else ""
         )
-        show_last_str = (
-            f"\n    Last+: {self.last_improvement_trial}" if show_last else ""
-        )
+        show_last_str = f"\n    Last+: {self.last_improvement_trial}" if show_last else ""
         show_last_removal_str = (
-            f"\n    Last+: {self.last_improvement_trial.removed_features}"
-            if show_last
-            else ""
+            f"\n    Last+: {self.last_improvement_trial.removed_features}" if show_last else ""
         )
         logger.info(
             f"## [ETA {self.eta(current_trial.trial)}] Valid trials: {100 * self.combination_count / (1 + current_trial.trial):02.2f}% ({self.combination_count})"
