@@ -224,16 +224,6 @@ class OptunaFeatureSelectionObjective:
         return self._handle_current_trial(trial, removed_features, loss).loss
 
     def __enter__(self):
-        """Prepares logging and timing information at the start of the optimization process.
-        This method logs the initial state of the feature selection process,
-        including the target variable and the total number of features.
-
-        Returns
-        -------
-        TYPE
-            DESCRIPTION.
-
-        """
         logger.info(
             f"[OptunaFeatureSelectionObjective] Target: {self.y.name}; "
             f"Size: {self.y.shape[0]}"

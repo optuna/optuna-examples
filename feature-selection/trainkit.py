@@ -14,8 +14,7 @@ logger = logging.getLogger("trainkit")
 
 
 def train_valid_splits_by_counts(train_count, valid_count):
-    """Generate indices for training and validation sets based on specified
-    counts.
+    """Generate indices for training and validation sets based on specified counts.
 
     This function creates a list of tuples, where each tuple contains
     two numpy arrays: the first array contains indices for the training set,
@@ -73,8 +72,7 @@ def compute_loss(
     selected_feature_names: list[str] | None = None,
     loss_fn: Callable[[pd.Series, pd.Series], float] = root_mean_squared_error,
 ) -> float:
-    """Compute the loss for a given model configuration and dataset
-    using the specified loss function.
+    """Compute the loss for a given model configuration and dataset.
 
     Parameters
     ----------
