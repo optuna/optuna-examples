@@ -1,11 +1,11 @@
 
 Target     : MedHouseVal; Rows: 20640
-Time       : 3 minutes and 54.65 seconds
+Time       : 3 minutes and 56.01 seconds
 Max removal: 5
 Trials     : 800
   Repeated : 85.4%
   Valid    : 12.75% (102)
-  Mean time: 2.30 seconds
+  Mean time: 2.31 seconds
 Improvement:
   Best: #0012 (valid #12 (92.31%)):   0.5640% (0.4470) [02 removed]
   Last: #0012 (valid #12 (92.31%)):   0.5640% (0.4470) [02 removed]
@@ -21,7 +21,7 @@ removed count, loss rank, element count, loss %, loss, removed
 00, 03, 001,  0.00000,   0.44950067535113, ()
 
 
-loss %, loss, removed count, removed
+relative-loss-%, loss, removed-count, removed
  0.56401,   0.44696545144867, 2, ('AveBedrms', 'Population')
  0.16590,   0.44875497579740, 1, ('Population',)
  0.10078,   0.44904767131884, 1, ('AveBedrms',)
