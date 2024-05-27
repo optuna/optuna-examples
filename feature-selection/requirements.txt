@@ -1,4 +1,6 @@
-lightgbm>=3.3.0
-numpy
-optuna
-scikit-learn
+humanize==4.9.0
+lightgbm==4.3.0
+numpy==1.26.4
+optuna==3.6.1
+pandas==2.2.2
+scikit-learn==1.5.0

@@ -13,7 +13,6 @@ from sklearn.metrics import root_mean_squared_error
 
 import optuna
 import lightgbm as lgb
-import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.model_selection import KFold
