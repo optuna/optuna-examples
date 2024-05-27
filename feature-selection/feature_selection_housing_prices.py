@@ -1,6 +1,8 @@
-from sklearn.datasets import fetch_california_housing
-from feature_selection import feature_removal_cv
 import logging
+
+from feature_selection import feature_removal_cv
+from sklearn.datasets import fetch_california_housing
+
 
 logging.basicConfig(
     level=logging.DEBUG,
