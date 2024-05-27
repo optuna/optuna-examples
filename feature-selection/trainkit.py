@@ -14,8 +14,7 @@ logger = logging.getLogger("trainkit")
 
 
 def train_valid_splits_by_counts(train_count, valid_count):
-    """
-    Generate indices for training and validation sets based on specified
+    """Generate indices for training and validation sets based on specified
     counts.
 
     This function creates a list of tuples, where each tuple contains
@@ -44,8 +43,7 @@ def train_valid_splits_by_counts(train_count, valid_count):
 
 
 def get_splits(X, split_count=2):
-    """
-    Generate training and validation indices for K-Fold cross-validation.
+    """Generate training and validation indices for K-Fold cross-validation.
 
     A list of tuples is created in which each tuple contains two arrays:
     the first array contains indices for the training set, and
@@ -75,8 +73,7 @@ def compute_loss(
     selected_feature_names: list[str] | None = None,
     loss_fn: Callable[[pd.Series, pd.Series], float] = root_mean_squared_error,
 ) -> float:
-    """
-    Compute the loss for a given model configuration and dataset
+    """Compute the loss for a given model configuration and dataset
     using the specified loss function.
 
     Parameters

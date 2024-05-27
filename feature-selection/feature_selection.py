@@ -127,8 +127,7 @@ class TrialInfo(TrialInfoBase):
         return self.loss == other.loss
 
     def __str__(self):
-        """
-        String representation.
+        """String representation.
 
         Returns
         -------
@@ -158,8 +157,7 @@ T = TypeVar("T")
 
 
 class OptunaFeatureSelectionObjective:
-    """
-    Provides an Optuna objective function to help you choose the best subset of features.
+    """Provides an Optuna objective function to help you choose the best subset of features.
 
     Also provide an ETA, and generates a final report of the feature selection process,
     including the best and last improvement trials, and the overall feature selection statistics.
@@ -204,8 +202,7 @@ class OptunaFeatureSelectionObjective:
         self.last_improvement_trial: TrialInfo = None
 
     def __call__(self, trial: optuna.trial.Trial) -> float:
-        """
-        Evaluates the loss of a model with a specific set of features.
+        """Evaluates the loss of a model with a specific set of features.
 
         Called by the Optuna framework for each trial.
 
@@ -227,8 +224,7 @@ class OptunaFeatureSelectionObjective:
         return self._handle_current_trial(trial, removed_features, loss).loss
 
     def __enter__(self):
-        """
-        Prepares logging and timing information at the start of the optimization process.
+        """Prepares logging and timing information at the start of the optimization process.
         This method logs the initial state of the feature selection process,
         including the target variable and the total number of features.
 
@@ -331,8 +327,7 @@ class OptunaFeatureSelectionObjective:
         return datetime.now() + timedelta(seconds=result)
 
     def loss_improvement_percent(self, loss: float) -> float:
-        """
-        Compares a loss against the baseline loss (with no features dropped).
+        """Compares a loss against the baseline loss (with no features dropped).
         NEGATIVE values indicate an INCREASE in loss.
         POSITIVE values indicate  a DECREASE in loss.
 
