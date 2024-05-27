@@ -1,6 +1,6 @@
 
 Target     : MedHouseVal; Rows: 20640
-Time       : 3 minutes and 54.60 seconds
+Time       : 3 minutes and 54.65 seconds
 Max removal: 5
 Trials     : 800
   Repeated : 85.4%

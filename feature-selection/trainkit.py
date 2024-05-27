@@ -21,7 +21,8 @@ from sklearn.model_selection import KFold
 import numpy as np
 import pandas as pd
 
-logger = logging.getLogger('trainkit')
+logger = logging.getLogger("trainkit")
+
 
 def train_valid_splits_by_counts(train_count, valid_count):
     """
@@ -117,9 +118,7 @@ def compute_loss(
         y_valid_split = y.iloc[valid_idx]
 
         train_data = lgb.Dataset(X_train_split, label=y_train_split)
-        valid_data = lgb.Dataset(
-            X_valid_split, label=y_valid_split, reference=train_data
-        )
+        valid_data = lgb.Dataset(X_valid_split, label=y_valid_split, reference=train_data)
         with warnings.catch_warnings():  # Python 3.11: (action="ignore"):
             warnings.simplefilter("ignore")
             gbm = lgb.train(
