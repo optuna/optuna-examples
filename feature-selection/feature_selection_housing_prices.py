@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import logging
 
 from feature_selection import feature_removal_cv
@@ -10,7 +12,6 @@ logging.basicConfig(
     format="[%(asctime)s] %(levelname)s: %(message)s",
     datefmt="%d-%b-%y %H:%M:%S",
 )
-
 
 df = fetch_california_housing(as_frame=True).frame
 
