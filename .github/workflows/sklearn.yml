@@ -34,7 +34,8 @@ jobs:
         pip install -r sklearn/requirements.txt
     - name: Run examples
       run: |
-        python sklearn/sklearn_simple.py
         python sklearn/sklearn_additional_args.py
+        python sklearn/sklearn_optuna_search_cv_simple.py
+        python sklearn/sklearn_simple.py
       env:
         OMP_NUM_THREADS: 1
