@@ -1,3 +1,4 @@
 botorch
-scikit-learn
+pandas  # used in terminator_search_cv.py
 plotly
+scikit-learn
