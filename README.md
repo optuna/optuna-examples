@@ -26,7 +26,7 @@ if __name__ == "__main__":
 > [!NOTE]
 > If you are interested in a quick start of [Optuna Dashboard](https://github.com/optuna/optuna-dashboard) with in-memory storage, please take a look at [this example](./dashboard/run_server_simple.py).
 
-> [!TIPS]
+> [!TIP]
 > Couldn't you find examples you would like to try?
 > [FAQ](https://optuna.readthedocs.io/en/stable/faq.html) might be helpful for you to implement what you want.
 > In this example repository, you can also find the examples for the following scenarios:
