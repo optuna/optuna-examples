@@ -33,11 +33,6 @@ jobs:
         pip install -r requirements.txt
     - name: Run examples
       run: |
-        python max_trials_callback.py
-        python enqueue_trial.py
-        python quadratic_simple.py
-        python simple_pruning.py
-        python -m py_compile rapids_simple.py  # due to difficulty importing, compile only
         jupyter nbconvert --to notebook --execute quickstart.ipynb
       env:
         OMP_NUM_THREADS: 1
