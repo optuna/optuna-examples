@@ -49,7 +49,14 @@ Here are the URLs to the example codeblocks to the corresponding setups.
 </details>
 
 <details>
-<summary>Machine Learning</summary>
+<summary>Multi-Objective Optimization</summary>
+
+* [Optimization with BoTorch](./multi_objective/botorch_simple.py)
+* [Optimization of Multi-Layer Perceptron with PyTorch](./multi_objective/pytorch_simple.py)
+</details>
+
+<details>
+<summary>Machine Learning (Incl. LightGBMTuner and OptunaSearchCV)</summary>
 
 * [AllenNLP](./allennlp/allennlp_simple.py)
 * [AllenNLP (Jsonnet)](./allennlp/allennlp_jsonnet.py)
@@ -120,13 +127,6 @@ If you are interested in defining a user-defined sampler, here is an example:
 
 * [Optuna Terminator](./terminator/terminator_simple.py)
 * [OptunaSearchCV with Terminator](./terminator/terminator_search_cv.py)
-</details>
-
-<details>
-<summary>Multi-Objective Optimization</summary>
-
-* [Optimization with BoTorch](./multi_objective/botorch_simple.py)
-* [Optimization of Multi-Layer Perceptron with PyTorch](./multi_objective/pytorch_simple.py)
 </details>
 
 <details>
