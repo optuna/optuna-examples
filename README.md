@@ -47,7 +47,7 @@ The examples below provide codeblocks similar to the example above for various d
 * [PyTorch Ignite](./pytorch/pytorch_ignite_simple.py)
 * [PyTorch Lightning](./pytorch/pytorch_lightning_simple.py)
 * [PyTorch Lightning (DDP)](./pytorch/pytorch_lightning_ddp.py)
-* [RAPIDS](./rapids_simple.py)
+* [RAPIDS](./rapids/rapids_simple.py)
 * [Scikit-learn](./sklearn/sklearn_simple.py)
 * [Scikit-learn OptunaSearchCV](./sklearn/sklearn_optuna_search_cv_simple.py)
 * [Scikit-image](./skimage/skimage_lbp_simple.py)
