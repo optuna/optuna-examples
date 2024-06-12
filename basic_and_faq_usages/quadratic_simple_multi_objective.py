@@ -28,7 +28,7 @@ if __name__ == "__main__":
     print("Number of finished trials: ", len(study.trials))
 
     for i, best_trial in enumerate(study.best_trials):
-        print(f"The {i}-th Pareto solution was found at Trial#{best_trial.number}.")
-        print(f"  Params: {best_trial.params}")
+        print("The {}-th Pareto solution was found at Trial#{}.".format(i, best_trial.number))
+        print("  Params: {}".format(best_trial.params))
         f1, f2 = best_trial.values
-        print(f"  Values: {f1=}, {f2=}")
+        print("  Values: f1={}, f2={}".format(f1, f2))
