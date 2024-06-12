@@ -25,9 +25,9 @@ The examples below provide codeblocks similar to the example above for various d
 
 ### Simple Black-box Optimization
 
-* [Quadratic function](./quadratic_simple.py)
-* [Quadratic multi-objective function](./multi_objective/quadratic_simple.py)
-* [Quadratic function with constraints](./quadratic_simple_constraint.py)
+* [Quadratic function](./basic_and_faq_usages/quadratic_simple.py)
+* [Quadratic multi-objective function](./basic_and_faq_usages/quadratic_simple_multi_objective.py)
+* [Quadratic function with constraints](./basic_and_faq_usages/quadratic_simple_constraint.py)
 
 ### Examples with ML Libraries
 
@@ -72,7 +72,7 @@ The following example demonstrates how to implement an objective function that u
 
 The following example demonstrates how to implement pruning logic with Optuna.
 
-* [Simple pruning (scikit-learn)](./simple_pruning.py)
+* [Simple pruning (scikit-learn)](./basic_and_faq_usages/simple_pruning.py)
 
 In addition, integration modules are available for the following libraries, providing simpler interfaces to utilize pruning.
 
@@ -116,7 +116,7 @@ In addition, integration modules are available for the following libraries, prov
 
 ### An example to enqueue trials with given parameter values
 
-* [Enqueuing trials with given parameters](./enqueue_trial.py)
+* [Enqueuing trials with given parameters](./basic_and_faq_usages/enqueue_trial.py)
 
 ### Examples of aim
 
