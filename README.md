@@ -26,6 +26,16 @@ if __name__ == "__main__":
 > [!NOTE]
 > If you are interested in a quick start of [Optuna Dashboard](https://github.com/optuna/optuna-dashboard) with in-memory storage, please take a look at [this example](./dashboard/run_server_simple.py).
 
+> [!TIPS]
+> Couldn't you find examples you would like to try?
+> [FAQ](https://optuna.readthedocs.io/en/stable/faq.html) might be helpful for you to implement what you want.
+> In this example repository, you can also find the examples for the following scenarios:
+> 1. [Objective function with additional arguments](./sklearn/sklearn_additional_args.py), which is useful when you would like to pass arguments besides `trial` to your objective function.
+> 
+> 2. [Manually provide trials with sampler](./enqueue_trial.py), which is useful when you would like to force certain parameters to be sampled.
+>
+> 3. [Callback to control the termination criterion of study](./max_trials_callback.py), which is useful when you would like to define your own termination criterion other than `n_trials` or `timeout`.
+
 ## Examples for Diverse Problem Setups
 
 Here are the URLs to the example codeblocks to the corresponding setups.
@@ -39,7 +49,7 @@ Here are the URLs to the example codeblocks to the corresponding setups.
 </details>
 
 <details>
-<summary>Combination with Machine Learning Libraries</summary>
+<summary>Machine Learning</summary>
 
 * [AllenNLP](./allennlp/allennlp_simple.py)
 * [AllenNLP (Jsonnet)](./allennlp/allennlp_jsonnet.py)
@@ -65,14 +75,10 @@ Here are the URLs to the example codeblocks to the corresponding setups.
 * [Tensorflow](./tensorflow/tensorflow_estimator_simple.py)
 * [Tensorflow (eager)](./tensorflow/tensorflow_eager_simple.py)
 * [XGBoost](./xgboost/xgboost_simple.py)
-</details>
 
-<details>
-<summary>Objective Function with Additional Arguments</summary>
+If you are looking for an example of reinforcement learning, please take a look at the following:
+* [Optimization of Hyperparameters for Stable-Baslines Agent](./rl/sb3_simple.py)
 
-The following example demonstrates how to implement an objective function that uses additional arguments besides `trial`.
-
-* [Scikit-learn (Callable Class Version)](./sklearn/sklearn_additional_args.py)
 </details>
 
 <details>
@@ -104,11 +110,8 @@ In addition, integration modules are available for the following libraries, prov
 <summary>Samplers</summary>
 
 * [Warm Starting CMA-ES](./samplers/warm_starting_cma.py)
-</details>
 
-<details>
-<summary>User-Defined Sampler</summary>
-
+If you are interested in defining a user-defined sampler, here is an example:
 * [SimulatedAnnealingSampler](./samplers/simulated_annealing_sampler.py)
 </details>
 
@@ -134,39 +137,21 @@ In addition, integration modules are available for the following libraries, prov
 </details>
 
 <details>
-<summary></summary>
+<summary>Distributed Optimization</summary>
 
+* [Optimizing on Dask Cluster](./dask/dask_simple.py)
+* [Optimizing on Kubernetes](./kubernetes/README.md)
+* [Optimizing with Ray's Joblib Backend](./ray/ray_joblib.py)
 </details>
 
-### An example to enqueue trials with given parameter values
+<details>
+<summary>MLOps Platform</summary>
 
-* [Enqueuing trials with given parameters](./enqueue_trial.py)
-
-### Examples of aim
-
-* [Tracking optimization process with aim](./aim/aim_integration.py)
-
-### Examples of MLflow
-
-* [Tracking optimization process with MLflow](./mlflow/keras_mlflow.py)
-
-### Examples of Weights & Biases
-
-* [Tracking optimization process with Weights & Biases](./wandb/wandb_integration.py)
-
-### Examples of Hydra
-
+* [Tracking Optimization Process with aim](./aim/aim_integration.py)
+* [Tracking Optimization Process with MLflow](./mlflow/keras_mlflow.py)
+* [Tracking Optimization Process with Weights & Biases](./wandb/wandb_integration.py)
 * [Optimization with Hydra](./hydra/simple.py)
-
-### Examples of Distributed Optimization
-
-* [Optimizing on a Dask cluster](./dask/dask_simple.py)
-* [Optimizing on Kubernetes](./kubernetes/README.md)
-* [Optimizing with Ray's joblib backend](./ray/ray_joblib.py)
-
-### Examples of Reinforcement Learning
-
-* [Optimization of Hyperparameters for Stable-Baslines Agent](./rl/sb3_simple.py)
+</details>
 
 <details>
 <summary>Real-World Optuna Examples by External Projects</summary>
