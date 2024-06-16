@@ -27,7 +27,7 @@ if __name__ == "__main__":
 > If you are interested in a quick start of [Optuna Dashboard](https://github.com/optuna/optuna-dashboard) with in-memory storage, please take a look at [this example](./dashboard/run_server_simple.py).
 
 > [!TIP]
-> Couldn't you find examples you would like to try?
+> Couldn't find your usecase?
 > [FAQ](https://optuna.readthedocs.io/en/stable/faq.html) might be helpful for you to implement what you want.
 > In this example repository, you can also find the examples for the following scenarios:
 > 1. [Objective function with additional arguments](./sklearn/sklearn_additional_args.py), which is useful when you would like to pass arguments besides `trial` to your objective function.
@@ -169,10 +169,10 @@ If you are interested in defining a user-defined sampler, here is an example:
 * [PyKEEN](https://github.com/pykeen/pykeen)
 * [RL Baselines Zoo](https://github.com/DLR-RM/rl-baselines3-zoo)
 * [Hyperparameter Optimization for Machine Learning, Code Repository for Online Course](https://github.com/solegalli/hyperparameter-optimization)
+</details>
 
 > [!IMPORTANT]
-> PRs to add additional projects are welcome!
-</details>
+> PRs to add additional real-world examples or projects are welcome!
 
 ### Running with Optuna's Docker images?
 
