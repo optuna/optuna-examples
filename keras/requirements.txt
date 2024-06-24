@@ -1,4 +1,5 @@
 keras
+numpy<2.0.0
 optuna
 tensorflow-cpu
 tensorflow-datasets
