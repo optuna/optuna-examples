@@ -1,3 +1,4 @@
 chainer
 mpi4py
+numpy<2.0.0 # TODO(nabe): Remove this constraint once this issue is resolved. https://github.com/numpy/numpy/issues/26710
 optuna
