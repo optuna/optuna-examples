@@ -1,3 +1,4 @@
 chainer
 mpi4py
+numpy==1.26.4
 optuna
