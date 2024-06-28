@@ -1,13 +1,12 @@
-name: base
+name: basic_and_faq_usages
 
 on:
   schedule:
     - cron: '0 15 * * *'
   pull_request:
     paths:
-      - './**.py'
-      - 'requirements.txt'
-      - '.github/workflows/base.yml'
+      - 'basic_and_faq_usages/**'
+      - '.github/workflows/basic_and_faq_usages.yml'
 
 jobs:
   examples:
@@ -30,9 +29,14 @@ jobs:
         pip install git+https://github.com/optuna/optuna.git
         python -c 'import optuna'
 
-        pip install -r requirements.txt
+        pip install -r basic_and_faq_usages/requirements.txt
     - name: Run examples
       run: |
-        jupyter nbconvert --to notebook --execute quickstart.ipynb
+        python basic_and_faq_usages/max_trials_callback.py
+        python basic_and_faq_usages/enqueue_trial.py
+        python basic_and_faq_usages/quadratic_simple.py
+        python basic_and_faq_usages/simple_pruning.py
+        python basic_and_faq_usages/quadratic_simple_constraint.py
+        python basic_and_faq_usages/quadratic_simple_multi_objective.py
       env:
         OMP_NUM_THREADS: 1
