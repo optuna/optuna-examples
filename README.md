@@ -40,7 +40,7 @@ if __name__ == "__main__":
 
 Here are the URLs to the example codeblocks to the corresponding setups.
 
-<details>
+<details open>
 <summary>Simple Black-box Optimization</summary>
 
 * [Quadratic Function](./quadratic_simple.py)
@@ -48,14 +48,14 @@ Here are the URLs to the example codeblocks to the corresponding setups.
 * [Quadratic Function with Constraints](./quadratic_simple_constraint.py)
 </details>
 
-<details>
+<details open>
 <summary>Multi-Objective Optimization</summary>
 
 * [Optimization with BoTorch](./multi_objective/botorch_simple.py)
 * [Optimization of Multi-Layer Perceptron with PyTorch](./multi_objective/pytorch_simple.py)
 </details>
 
-<details>
+<details open>
 <summary>Machine Learning (Incl. LightGBMTuner and OptunaSearchCV)</summary>
 
 * [AllenNLP](./allennlp/allennlp_simple.py)
@@ -88,7 +88,7 @@ If you are looking for an example of reinforcement learning, please take a look 
 
 </details>
 
-<details>
+<details open>
 <summary>Pruning</summary>
 
 The following example demonstrates how to implement pruning logic with Optuna.
@@ -113,7 +113,7 @@ In addition, integration modules are available for the following libraries, prov
 * [Pruning with XGBoost Integration Module (Cross Validation Version)](./xgboost/xgboost_cv_integration.py)
 </details>
 
-<details>
+<details open>
 <summary>Samplers</summary>
 
 * [Warm Starting CMA-ES](./samplers/warm_starting_cma.py)
@@ -122,21 +122,21 @@ If you are interested in defining a user-defined sampler, here is an example:
 * [SimulatedAnnealingSampler](./samplers/simulated_annealing_sampler.py)
 </details>
 
-<details>
+<details open>
 <summary>Terminator</summary>
 
 * [Optuna Terminator](./terminator/terminator_simple.py)
 * [OptunaSearchCV with Terminator](./terminator/terminator_search_cv.py)
 </details>
 
-<details>
+<details open>
 <summary>Visualization</summary>
 
 * [Visualizing Study](https://colab.research.google.com/github/optuna/optuna-examples/blob/main/visualization/plot_study.ipynb)
 * [Visualizing Study with HiPlot](https://colab.research.google.com/github/optuna/optuna-examples/blob/main/hiplot/plot_study.ipynb)
 </details>
 
-<details>
+<details open>
 <summary>Distributed Optimization</summary>
 
 * [Optimizing on Dask Cluster](./dask/dask_simple.py)
@@ -144,7 +144,7 @@ If you are interested in defining a user-defined sampler, here is an example:
 * [Optimizing with Ray's Joblib Backend](./ray/ray_joblib.py)
 </details>
 
-<details>
+<details open>
 <summary>MLOps Platform</summary>
 
 * [Tracking Optimization Process with aim](./aim/aim_integration.py)
@@ -153,7 +153,7 @@ If you are interested in defining a user-defined sampler, here is an example:
 * [Optimization with Hydra](./hydra/simple.py)
 </details>
 
-<details>
+<details open>
 <summary>Real-World Optuna Examples by External Projects</summary>
 
 * [Hugging Face Trainer's Hyperparameter Search](https://huggingface.co/docs/transformers/main/main_classes/trainer#transformers.Trainer.hyperparameter_search)
