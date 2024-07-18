@@ -32,9 +32,9 @@ if __name__ == "__main__":
 > In this example repository, you can also find the examples for the following scenarios:
 > 1. [Objective function with additional arguments](./sklearn/sklearn_additional_args.py), which is useful when you would like to pass arguments besides `trial` to your objective function.
 > 
-> 2. [Manually provide trials with sampler](./enqueue_trial.py), which is useful when you would like to force certain parameters to be sampled.
+> 2. [Manually provide trials with sampler](./basic_and_faq_usages/enqueue_trial.py), which is useful when you would like to force certain parameters to be sampled.
 >
-> 3. [Callback to control the termination criterion of study](./max_trials_callback.py), which is useful when you would like to define your own termination criterion other than `n_trials` or `timeout`.
+> 3. [Callback to control the termination criterion of study](./basic_and_faq_usages/max_trials_callback.py), which is useful when you would like to define your own termination criterion other than `n_trials` or `timeout`.
 
 ## Examples for Diverse Problem Setups
 
@@ -43,9 +43,9 @@ Here are the URLs to the example codeblocks to the corresponding setups.
 <details open>
 <summary>Simple Black-box Optimization</summary>
 
-* [Quadratic Function](./quadratic_simple.py)
-* [Quadratic Multi-Objective Function](./multi_objective/quadratic_simple.py)
-* [Quadratic Function with Constraints](./quadratic_simple_constraint.py)
+* [Quadratic Function](./basic_and_faq_usages/quadratic_simple.py)
+* [Quadratic Multi-Objective Function](./basic_and_faq_usages/quadratic_simple_multi_objective.py)
+* [Quadratic Function with Constraints](./basic_and_faq_usages/quadratic_simple_constraint.py)
 </details>
 
 <details open>
