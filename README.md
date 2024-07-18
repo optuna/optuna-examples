@@ -74,7 +74,7 @@ Here are the URLs to the example codeblocks to the corresponding setups.
 * [PyTorch Ignite](./pytorch/pytorch_ignite_simple.py)
 * [PyTorch Lightning](./pytorch/pytorch_lightning_simple.py)
 * [PyTorch Lightning (DDP)](./pytorch/pytorch_lightning_ddp.py)
-* [RAPIDS](./rapids_simple.py)
+* [RAPIDS](./rapids/rapids_simple.py)
 * [Scikit-learn](./sklearn/sklearn_simple.py)
 * [Scikit-learn OptunaSearchCV](./sklearn/sklearn_optuna_search_cv_simple.py)
 * [Scikit-image](./skimage/skimage_lbp_simple.py)
@@ -93,7 +93,7 @@ If you are looking for an example of reinforcement learning, please take a look 
 
 The following example demonstrates how to implement pruning logic with Optuna.
 
-* [Simple pruning (scikit-learn)](./simple_pruning.py)
+* [Simple pruning (scikit-learn)](./basic_and_faq_usages/simple_pruning.py)
 
 In addition, integration modules are available for the following libraries, providing simpler interfaces to utilize pruning.
 
