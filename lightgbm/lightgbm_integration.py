@@ -14,6 +14,7 @@ import optuna
 
 import lightgbm as lgb
 import sklearn.datasets
+import sklearn.metrics
 from sklearn.model_selection import train_test_split
 
 
@@ -43,7 +44,8 @@ def objective(trial):
     pruning_callback = optuna.integration.LightGBMPruningCallback(trial, "auc")
     gbm = lgb.train(param, dtrain, valid_sets=[dvalid], callbacks=[pruning_callback])
 
-    return gbm.best_score["valid_0"]["auc"]
+    preds = gbm.predict(valid_x)
+    return sklearn.metrics.roc_auc_score(valid_y, preds)
 
 
 if __name__ == "__main__":
