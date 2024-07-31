@@ -154,7 +154,7 @@ If you are interested in defining a user-defined sampler, here is an example:
 </details>
 
 <details open>
-<summary>Real-World Optuna Examples by External Projects</summary>
+<summary>External Projects Using Optuna</summary>
 
 * [Hugging Face Trainer's Hyperparameter Search](https://huggingface.co/docs/transformers/main/main_classes/trainer#transformers.Trainer.hyperparameter_search)
 * [Allegro Trains](https://github.com/allegroai/trains)
