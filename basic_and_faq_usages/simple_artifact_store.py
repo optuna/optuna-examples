@@ -1,15 +1,12 @@
 import os
 
 import matplotlib.pyplot as plt
-
 import numpy as np
-
 import optuna
-from optuna.artifacts import FileSystemArtifactStore
 from optuna.artifacts import download_artifact
+from optuna.artifacts import FileSystemArtifactStore
 from optuna.artifacts import get_all_artifact_meta
 from optuna.artifacts import upload_artifact
-
 import pandas as pd
 
 
@@ -70,7 +67,7 @@ def show_best_result(study, artifact_store):
     best_result_img = plt.imread(fig_path)
     plt.figure()
     plt.tick_params(labelleft=False, labelbottom=False, left=False, bottom=False)
-    plt.imshow(best_result_img) 
+    plt.imshow(best_result_img)
     plt.show()
 
 
