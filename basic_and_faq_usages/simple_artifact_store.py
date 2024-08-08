@@ -14,7 +14,7 @@ dataset_path = "demo-dataset.csv"
 fig_name = "result-trial.png"
 # NOTE: The uploaded artifacts can be viewed in Optuna Dashboard with the following command:
 # $ optuna-dashboard sqlite:///artifact-demo.db --artifact-dir ./save-artifact-here
-base_path = os.path.join("./save-artifact-here")
+base_path = "./save-artifact-here"
 # Make the directory used for artifact store.
 os.makedirs(base_path, exist_ok=True)
 # Instantiate an artifact store.
