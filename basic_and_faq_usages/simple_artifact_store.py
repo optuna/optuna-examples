@@ -55,7 +55,6 @@ def objective(trial):
     b = trial.suggest_float("b", -5, 5)
 
     with tempfile.TemporaryDirectory() as tmp_dir:
-        print(tmp_dir)
         plot_predictions(a, b, trial, tmp_dir)
         fig_path = os.path.join(tmp_dir, fig_name)
         # Link the plotted figure with trial using artifact store API.
