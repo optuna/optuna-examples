@@ -1,3 +1,18 @@
+"""
+A simple example of Optuna Artifact Store.
+
+In this example, we optimize coefficients (a, b) of a quadratic function:
+    f(x) = a * x**2 + b
+
+The demo works as follows:
+1. Create a dataset by ``create_dataset``,
+2. For each trial, Optuna suggests a candidate of (a, b),
+3. For each trial, plot the prediction,
+4. Upload the prediction figure to the artifact store, and
+5. After the optimization, check the prediction for best_trial using the download API.
+
+"""
+
 import os
 import tempfile
 
@@ -42,7 +57,7 @@ def plot_predictions(a, b, trial, tmp_dir):
     _, ax = plt.subplots()
     x = np.linspace(-5, 5, 100)
     ax.scatter(dataset["X"], dataset["Y"], label="Dataset", color="blue")
-    ax.plot(x, a * x**2 + b, label="Prediction", color="darkred")
+    ax.plot(x, a * x ** 2 + b, label="Prediction", color="darkred")
     ax.set_title(f"a={a:.2f}, b={b:.2f}")
     ax.grid()
     ax.legend()
