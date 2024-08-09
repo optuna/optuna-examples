@@ -57,7 +57,7 @@ def plot_predictions(a, b, trial, tmp_dir):
     _, ax = plt.subplots()
     x = np.linspace(-5, 5, 100)
     ax.scatter(dataset["X"], dataset["Y"], label="Dataset", color="blue")
-    ax.plot(x, a * x ** 2 + b, label="Prediction", color="darkred")
+    ax.plot(x, a * x**2 + b, label="Prediction", color="darkred")
     ax.set_title(f"a={a:.2f}, b={b:.2f}")
     ax.grid()
     ax.legend()
@@ -75,7 +75,7 @@ def objective(trial):
         # Link the plotted figure with trial using artifact store API.
         upload_artifact(artifact_store=artifact_store, file_path=fig_path, study_or_trial=trial)
 
-    return np.mean((a * dataset["X"]**2 + b - dataset["Y"]) ** 2)
+    return np.mean((a * dataset["X"] ** 2 + b - dataset["Y"]) ** 2)
 
 
 def show_best_result(study, artifact_store):
