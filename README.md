@@ -34,7 +34,7 @@ if __name__ == "__main__":
 > 
 > 2. [Manually provide trials with sampler](./faq/enqueue_trial.py), which is useful when you would like to force certain parameters to be sampled.
 >
-> 3. [Callback to control the termination criterion of study](./basic/max_trials_callback.py), which is useful when you would like to define your own termination criterion other than `n_trials` or `timeout`.
+> 3. [Callback to control the termination criterion of study](./faq/max_trials_callback.py), which is useful when you would like to define your own termination criterion other than `n_trials` or `timeout`.
 
 ## Examples for Diverse Problem Setups
 
