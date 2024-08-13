@@ -1,0 +1,40 @@
+name: basic
+
+on:
+  schedule:
+    - cron: '0 15 * * *'
+  pull_request:
+    paths:
+      - 'basic/**'
+      - '.github/workflows/basic.yml'
+
+jobs:
+  examples:
+    if: (github.event_name == 'schedule' && github.repository == 'optuna/optuna-examples') || (github.event_name != 'schedule')
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.7', '3.8', '3.9', '3.10', '3.11', '3.12']
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: setup-python${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install (Python)
+      run: |
+        python -m pip install --upgrade pip
+        pip install --progress-bar off -U setuptools
+        pip install git+https://github.com/optuna/optuna.git
+        python -c 'import optuna'
+
+        pip install -r basic/requirements.txt
+    - name: Run examples
+      run: |
+        python basic/quadratic.py
+        python basic/pruning.py
+        python basic/quadratic_constraint.py
+        python basic/quadratic_multi_objective.py
+      env:
+        OMP_NUM_THREADS: 1
