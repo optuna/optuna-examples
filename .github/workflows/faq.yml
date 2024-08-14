@@ -1,12 +1,12 @@
-name: basic_and_faq_usages
+name: faq
 
 on:
   schedule:
     - cron: '0 15 * * *'
   pull_request:
     paths:
-      - 'basic_and_faq_usages/**'
-      - '.github/workflows/basic_and_faq_usages.yml'
+      - 'faq/**'
+      - '.github/workflows/faq.yml'
 
 jobs:
   examples:
@@ -29,15 +29,10 @@ jobs:
         pip install git+https://github.com/optuna/optuna.git
         python -c 'import optuna'
 
-        pip install -r basic_and_faq_usages/requirements.txt
+        pip install -r faq/requirements.txt
     - name: Run examples
       run: |
-        python basic_and_faq_usages/max_trials_callback.py
-        python basic_and_faq_usages/enqueue_trial.py
-        python basic_and_faq_usages/quadratic_simple.py
-        python basic_and_faq_usages/simple_pruning.py
-        python basic_and_faq_usages/quadratic_simple_constraint.py
-        python basic_and_faq_usages/quadratic_simple_multi_objective.py
-        python basic_and_faq_usages/simple_artifact_store.py
+        python faq/max_trials_callback.py
+        python faq/enqueue_trial.py
       env:
         OMP_NUM_THREADS: 1
