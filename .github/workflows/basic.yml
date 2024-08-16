@@ -36,5 +36,6 @@ jobs:
         python basic/pruning.py
         python basic/quadratic_constraint.py
         python basic/quadratic_multi_objective.py
+        python basic/artifact_store.py
       env:
         OMP_NUM_THREADS: 1
