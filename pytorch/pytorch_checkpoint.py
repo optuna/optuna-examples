@@ -14,9 +14,11 @@ previous saved checkpoint using heartbeat.
 """
 
 import os
-import shutil
 
 import optuna
+from optuna.artifacts import download_artifact
+from optuna.artifacts import FileSystemArtifactStore
+from optuna.artifacts import upload_artifact
 from optuna.storages import RetryFailedTrialCallback
 import torch
 import torch.nn as nn
@@ -25,11 +27,6 @@ import torch.optim as optim
 import torch.utils.data
 from torchvision import datasets
 from torchvision import transforms
-from optuna.artifacts import FileSystemArtifactStore
-from optuna.artifacts import upload_artifact
-from optuna.artifacts import download_artifact
-
-import pandas as pd
 
 
 DEVICE = torch.device("cpu")
@@ -95,11 +92,13 @@ def objective(trial):
     trial_number = RetryFailedTrialCallback.retried_trial_number(trial)
 
     print(f"Retrieved trial number: {trial_number}")
-    
+
     if trial_number is not None:
         study = optuna.load_study(study_name="pytorch_checkpoint", storage="sqlite:///example.db")
         artifact_id = study.trials[trial_number].user_attrs["artifact_id"]
-        download_artifact(artifact_store=artifact_store, file_path="./tmp_model.pt", artifact_id=artifact_id)
+        download_artifact(
+            artifact_store=artifact_store, file_path="./tmp_model.pt", artifact_id=artifact_id
+        )
         checkpoint = torch.load("./tmp_model.pt")
         epoch = checkpoint["epoch"]
         epoch_begin = epoch + 1
@@ -161,16 +160,14 @@ def objective(trial):
                 "optimizer_state_dict": optimizer.state_dict(),
                 "accuracy": accuracy,
             },
-            "./tmp_model.pt"
+            "./tmp_model.pt",
         )
         artifact_id = upload_artifact(
             artifact_store=artifact_store,
             file_path="./tmp_model.pt",
             study_or_trial=trial,
         )
-        trial.set_user_attr(
-            "artifact_id", artifact_id
-        )
+        trial.set_user_attr("artifact_id", artifact_id)
         os.remove("./tmp_model.pt")
 
         # Handle pruning based on the intermediate value.
