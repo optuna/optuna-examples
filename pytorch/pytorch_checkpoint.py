@@ -91,8 +91,6 @@ def objective(trial):
 
     trial_number = RetryFailedTrialCallback.retried_trial_number(trial)
 
-    print(f"Retrieved trial number: {trial_number}")
-
     if trial_number is not None:
         study = optuna.load_study(study_name="pytorch_checkpoint", storage="sqlite:///example.db")
         artifact_id = study.trials[trial_number].user_attrs["artifact_id"]
