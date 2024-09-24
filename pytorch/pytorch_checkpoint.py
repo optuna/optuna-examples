@@ -25,6 +25,11 @@ import torch.optim as optim
 import torch.utils.data
 from torchvision import datasets
 from torchvision import transforms
+from optuna.artifacts import FileSystemArtifactStore
+from optuna.artifacts import upload_artifact
+from optuna.artifacts import download_artifact
+
+import pandas as pd
 
 
 DEVICE = torch.device("cpu")
@@ -36,6 +41,10 @@ LOG_INTERVAL = 10
 N_TRAIN_EXAMPLES = BATCHSIZE * 30
 N_VALID_EXAMPLES = BATCHSIZE * 10
 CHECKPOINT_DIR = "pytorch_checkpoint"
+
+base_path = "./artifacts"
+os.makedirs(base_path, exist_ok=True)
+artifact_store = FileSystemArtifactStore(base_path=base_path)
 
 
 def define_model(trial):
@@ -84,12 +93,14 @@ def objective(trial):
     optimizer = getattr(optim, optimizer_name)(model.parameters(), lr=lr)
 
     trial_number = RetryFailedTrialCallback.retried_trial_number(trial)
-    trial_checkpoint_dir = os.path.join(CHECKPOINT_DIR, str(trial_number))
-    checkpoint_path = os.path.join(trial_checkpoint_dir, "model.pt")
-    checkpoint_exists = os.path.isfile(checkpoint_path)
 
-    if trial_number is not None and checkpoint_exists:
-        checkpoint = torch.load(checkpoint_path)
+    print(f"Retrieved trial number: {trial_number}")
+    
+    if trial_number is not None:
+        study = optuna.load_study(study_name="pytorch_checkpoint", storage="sqlite:///example.db")
+        artifact_id = study.trials[trial_number].user_attrs["artifact_id"]
+        download_artifact(artifact_store=artifact_store, file_path="./tmp_model.pt", artifact_id=artifact_id)
+        checkpoint = torch.load("./tmp_model.pt")
         epoch = checkpoint["epoch"]
         epoch_begin = epoch + 1
 
@@ -99,19 +110,10 @@ def objective(trial):
         optimizer.load_state_dict(checkpoint["optimizer_state_dict"])
         accuracy = checkpoint["accuracy"]
     else:
-        trial_checkpoint_dir = os.path.join(CHECKPOINT_DIR, str(trial.number))
-        checkpoint_path = os.path.join(trial_checkpoint_dir, "model.pt")
         epoch_begin = 0
 
     # Get the FashionMNIST dataset.
     train_loader, valid_loader = get_mnist()
-
-    os.makedirs(trial_checkpoint_dir, exist_ok=True)
-    # A checkpoint may be corrupted when the process is killed during `torch.save`.
-    # Reduce the risk by first calling `torch.save` to a temporary file, then copy.
-    tmp_checkpoint_path = os.path.join(trial_checkpoint_dir, "tmp_model.pt")
-
-    print(f"Checkpoint path for trial is '{checkpoint_path}'.")
 
     # Training of the model.
     for epoch in range(epoch_begin, EPOCHS):
@@ -159,9 +161,17 @@ def objective(trial):
                 "optimizer_state_dict": optimizer.state_dict(),
                 "accuracy": accuracy,
             },
-            tmp_checkpoint_path,
+            "./tmp_model.pt"
         )
-        shutil.move(tmp_checkpoint_path, checkpoint_path)
+        artifact_id = upload_artifact(
+            artifact_store=artifact_store,
+            file_path="./tmp_model.pt",
+            study_or_trial=trial,
+        )
+        trial.set_user_attr(
+            "artifact_id", artifact_id
+        )
+        os.remove("./tmp_model.pt")
 
         # Handle pruning based on the intermediate value.
         if trial.should_prune():
