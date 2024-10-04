@@ -31,7 +31,7 @@ if __name__ == "__main__":
 > [FAQ](https://optuna.readthedocs.io/en/stable/faq.html) might be helpful for you to implement what you want.
 > In this example repository, you can also find the examples for the following scenarios:
 > 1. [Objective function with additional arguments](./sklearn/sklearn_additional_args.py), which is useful when you would like to pass arguments besides `trial` to your objective function.
-> 
+>
 > 2. [Manually provide trials with sampler](./faq/enqueue_trial.py), which is useful when you would like to force certain parameters to be sampled.
 >
 > 3. [Callback to control the termination criterion of study](./faq/max_trials_callback.py), which is useful when you would like to define your own termination criterion other than `n_trials` or `timeout`.
@@ -180,11 +180,11 @@ Our Docker images for most examples are available with the tag ending with `-dev
 For example, [PyTorch Simple](./pytorch/pytorch_simple.py) can be run via:
 
 ```bash
-$ docker run --rm -v $(pwd):/prj -w /prj optuna/optuna:py3.7-dev python pytorch/pytorch_simple.py
+$ docker run --rm -v $(pwd):/prj -w /prj optuna/optuna:py3.11-dev python pytorch/pytorch_simple.py
 ```
 
 Additionally, our visualization example can also be run on Jupyter Notebook by opening `localhost:8888` in your browser after executing the following:
 
 ```bash
-$ docker run -p 8888:8888 --rm optuna/optuna:py3.7-dev jupyter notebook --allow-root --no-browser --port 8888 --ip 0.0.0.0 --NotebookApp.token='' --NotebookApp.password=''
+$ docker run -p 8888:8888 --rm optuna/optuna:py3.11-dev jupyter notebook --allow-root --no-browser --port 8888 --ip 0.0.0.0 --NotebookApp.token='' --NotebookApp.password=''
 ```
