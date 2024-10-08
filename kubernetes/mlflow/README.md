@@ -2,7 +2,7 @@
 
 This example is only verified on minikube.
 
-This example's code is based on ../../pytorch/pytorch_lightning_simple.py example with the following changes:
+This example's code is based on [`pytorch_lightning_simple.py`](../../pytorch/pytorch_lightning_simple.py) example with the following changes:
 
 1. It gives a name to the study and sets `load_if_exists` to `True` in order to avoid errors when the code is run from multiple workers.
 2. It sets the storage address to the postgres pod deployed with the workers.
@@ -18,7 +18,7 @@ First run `run.sh` which takes two arguments `$IsMinikube` and `$IMAGE_NAME`
 $ bash run.sh True optuna-kubernetes-mlflow:example
  ```
 
-- If you want to run in cloud, please change the `IMAGE_NAME` accordingly in k8s-manifest.yaml and run as follows. Also please make sure that your kubernetes context is set correctly.
+- If you want to run in cloud, please change the `IMAGE_NAME` accordingly in `k8s-manifest.yaml` and run as follows. Also please make sure that your kubernetes context is set correctly.
 
  ```bash
 $ bash run.sh False $IMAGE_NAME
