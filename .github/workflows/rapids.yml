@@ -28,9 +28,8 @@ jobs:
           pip install --progress-bar off -U setuptools
           pip install git+https://github.com/optuna/optuna.git
           python -c 'import optuna'
-
-    - name: Run examples
-      run: |
-        python -m py_compile rapids/rapids_simple.py  # due to difficulty in importing, compile only
-      env:
-        OMP_NUM_THREADS: 1
+      - name: Run examples
+        run: |
+          python -m py_compile rapids/rapids_simple.py  # due to difficulty in importing, compile only
+        env:
+          OMP_NUM_THREADS: 1
