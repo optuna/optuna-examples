@@ -1,4 +1,4 @@
-name: raipds
+name: rapids
 
 on:
   schedule:
