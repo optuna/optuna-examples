@@ -91,7 +91,7 @@ def objective(trial):
 
     trial_number = RetryFailedTrialCallback.retried_trial_number(trial)
 
-    artifact_id = trial.study.trials[trial_number].user_attrs.get("artifact_id")
+    artifact_id = trial_number and trial.study.trials[trial_number].user_attrs.get("artifact_id")
     if trial_number is not None and artifact_id is not None:
         download_artifact(
             artifact_store=artifact_store,
