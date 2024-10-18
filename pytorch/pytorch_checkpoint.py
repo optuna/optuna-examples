@@ -94,7 +94,9 @@ def objective(trial):
     artifact_id = trial.study.trials[trial_number].user_attrs.get("artifact_id")
     if trial_number is not None and artifact_id is not None:
         download_artifact(
-            artifact_store=artifact_store, file_path=f"./tmp_model_{trial_number}.pt", artifact_id=artifact_id
+            artifact_store=artifact_store,
+            file_path=f"./tmp_model_{trial_number}.pt",
+            artifact_id=artifact_id,
         )
         checkpoint = torch.load(f"./tmp_model_{trial_number}.pt")
         epoch = checkpoint["epoch"]
