@@ -92,7 +92,7 @@ def objective(trial):
     trial_number = RetryFailedTrialCallback.retried_trial_number(trial)
 
     if trial_number is not None:
-        study = optuna.load_study(study_name="pytorch_checkpoint", storage="sqlite:///example.db")
+        study = trial.study
         artifact_id = study.trials[trial_number].user_attrs["artifact_id"]
         download_artifact(
             artifact_store=artifact_store, file_path="./tmp_model.pt", artifact_id=artifact_id
