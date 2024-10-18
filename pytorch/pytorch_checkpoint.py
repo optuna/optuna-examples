@@ -91,13 +91,12 @@ def objective(trial):
 
     trial_number = RetryFailedTrialCallback.retried_trial_number(trial)
 
-    if trial_number is not None:
-        study = trial.study
-        artifact_id = study.trials[trial_number].user_attrs["artifact_id"]
+    artifact_id = trial.study.trials[trial_number].user_attrs.get("artifact_id")
+    if trial_number is not None and artifact_id is not None:
         download_artifact(
-            artifact_store=artifact_store, file_path="./tmp_model.pt", artifact_id=artifact_id
+            artifact_store=artifact_store, file_path=f"./tmp_model_{trial_number}.pt", artifact_id=artifact_id
         )
-        checkpoint = torch.load("./tmp_model.pt")
+        checkpoint = torch.load(f"./tmp_model_{trial_number}.pt")
         epoch = checkpoint["epoch"]
         epoch_begin = epoch + 1
 
@@ -158,15 +157,15 @@ def objective(trial):
                 "optimizer_state_dict": optimizer.state_dict(),
                 "accuracy": accuracy,
             },
-            "./tmp_model.pt",
+            f"./tmp_model_{trial_number}.pt",
         )
         artifact_id = upload_artifact(
             artifact_store=artifact_store,
-            file_path="./tmp_model.pt",
+            file_path=f"./tmp_model_{trial_number}.pt",
             study_or_trial=trial,
         )
         trial.set_user_attr("artifact_id", artifact_id)
-        os.remove("./tmp_model.pt")
+        os.remove(f"./tmp_model_{trial_number}.pt")
 
         # Handle pruning based on the intermediate value.
         if trial.should_prune():
