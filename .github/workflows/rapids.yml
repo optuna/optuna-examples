@@ -1,4 +1,4 @@
-name: base
+name: rapids
 
 on:
   schedule:
@@ -17,19 +17,19 @@ jobs:
         python-version: ['3.7', '3.8', '3.9', '3.10', '3.11', '3.12']
 
     steps:
-      - uses: actions/checkout@v4
-      - name: setup-python${{ matrix.python-version }}
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: Install (Python)
-        run: |
-          python -m pip install --upgrade pip
-          pip install --progress-bar off -U setuptools
-          pip install git+https://github.com/optuna/optuna.git
-          python -c 'import optuna'
-      - name: Run examples
-        run: |
-          python -m py_compile rapids/rapids_simple.py  # due to difficulty in importing, compile only
-        env:
-          OMP_NUM_THREADS: 1
+    - uses: actions/checkout@v4
+    - name: setup-python${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install (Python)
+      run: |
+        python -m pip install --upgrade pip
+        pip install --progress-bar off -U setuptools
+        pip install git+https://github.com/optuna/optuna.git
+        python -c 'import optuna'
+    - name: Run examples
+      run: |
+        python -m py_compile rapids/rapids_simple.py  # due to difficulty in importing, compile only
+      env:
+        OMP_NUM_THREADS: 1
