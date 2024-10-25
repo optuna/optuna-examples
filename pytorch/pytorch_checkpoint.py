@@ -104,6 +104,7 @@ def objective(trial):
             artifact_id=artifact_id,
         )
         checkpoint = torch.load(f"./tmp_model_{trial.number}.pt")
+        os.remove(f"./tmp_model_{trial.number}.pt")
         epoch = checkpoint["epoch"]
         epoch_begin = epoch + 1
 
