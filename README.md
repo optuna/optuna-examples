@@ -31,10 +31,10 @@ if __name__ == "__main__":
 > [FAQ](https://optuna.readthedocs.io/en/stable/faq.html) might be helpful for you to implement what you want.
 > In this example repository, you can also find the examples for the following scenarios:
 > 1. [Objective function with additional arguments](./sklearn/sklearn_additional_args.py), which is useful when you would like to pass arguments besides `trial` to your objective function.
-> 
-> 2. [Manually provide trials with sampler](./basic_and_faq_usages/enqueue_trial.py), which is useful when you would like to force certain parameters to be sampled.
 >
-> 3. [Callback to control the termination criterion of study](./basic_and_faq_usages/max_trials_callback.py), which is useful when you would like to define your own termination criterion other than `n_trials` or `timeout`.
+> 2. [Manually provide trials with sampler](./faq/enqueue_trial.py), which is useful when you would like to force certain parameters to be sampled.
+>
+> 3. [Callback to control the termination criterion of study](./faq/max_trials_callback.py), which is useful when you would like to define your own termination criterion other than `n_trials` or `timeout`.
 
 ## Examples for Diverse Problem Setups
 
@@ -43,9 +43,9 @@ Here are the URLs to the example codeblocks to the corresponding setups.
 <details open>
 <summary>Simple Black-box Optimization</summary>
 
-* [Quadratic Function](./basic_and_faq_usages/quadratic_simple.py)
-* [Quadratic Multi-Objective Function](./basic_and_faq_usages/quadratic_simple_multi_objective.py)
-* [Quadratic Function with Constraints](./basic_and_faq_usages/quadratic_simple_constraint.py)
+* [Quadratic Function](./basic/quadratic.py)
+* [Quadratic Multi-Objective Function](./basic/quadratic_multi_objective.py)
+* [Quadratic Function with Constraints](./basic/quadratic_constraint.py)
 </details>
 
 <details open>
@@ -93,7 +93,7 @@ If you are looking for an example of reinforcement learning, please take a look 
 
 The following example demonstrates how to implement pruning logic with Optuna.
 
-* [Simple pruning (scikit-learn)](./basic_and_faq_usages/simple_pruning.py)
+* [Simple pruning (scikit-learn)](./basic/pruning.py)
 
 In addition, integration modules are available for the following libraries, providing simpler interfaces to utilize pruning.
 
@@ -169,6 +169,7 @@ If you are interested in defining a user-defined sampler, here is an example:
 * [PyKEEN](https://github.com/pykeen/pykeen)
 * [RL Baselines Zoo](https://github.com/DLR-RM/rl-baselines3-zoo)
 * [Hyperparameter Optimization for Machine Learning, Code Repository for Online Course](https://github.com/solegalli/hyperparameter-optimization)
+* [Property-guided molecular optimization using MolMIM with CMA-ES](https://github.com/olachinkei/BioNeMo_WandB/blob/main/Molecule/03_Molecule_LLM.ipynb)
 </details>
 
 > [!IMPORTANT]
