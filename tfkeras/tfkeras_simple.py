@@ -15,6 +15,7 @@ from tensorflow.keras.backend import clear_session
 from tensorflow.keras.datasets import mnist
 from tensorflow.keras.layers import Conv2D
 from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import Input
 from tensorflow.keras.layers import Flatten
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.optimizers import RMSprop
@@ -47,13 +48,13 @@ def objective(trial):
     input_shape = (img_x, img_y, 1)
 
     model = Sequential()
+    model.add(Input(input_shape))
     model.add(
         Conv2D(
             filters=trial.suggest_categorical("filters", [32, 64]),
             kernel_size=trial.suggest_categorical("kernel_size", [3, 5]),
             strides=trial.suggest_categorical("strides", [1, 2]),
             activation=trial.suggest_categorical("activation", ["relu", "linear"]),
-            input_shape=input_shape,
         )
     )
     model.add(Flatten())

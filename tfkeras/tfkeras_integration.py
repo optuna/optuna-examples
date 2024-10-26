@@ -15,8 +15,8 @@ You can run this example as follows:
 import urllib
 
 import optuna
-from optuna.integration import TFKerasPruningCallback
 from optuna.trial import TrialState
+from optuna.integration import TFKerasPruningCallback
 import tensorflow_datasets as tfds
 
 import tensorflow as tf
