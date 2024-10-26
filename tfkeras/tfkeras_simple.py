@@ -15,8 +15,8 @@ from tensorflow.keras.backend import clear_session
 from tensorflow.keras.datasets import mnist
 from tensorflow.keras.layers import Conv2D
 from tensorflow.keras.layers import Dense
-from tensorflow.keras.layers import Input
 from tensorflow.keras.layers import Flatten
+from tensorflow.keras.layers import Input
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.optimizers import RMSprop
 
