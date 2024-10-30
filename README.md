@@ -181,11 +181,11 @@ Our Docker images for most examples are available with the tag ending with `-dev
 For example, [PyTorch Simple](./pytorch/pytorch_simple.py) can be run via:
 
 ```bash
-$ docker run --rm -v $(pwd):/prj -w /prj optuna/optuna:py3.7-dev python pytorch/pytorch_simple.py
+$ docker run --rm -v $(pwd):/prj -w /prj optuna/optuna:py3.11-dev python pytorch/pytorch_simple.py
 ```
 
 Additionally, our visualization example can also be run on Jupyter Notebook by opening `localhost:8888` in your browser after executing the following:
 
 ```bash
-$ docker run -p 8888:8888 --rm optuna/optuna:py3.7-dev jupyter notebook --allow-root --no-browser --port 8888 --ip 0.0.0.0 --NotebookApp.token='' --NotebookApp.password=''
+$ docker run -p 8888:8888 --rm optuna/optuna:py3.11-dev jupyter notebook --allow-root --no-browser --port 8888 --ip 0.0.0.0 --NotebookApp.token='' --NotebookApp.password=''
 ```
