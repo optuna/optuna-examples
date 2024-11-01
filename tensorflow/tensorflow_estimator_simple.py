@@ -9,9 +9,9 @@ subset of it.
 """
 
 import shutil
+import sys
 import tempfile
 import urllib
-import sys
 
 import optuna
 from packaging import version
