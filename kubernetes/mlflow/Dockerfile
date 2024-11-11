@@ -1,5 +1,5 @@
 # NOTE(crcrpar): optuna/optuna:py3.7-dev can be used as base instead.
-FROM python:3.11-slim-buster
+FROM python:3.11-slim
 
 WORKDIR /usr/src/
 
