@@ -27,6 +27,8 @@ jobs:
         python -m pip install --upgrade pip
         pip install --progress-bar off -U setuptools
         pip install git+https://github.com/optuna/optuna.git
+        # TODO(c-bata): Remove the version constraint after dask-ml supports dask 2025.1.0
+        pip install "dask<2025.1.0"
         python -c 'import optuna'
 
         pip install -r dask_ml/requirements.txt
