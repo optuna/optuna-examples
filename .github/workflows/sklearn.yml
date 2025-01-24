@@ -1,5 +1,6 @@
 name: sklearn
 
+# TODO(fusawa-yugo) Change schedule to run daily once the problem is resolved
 on:
   schedule:
     - cron: '0 15 * * 1'
