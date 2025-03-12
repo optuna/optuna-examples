@@ -21,28 +21,22 @@ import skorch
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import pandas as pd
 
 from sklearn.datasets import fetch_openml
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 
 
-# Register a global custom opener to avoid HTTP Error 403: Forbidden when downloading MNIST.
-# This is a temporary fix until torchvision v0.9 is released.
-opener = urllib.request.build_opener()
-opener.addheaders = [("User-agent", "Mozilla/5.0")]
-urllib.request.install_opener(opener)
-
-
 SUBSET_RATIO = 0.4
 
 mnist = fetch_openml("mnist_784", cache=False)
 
-X = mnist.data.astype("float32")
+X = pd.DataFrame(mnist.data)
 y = mnist.target.astype("int64")
 indices = np.random.permutation(len(X))
 N = int(len(X) * SUBSET_RATIO)
-X = X[indices][:N]
+X = X.iloc[indices][:N].astype(np.float32)  
 y = y[indices][:N]
 
 X /= 255.0
@@ -72,6 +66,8 @@ class ClassifierModule(nn.Module):
         self.model = nn.Sequential(*layers)
 
     def forward(self, x):
+        if isinstance(x, dict):
+            x = x["data"] 
         return F.softmax(self.model(x), dim=-1)
 
 
@@ -84,9 +80,9 @@ def objective(trial: optuna.Trial) -> float:
         callbacks=[SkorchPruningCallback(trial, "valid_acc")],
     )
 
-    net.fit(X_train, y_train)
+    net.fit(X_train.to_numpy().astype(np.float32), y_train)
 
-    return accuracy_score(y_test, net.predict(X_test))
+    return accuracy_score(y_test.to_numpy(), net.predict(X_test.to_numpy().astype(np.float32)))
 
 
 if __name__ == "__main__":
@@ -110,8 +106,8 @@ if __name__ == "__main__":
     print("Best trial:")
     trial = study.best_trial
 
-    print("  Value: {}".format(trial.value))
+    print("Value: {}".format(trial.value))
 
-    print("  Params: ")
+    print("Params: ")
     for key, value in trial.params.items():
         print("    {}: {}".format(key, value))
