@@ -36,7 +36,7 @@ X = pd.DataFrame(mnist.data)
 y = mnist.target.astype("int64")
 indices = np.random.permutation(len(X))
 N = int(len(X) * SUBSET_RATIO)
-X = X.iloc[indices][:N].astype(np.float32)  
+X = X.iloc[indices][:N].astype(np.float32)
 y = y[indices][:N]
 
 X /= 255.0
@@ -67,7 +67,7 @@ class ClassifierModule(nn.Module):
 
     def forward(self, x):
         if isinstance(x, dict):
-            x = x["data"] 
+            x = x["data"]
         return F.softmax(self.model(x), dim=-1)
 
 
