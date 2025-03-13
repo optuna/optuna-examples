@@ -12,20 +12,19 @@ argument.
 """
 
 import argparse
-import urllib
 
 import numpy as np
 import optuna
 from optuna.integration import SkorchPruningCallback
-import skorch
+import pandas as pd
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import pandas as pd
 
 from sklearn.datasets import fetch_openml
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
+import skorch
 
 
 SUBSET_RATIO = 0.4
@@ -41,7 +40,9 @@ y = y[indices][:N]
 
 X /= 255.0
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.25, random_state=42
+)
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 
@@ -82,7 +83,9 @@ def objective(trial: optuna.Trial) -> float:
 
     net.fit(X_train.to_numpy().astype(np.float32), y_train)
 
-    return accuracy_score(y_test.to_numpy(), net.predict(X_test.to_numpy().astype(np.float32)))
+    return accuracy_score(
+        y_test.to_numpy(), net.predict(X_test.to_numpy().astype(np.float32))
+    )
 
 
 if __name__ == "__main__":
@@ -96,7 +99,9 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    pruner = optuna.pruners.MedianPruner() if args.pruning else optuna.pruners.NopPruner()
+    pruner = (
+        optuna.pruners.MedianPruner() if args.pruning else optuna.pruners.NopPruner()
+    )
 
     study = optuna.create_study(direction="maximize", pruner=pruner)
     study.optimize(objective, n_trials=100, timeout=600)
