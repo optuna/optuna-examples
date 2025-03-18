@@ -1,3 +1,3 @@
 optuna
-tensorflow-cpu<2.19.0
+tensorflow-cpu<2.19.0  # TODO(y0z): remove the version constraint <2.19.0 after resolve the CI issue (cf. #304)
 tensorflow-datasets
