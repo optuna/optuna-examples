@@ -1,22 +1,22 @@
 """
 Optuna example that optimizes multi-layer perceptrons using skorch.
 
-In this example, we optimize the validation accuracy of hand-written digit recognition using
-skorch and MNIST. We optimize the neural network architecture. As it is too time
+In this example, we optimize the validation accuracy of hand-written digit recognition
+using skorch and MNIST. We optimize the neural network architecture. As it is too time
 consuming to use the whole MNIST dataset, we here use a small subset of it.
 
-You can run this example as follows, pruning can be turned on and off with the `--pruning`
-argument.
+You can run this example as follows, pruning can be turned on and off with the
+`--pruning` argument.
     $ python skorch_simple.py [--pruning]
 
 """
 
 import argparse
-import urllib
 
 import numpy as np
 import optuna
 from optuna.integration import SkorchPruningCallback
+import pandas as pd
 import skorch
 import torch
 import torch.nn as nn
@@ -27,22 +27,15 @@ from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 
 
-# Register a global custom opener to avoid HTTP Error 403: Forbidden when downloading MNIST.
-# This is a temporary fix until torchvision v0.9 is released.
-opener = urllib.request.build_opener()
-opener.addheaders = [("User-agent", "Mozilla/5.0")]
-urllib.request.install_opener(opener)
-
-
 SUBSET_RATIO = 0.4
 
 mnist = fetch_openml("mnist_784", cache=False)
 
-X = mnist.data.astype("float32")
+X = pd.DataFrame(mnist.data)
 y = mnist.target.astype("int64")
 indices = np.random.permutation(len(X))
 N = int(len(X) * SUBSET_RATIO)
-X = X[indices][:N]
+X = X.iloc[indices][:N].astype(np.float32)
 y = y[indices][:N]
 
 X /= 255.0
@@ -72,6 +65,8 @@ class ClassifierModule(nn.Module):
         self.model = nn.Sequential(*layers)
 
     def forward(self, x):
+        if isinstance(x, dict):
+            x = x["data"]
         return F.softmax(self.model(x), dim=-1)
 
 
@@ -84,9 +79,9 @@ def objective(trial: optuna.Trial) -> float:
         callbacks=[SkorchPruningCallback(trial, "valid_acc")],
     )
 
-    net.fit(X_train, y_train)
+    net.fit(X_train.to_numpy().astype(np.float32), y_train)
 
-    return accuracy_score(y_test, net.predict(X_test))
+    return accuracy_score(y_test.to_numpy(), net.predict(X_test.to_numpy().astype(np.float32)))
 
 
 if __name__ == "__main__":
@@ -110,8 +105,8 @@ if __name__ == "__main__":
     print("Best trial:")
     trial = study.best_trial
 
-    print("  Value: {}".format(trial.value))
+    print("Value: {}".format(trial.value))
 
-    print("  Params: ")
+    print("Params: ")
     for key, value in trial.params.items():
         print("    {}: {}".format(key, value))
