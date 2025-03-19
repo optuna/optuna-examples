@@ -1,4 +1,5 @@
 mpi4py
+pandas
 plotly
 pytorch-ignite
 lightning
