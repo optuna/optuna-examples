@@ -28,9 +28,15 @@ from sklearn.metrics import recall_score
 from sklearn.model_selection import train_test_split
 
 
-experiment = comet_ml.Experiment(api_key=os.getenv("COMET_API_KEY"))
-comet_ml.login(project_name="comet-optuna-example")
+# Ensure the API key is available
+if not os.getenv("COMET_API_KEY"):
+    raise ValueError("COMET_API_KEY is missing! Please set it as an environment variable.")
+
+# Start the experiment using comet_ml.start()
 experiment = comet_ml.start()
+
+# Log the project name
+experiment.set_name("comet-optuna-example")
 
 # Load dataset
 random_state = 42
