@@ -17,6 +17,7 @@ You can run this example as follows:
 
 import comet_ml
 import optuna
+import os
 from optuna_integration.comet import CometCallback
 
 from sklearn.datasets import load_breast_cancer
@@ -27,8 +28,8 @@ from sklearn.metrics import recall_score
 from sklearn.model_selection import train_test_split
 
 
-# Initialize Comet ML
-comet_ml.login(project_name="comet-optuna-sklearn-example")
+experiment = comet_ml.Experiment(api_key=os.getenv("COMET_API_KEY"))
+comet_ml.login(project_name="comet-optuna-example")
 experiment = comet_ml.start()
 
 # Load dataset

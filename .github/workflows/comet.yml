@@ -32,6 +32,8 @@ jobs:
         python -c 'import optuna_integration'
 
         pip install -r comet/requirements.txt
+    - name: Set API Key
+      run: echo "COMET_API_KEY=${{ secrets.COMET_API_KEY }}" >> $GITHUB_ENV
     - name: Run examples
       run: |
         python comet/comet_callback.py
