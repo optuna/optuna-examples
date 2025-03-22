@@ -15,9 +15,10 @@ You can run this example as follows:
     $ python comet_callback.py
 """
 
+import os
+
 import comet_ml
 import optuna
-import os
 from optuna_integration.comet import CometCallback
 
 from sklearn.datasets import load_breast_cancer
