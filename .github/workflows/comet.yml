@@ -17,25 +17,38 @@ jobs:
         python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
 
     steps:
-    - uses: actions/checkout@v4
-    - name: setup-python${{ matrix.python-version }}
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Setup Python ${{ matrix.python-version }}
       uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install (Python)
+
+    - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
         pip install --progress-bar off -U setuptools
         pip install git+https://github.com/optuna/optuna.git
-        python -c 'import optuna'
         pip install git+https://github.com/optuna/optuna-integration.git
-        python -c 'import optuna_integration'
-
         pip install -r comet/requirements.txt
+
     - name: Set API Key
-      run: echo "COMET_API_KEY=${{ secrets.COMET_API_KEY }}" >> $GITHUB_ENV
-    - name: Run examples
       run: |
-        python comet/comet_callback.py
+        echo "COMET_API_KEY=${{ secrets.COMET_API_KEY }}" >> $GITHUB_ENV
+
+    - name: Debug API Key
+      run: |
+        echo "Checking COMET_API_KEY..."
+        if [ -z "$COMET_API_KEY" ]; then
+          echo "❌ COMET_API_KEY is NOT set!"
+          exit 1
+        else
+          echo "✅ COMET_API_KEY is set."
+        fi
+
+    - name: Run Examples
+      run: python comet/comet_callback.py
       env:
         OMP_NUM_THREADS: 1
+        COMET_API_KEY: ${{ secrets.COMET_API_KEY }}
