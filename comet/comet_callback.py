@@ -15,8 +15,6 @@ You can run this example as follows:
     $ python comet_callback.py
 """
 
-import os
-
 import comet_ml
 import optuna
 from optuna_integration.comet import CometCallback
@@ -29,9 +27,7 @@ from sklearn.metrics import recall_score
 from sklearn.model_selection import train_test_split
 
 
-# Ensure the API key is available
-if not os.getenv("COMET_API_KEY"):
-    raise ValueError("COMET_API_KEY is missing! Please set it as an environment variable.")
+comet_ml.login()  # Explicit login
 
 # Start the experiment using comet_ml.start()
 experiment = comet_ml.start()
