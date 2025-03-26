@@ -16,6 +16,7 @@ You can run this example as follows:
 """
 
 import comet_ml
+from comet_ml import login
 import optuna
 from optuna_integration.comet import CometCallback
 
@@ -26,6 +27,8 @@ from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
 from sklearn.model_selection import train_test_split
 
+
+login()
 
 # Start the experiment using comet_ml.start()
 experiment = comet_ml.start()
