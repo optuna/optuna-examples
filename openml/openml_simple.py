@@ -16,7 +16,6 @@ import openml
 from openml.extensions.sklearn import cat
 from openml.extensions.sklearn import cont
 import optuna
-import optunahub
 from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.impute import SimpleImputer
@@ -60,7 +59,6 @@ preproc = ColumnTransformer([categorical_preproc, numerical_preproc])
 # =====================================================
 
 ## Optuna explanation
-# Since we use `OptunaHub <https://hub.optuna.org/>`__ for the benchmarking of hyperparameter optimization,
 # we follow the `Optuna <https://github.com/optuna/optuna/>`__ search space design.
 
 ## OpenML runs
@@ -100,16 +98,9 @@ def objective(trial: optuna.Trial) -> Pipeline:
 
 
 ############################################################################
-# Load a sampler from OptunaHub
-# =============================
-sampler = optunahub.load_module("samplers/hebo").HEBOSampler(seed=seed)
-
-logger.log(0, f"Sampler used {sampler}")
-
-############################################################################
 # Optimize the pipeline
 # =====================
-study = optuna.create_study(direction="maximize", sampler=sampler)
+study = optuna.create_study(direction="maximize")
 logger.log(0, f"Study {study}")
 study.optimize(objective, n_trials=15)
 
