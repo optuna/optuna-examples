@@ -27,8 +27,6 @@ from sklearn.metrics import recall_score
 from sklearn.model_selection import train_test_split
 
 
-comet_ml.login()  # Explicit login
-
 # Start the experiment using comet_ml.start()
 experiment = comet_ml.start()
 
