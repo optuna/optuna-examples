@@ -12,8 +12,7 @@ OpenML and OptunaHub.
 # ``pip install -r requirements.txt``
 # Then we import all the necessary modules.
 
-# License: BSD 3-Clause
-
+# License: MIT License
 import logging
 
 import optuna
