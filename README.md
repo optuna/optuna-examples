@@ -111,7 +111,6 @@ In addition, integration modules are available for the following libraries, prov
 * [Pruning with Tensorflow Integration Module](./tensorflow/tensorflow_estimator_integration.py)
 * [Pruning with XGBoost Integration Module](./xgboost/xgboost_integration.py)
 * [Pruning with XGBoost Integration Module (Cross Validation Version)](./xgboost/xgboost_cv_integration.py)
-* [Pruning with Comet Integration Module](./comet/comet_callback.py)
 </details>
 
 <details open>
