@@ -13,7 +13,7 @@ jobs:
     if: (github.event_name == 'schedule' && github.repository == 'optuna/optuna-examples') || (github.event_name != 'schedule')
     runs-on: ubuntu-latest
     env:
-      COMET_API_KEY: ${{ secrets.COMET_API_KEY }}
+      COMET_MODE: offline
     strategy:
       matrix:
         python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
