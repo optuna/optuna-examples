@@ -30,15 +30,6 @@ from sklearn.metrics import recall_score
 from sklearn.model_selection import train_test_split
 
 
-# Ensure API key is available and login
-if "COMET_API_KEY" not in os.environ:
-    raise ValueError("COMET_API_KEY is missing! Please set it as an environment variable.")
-
-login()  # Explicit login
-
-# Initialize experiment using API key instead of comet_ml.start()
-experiment = comet_ml.Experiment(api_key=os.getenv("COMET_API_KEY"))
-
 # Log the project name
 experiment.set_name("comet-optuna-example")
 
