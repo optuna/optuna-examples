@@ -1,3 +1,22 @@
+"""
+This script integrates Comet ML and Optuna to optimize a Random Forest Classifier
+on the scikit-learn Breast Cancer dataset. It performs the following steps:
+
+1. Initializes a Comet ML experiment for logging.
+2. Loads the Breast Cancer dataset and splits it into training and testing sets.
+3. Defines an evaluation function using F1-score, precision, and recall.
+4. Implements an Optuna objective function to optimize hyperparameters
+   (n_estimators and max_depth) for the Random Forest model.
+5. Uses Optuna to run multiple trials and identify the best hyperparameters.
+6. Trains the final Random Forest model using the best-found hyperparameters.
+7. Logs training and testing metrics to Comet ML.
+
+You can run this example as follows:
+    $ python comet_callback.py
+"""
+
+import os
+
 import comet_ml
 import optuna
 from optuna_integration.comet import CometCallback
@@ -10,10 +29,14 @@ from sklearn.metrics import recall_score
 from sklearn.model_selection import train_test_split
 
 
-# Create the experiment first
-experiment = comet_ml.start(online=False)
+# Ensure the API key is available
+if not os.getenv("COMET_API_KEY"):
+    raise ValueError("COMET_API_KEY is missing! Please set it as an environment variable.")
 
-# Then set the name
+# Start the experiment using comet_ml.start()
+experiment = comet_ml.start()
+
+# Log the project name
 experiment.set_name("comet-optuna-example")
 
 # Load dataset
