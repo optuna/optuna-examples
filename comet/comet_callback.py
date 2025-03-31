@@ -33,6 +33,8 @@ from sklearn.model_selection import train_test_split
 # Log the project name
 experiment.set_name("comet-optuna-example")
 
+experiment = comet_ml.start(online=False)
+
 # Load dataset
 random_state = 42
 cancer = load_breast_cancer()
