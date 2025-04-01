@@ -16,7 +16,7 @@ You can run this example as follows:
 """
 
 import optuna
-from optuna.integration.wandb import WeightsAndBiasesCallback
+from optuna.integration.comet import CometCallback
 
 from sklearn.datasets import load_iris
 from sklearn.ensemble import RandomForestClassifier
@@ -45,12 +45,11 @@ def objective(trial):
 
 
 if __name__ == "__main__":
-    wandb_kwargs = {"project": "optuna-wandb-example"}
-    wandbc = WeightsAndBiasesCallback(metric_name="accuracy", wandb_kwargs=wandb_kwargs)
+    comet_callback = CometCallback(project_name="comet-optuna-sklearn-example")
 
     # Create and optimize the study
     study = optuna.create_study(direction="maximize")
-    study.optimize(objective, n_trials=100, callbacks=[wandbc])
+    study.optimize(objective, n_trials=20, callbacks=[comet_callback])
 
     # Print study results
     print(f"Number of finished trials: {len(study.trials)}\n")
