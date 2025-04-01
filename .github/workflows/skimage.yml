@@ -7,6 +7,7 @@ on:
     paths:
       - 'skimage/**'
       - '.github/workflows/skimage.yml'
+  workflow_dispatch:
 
 jobs:
   examples:

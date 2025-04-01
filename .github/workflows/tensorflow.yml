@@ -7,6 +7,7 @@ on:
     paths:
       - 'tensorflow/**'
       - '.github/workflows/tensorflow.yml'
+  workflow_dispatch:
 
 jobs:
   examples:

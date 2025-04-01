@@ -7,6 +7,7 @@ on:
     paths:
       - 'hydra/**'
       - '.github/workflows/hydra.yml'
+  workflow_dispatch:
 
 jobs:
   examples:

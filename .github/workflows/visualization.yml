@@ -7,6 +7,7 @@ on:
     paths:
       - 'visualization/**'
       - '.github/workflows/visualization.yml'
+  workflow_dispatch:
 
 jobs:
   examples:

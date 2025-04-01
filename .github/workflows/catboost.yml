@@ -7,6 +7,7 @@ on:
     paths:
       - 'catboost/**'
       - '.github/workflows/catboost.yml'
+  workflow_dispatch:
 
 jobs:
   examples:
