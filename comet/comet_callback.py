@@ -15,85 +15,50 @@ You can run this example as follows:
     $ python comet_callback.py
 """
 
-import os
-
-import comet_ml
 import optuna
-from optuna_integration.comet import CometCallback
+from optuna.integration.wandb import WeightsAndBiasesCallback
 
-from sklearn.datasets import load_breast_cancer
+from sklearn.datasets import load_iris
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import f1_score
-from sklearn.metrics import precision_score
-from sklearn.metrics import recall_score
+from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 
 
-# Ensure the API key is available
-if not os.getenv("COMET_API_KEY"):
-    raise ValueError("COMET_API_KEY is missing! Please set it as an environment variable.")
-
-# Start the experiment using comet_ml.start()
-experiment = comet_ml.start()
-
-# Log the project name
-experiment.set_name("comet-optuna-example")
-
-# Load dataset
-random_state = 42
-cancer = load_breast_cancer()
-X_train, X_test, y_train, y_test = train_test_split(
-    cancer.data, cancer.target, stratify=cancer.target, random_state=random_state
-)
-
-
-# Evaluation function
-def evaluate(y_true, y_pred):
-    return {
-        "f1": f1_score(y_true, y_pred),
-        "precision": precision_score(y_true, y_pred),
-        "recall": recall_score(y_true, y_pred),
+def objective(trial):
+    """Objective function for optimizing a RandomForestClassifier using Optuna."""
+    data = load_iris()
+    x_train, x_valid, y_train, y_valid = train_test_split(
+        data["data"], data["target"], random_state=42
+    )
+    params = {
+        "min_samples_leaf": trial.suggest_int("min_samples_leaf", 2, 10),
+        "max_depth": trial.suggest_int("max_depth", 5, 20),
+        "min_samples_split": trial.suggest_int("min_samples_split", 2, 10),
     }
 
-
-def objective(trial):
-    n_estimators = trial.suggest_int("n_estimators", 10, 200)
-    max_depth = trial.suggest_int("max_depth", 2, 20)
-
-    clf = RandomForestClassifier(
-        n_estimators=n_estimators, max_depth=max_depth, random_state=random_state
-    )
-    clf.fit(X_train, y_train)
-    y_pred = clf.predict(X_test)
-
-    score = f1_score(y_test, y_pred)
-
-    # Log the metric manually
-    experiment.log_metric("f1_score", score, step=trial.number)
+    clf = RandomForestClassifier(**params, random_state=42)
+    clf.fit(x_train, y_train)
+    pred = clf.predict(x_valid)
+    score = accuracy_score(y_valid, pred)
 
     return score
 
 
-# Optuna Study with Comet ML callback
-study = optuna.create_study(direction="maximize")
-comet_callback = CometCallback(
-    study, project_name="comet-optuna-sklearn-example", metric_names=["f1_score"]
-)
-study.optimize(objective, n_trials=20, callbacks=[comet_callback])
+if __name__ == "__main__":
+    wandb_kwargs = {"project": "optuna-wandb-example"}
+    wandbc = WeightsAndBiasesCallback(metric_name="accuracy", wandb_kwargs=wandb_kwargs)
 
-# Train final model with best parameters
-best_params = study.best_params
-clf = RandomForestClassifier(**best_params, random_state=random_state)
-clf.fit(X_train, y_train)
-y_train_pred = clf.predict(X_train)
-y_test_pred = clf.predict(X_test)
+    # Create and optimize the study
+    study = optuna.create_study(direction="maximize")
+    study.optimize(objective, n_trials=100, callbacks=[wandbc])
 
-# Log training metrics
-with experiment.train():
-    experiment.log_metrics(evaluate(y_train, y_train_pred))
+    # Print study results
+    print(f"Number of finished trials: {len(study.trials)}\n")
 
-# Log testing metrics
-with experiment.test():
-    experiment.log_metrics(evaluate(y_test, y_test_pred))
+    print("Best trial:")
+    trial = study.best_trial
 
-experiment.end()
+    print(f"Value: {trial.value}\n")
+    print("Params:")
+    for key, value in trial.params.items():
+        print(f"{key}: {value}")
