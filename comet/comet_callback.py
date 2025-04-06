@@ -12,11 +12,11 @@ on the scikit-learn Breast Cancer dataset. It performs the following steps:
 7. Logs training and testing metrics to Comet ML.
 
 You can run this example as follows:
-    $ python comet_callback.py
+    $ python comet_integration.py
 """
 
 import optuna
-from optuna.integration.comet import CometCallback
+from optuna_integration.comet import CometCallback
 
 from sklearn.datasets import load_iris
 from sklearn.ensemble import RandomForestClassifier
@@ -47,17 +47,15 @@ def objective(trial):
 if __name__ == "__main__":
     comet_callback = CometCallback(project_name="comet-optuna-sklearn-example")
 
-    # Create and optimize the study
     study = optuna.create_study(direction="maximize")
     study.optimize(objective, n_trials=20, callbacks=[comet_callback])
 
-    # Print study results
     print(f"Number of finished trials: {len(study.trials)}\n")
 
     print("Best trial:")
     trial = study.best_trial
 
-    print(f"Value: {trial.value}\n")
-    print("Params:")
+    print(f"  Value: {trial.value}\n")
+    print("  Params:")
     for key, value in trial.params.items():
-        print(f"{key}: {value}")
+        print(f"    {key}: {value}")
