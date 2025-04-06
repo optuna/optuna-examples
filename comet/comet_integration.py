@@ -4,9 +4,9 @@ on the scikit-learn Breast Cancer dataset. It performs the following steps:
 
 1. Initializes a Comet ML experiment for logging.
 2. Loads the Breast Cancer dataset and splits it into training and testing sets.
-3. Defines an evaluation function using F1-score, precision, and recall.
+3. Defines an evaluation function using accuracy.
 4. Implements an Optuna objective function to optimize hyperparameters
-   (n_estimators and max_depth) for the Random Forest model.
+   (min_samples_leaf, max_depth, and min_samples_split) for the Random Forest model.
 5. Uses Optuna to run multiple trials and identify the best hyperparameters.
 6. Trains the final Random Forest model using the best-found hyperparameters.
 7. Logs training and testing metrics to Comet ML.
