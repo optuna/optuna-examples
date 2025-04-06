@@ -45,9 +45,9 @@ def objective(trial):
 
 
 if __name__ == "__main__":
-    comet_callback = CometCallback(project_name="comet-optuna-sklearn-example")
-
     study = optuna.create_study(direction="maximize")
+    comet_callback = CometCallback(study, project_name="comet-optuna-sklearn-example")
+
     study.optimize(objective, n_trials=20, callbacks=[comet_callback])
 
     print(f"Number of finished trials: {len(study.trials)}\n")
