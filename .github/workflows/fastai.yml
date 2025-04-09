@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         # TODO(c-bata): Add Python 3.9 here after fixing https://github.com/optuna/optuna-examples/issues/307
-        python-version: ['3.10', '3.11', '3.12']
+        python-version: ['3.9','3.10', '3.11', '3.12']
 
     steps:
     - uses: actions/checkout@v4
