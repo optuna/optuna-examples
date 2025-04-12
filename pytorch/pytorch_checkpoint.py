@@ -46,6 +46,7 @@ artifact_store = FileSystemArtifactStore(base_path=base_path)
 
 
 def define_model(trial):
+    # We optimize the number of layers, hidden units and dropout ratio in each layer.
     n_layers = trial.suggest_int("n_layers", 1, 3)
     layers = []
     in_features = 28 * 28
@@ -64,6 +65,7 @@ def define_model(trial):
 
 
 def get_mnist():
+    # Load FashionMNIST dataset.
     train_loader = torch.utils.data.DataLoader(
         datasets.FashionMNIST(DIR, train=True, download=True, transform=transforms.ToTensor()),
         batch_size=BATCHSIZE,
@@ -78,8 +80,10 @@ def get_mnist():
 
 
 def objective(trial):
+    # Generate the model.
     model = define_model(trial).to(DEVICE)
 
+    # Generate the optimizers.
     optimizer_name = trial.suggest_categorical("optimizer", ["Adam", "RMSprop", "SGD"])
     lr = trial.suggest_float("lr", 1e-5, 1e-1, log=True)
     optimizer = getattr(optim, optimizer_name)(model.parameters(), lr=lr)
@@ -113,11 +117,14 @@ def objective(trial):
     else:
         epoch_begin = 0
 
+    # Get the FashionMNIST dataset.
     train_loader, valid_loader = get_mnist()
 
+    # Training of the model.
     for epoch in range(epoch_begin, EPOCHS):
         model.train()
         for batch_idx, (data, target) in enumerate(train_loader):
+            # Limiting training data for faster epochs.
             if batch_idx * BATCHSIZE >= N_TRAIN_EXAMPLES:
                 break
             data, target = data.view(data.size(0), -1).to(DEVICE), target.to(DEVICE)
@@ -127,13 +134,16 @@ def objective(trial):
             loss.backward()
             optimizer.step()
 
+        # Validation of the model.
         model.eval()
         correct = 0
         with torch.no_grad():
             for batch_idx, (data, target) in enumerate(valid_loader):
+                # Limiting validation data.
                 if batch_idx * BATCHSIZE >= N_VALID_EXAMPLES:
                     break
                 data, target = data.view(data.size(0), -1).to(DEVICE), target.to(DEVICE)
+                # Get the index of the max log-probability.
                 output = model(data)
                 pred = output.argmax(dim=1, keepdim=True)
                 correct += pred.eq(target.view_as(pred)).sum().item()
@@ -141,6 +151,8 @@ def objective(trial):
         accuracy = correct / min(len(valid_loader.dataset), N_VALID_EXAMPLES)
         trial.report(accuracy, epoch)
 
+        # Save optimization status. We should save the objective value because the process may be
+        # killed between saving the last model and recording the objective value to the storage.
         print(f"Saving a checkpoint in epoch {epoch}.")
 
         with tempfile.NamedTemporaryFile(delete=False, suffix=".pt") as tmp_file:
@@ -161,6 +173,7 @@ def objective(trial):
         trial.set_user_attr("artifact_id", artifact_id)
         os.remove(temp_path)
 
+        # Handle pruning based on the intermediate value.
         if trial.should_prune():
             raise optuna.exceptions.TrialPruned()
 
@@ -196,4 +209,5 @@ if __name__ == "__main__":
     for key, value in trial.params.items():
         print(f"    {key}: {value}")
 
+    # The line of the resumed trial's intermediate values begins with the restarted epoch.
     optuna.visualization.plot_intermediate_values(study).show()
