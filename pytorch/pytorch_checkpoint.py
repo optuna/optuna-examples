@@ -106,7 +106,7 @@ def objective(trial):
             epoch_begin = checkpoint["epoch"] + 1
 
             print(
-                f"Loading a checkpoint from trial {retry_trial_number} in epoch {checkpoint['epoch']}."
+                f"Loading checkpoint from trial {retry_trial_number}, epoch {checkpoint['epoch']}."
             )
 
             model.load_state_dict(checkpoint["model_state_dict"])
