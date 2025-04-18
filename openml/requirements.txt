@@ -1,0 +1,2 @@
+openml>=0.15.1
+plotly
