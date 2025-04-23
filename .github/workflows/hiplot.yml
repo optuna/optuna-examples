@@ -1,8 +1,9 @@
 name: visualization with hiplot
 
+# TODO(fusawa-yugo) Change schedule to run daily once the problem is resolved
 on:
   schedule:
-    - cron: '0 15 * * *'
+    - cron: '0 15 * * 1'
   pull_request:
     paths:
       - 'hiplot/**'
@@ -15,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.7', '3.8', '3.9', '3.10', '3.11', '3.12']
+        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
 
     steps:
     - uses: actions/checkout@v4

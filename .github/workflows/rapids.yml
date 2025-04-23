@@ -1,14 +1,12 @@
-name: sklearn
+name: rapids
 
-# TODO(fusawa-yugo) Change schedule to run daily once the problem is resolved
 on:
   schedule:
-    - cron: '0 15 * * 1'
+    - cron: '0 15 * * *'
   pull_request:
     paths:
-      - 'sklearn/**'
-      - '.github/workflows/sklearn.yml'
-  workflow_dispatch:
+      - 'rapids/**'
+      - '.github/workflows/rapids.yml'
 
 jobs:
   examples:
@@ -30,14 +28,8 @@ jobs:
         pip install --progress-bar off -U setuptools
         pip install git+https://github.com/optuna/optuna.git
         python -c 'import optuna'
-        pip install git+https://github.com/optuna/optuna-integration.git
-        python -c 'import optuna_integration'
-
-        pip install -r sklearn/requirements.txt
     - name: Run examples
       run: |
-        python sklearn/sklearn_additional_args.py
-        python sklearn/sklearn_optuna_search_cv_simple.py
-        python sklearn/sklearn_simple.py
+        python -m py_compile rapids/rapids_simple.py  # due to difficulty in importing, compile only
       env:
         OMP_NUM_THREADS: 1

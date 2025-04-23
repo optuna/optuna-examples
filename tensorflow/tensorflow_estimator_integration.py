@@ -12,6 +12,7 @@ You can run this example as follows:
 """
 
 import shutil
+import sys
 import tempfile
 import urllib
 
@@ -133,4 +134,11 @@ def main():
 
 
 if __name__ == "__main__":
+    if sys.version_info >= (3, 12):
+        raise RuntimeError(
+            "Use `optuna_integration.KerasPruningCallback` instead, "
+            "because TensorFlow recommends migrating from Estimator to Keras APIs. "
+            "For more details, please check the TensorFlow migration guide: "
+            "https://www.tensorflow.org/guide/migrate/migrating_estimator"
+        )
     main()

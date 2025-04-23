@@ -9,6 +9,7 @@ subset of it.
 """
 
 import shutil
+import sys
 import tempfile
 import urllib
 
@@ -123,4 +124,10 @@ def main():
 
 
 if __name__ == "__main__":
+    if sys.version_info >= (3, 12):
+        raise RuntimeError(
+            "Use Keras APIs instead of Estimator API in TensorFlow. "
+            "For more details, please check the TensorFlow migration guide: "
+            "https://www.tensorflow.org/guide/migrate/migrating_estimator"
+        )
     main()

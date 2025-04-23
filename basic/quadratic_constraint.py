@@ -56,8 +56,8 @@ if __name__ == "__main__":
     else:
         best_trial_number = sorted(feasible_trial_numbers, key=lambda i: study.trials[i].value)[0]
         best_trial = study.trials[best_trial_number]
-        print(f"Best trial was found at Trial#{best_trial_number}")
-        print(f"  Params: {best_trial.params}")
-        print(f"  Value: {best_trial.value}")
+        print("Best trial was found at Trial#{}".format(best_trial_number))
+        print("  Params: {}".format(best_trial.params))
+        print("  Value: {}".format(best_trial.value))
         c1, c2 = best_trial.system_attrs["constraints"]
-        print(f"  Constraints: {c1=}, {c2=}")
+        print("  Constraints: c1={}, c2={}".format(c1, c2))

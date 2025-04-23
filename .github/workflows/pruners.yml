@@ -6,7 +6,7 @@ on:
   pull_request:
     paths:
       - 'pruners/**'
-      - '.github/workflows/wilcoxon_pruner.yml'
+      - '.github/workflows/pruners.yml'
   workflow_dispatch:
 
 jobs:
@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.7', '3.8', '3.9', '3.10', '3.11', '3.12']
+        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
 
     steps:
     - uses: actions/checkout@v4

@@ -11,7 +11,7 @@ as this uses the entire MNIST dataset.
 
 You can run this example as follows, pruning can be turned on and off with the `--pruning`
 argument.
-    $ python fastaiv2_simple.py [--pruning]
+    $ python fastai_simple.py [--pruning]
 """
 
 import argparse

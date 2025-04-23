@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.7', '3.8', '3.9', '3.10', '3.11']
+        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
 
     steps:
     - uses: actions/checkout@v4
@@ -29,11 +29,14 @@ jobs:
         pip install --progress-bar off -U setuptools
         pip install git+https://github.com/optuna/optuna.git
         python -c 'import optuna'
+        pip install git+https://github.com/optuna/optuna-integration.git
+        python -c 'import optuna_integration'
 
         pip install -r terminator/requirements.txt
     - name: Run examples
       run: |
-        python terminator/terminator_simple.py
         python terminator/terminator_improvement_plot.py
+        python terminator/terminator_search_cv.py
+        python terminator/terminator_simple.py
       env:
         OMP_NUM_THREADS: 1

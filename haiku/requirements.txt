@@ -4,5 +4,5 @@ jaxlib
 numpy
 optax
 optuna
-tensorflow
+tensorflow-cpu
 tensorflow-datasets

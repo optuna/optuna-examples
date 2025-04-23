@@ -78,3 +78,8 @@ jobs:
         python pytorch/pytorch_lightning_ddp.py -p
       env:
         OMP_NUM_THREADS: 1
+    - name: Run skorch example
+      run: |
+        python pytorch/skorch_simple.py
+      env:
+        OMP_NUM_THREADS: 1

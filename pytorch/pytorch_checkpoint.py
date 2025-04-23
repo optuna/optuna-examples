@@ -14,9 +14,12 @@ previous saved checkpoint using heartbeat.
 """
 
 import os
-import shutil
+import tempfile
 
 import optuna
+from optuna.artifacts import download_artifact
+from optuna.artifacts import FileSystemArtifactStore
+from optuna.artifacts import upload_artifact
 from optuna.storages import RetryFailedTrialCallback
 import torch
 import torch.nn as nn
@@ -37,21 +40,24 @@ N_TRAIN_EXAMPLES = BATCHSIZE * 30
 N_VALID_EXAMPLES = BATCHSIZE * 10
 CHECKPOINT_DIR = "pytorch_checkpoint"
 
+base_path = "./artifacts"
+os.makedirs(base_path, exist_ok=True)
+artifact_store = FileSystemArtifactStore(base_path=base_path)
+
 
 def define_model(trial):
-    # We optimize the number of layers, hidden units and dropout ratio in each layer.
     n_layers = trial.suggest_int("n_layers", 1, 3)
     layers = []
 
     in_features = 28 * 28
     for i in range(n_layers):
-        out_features = trial.suggest_int("n_units_l{}".format(i), 4, 128)
+        out_features = trial.suggest_int(f"n_units_l{i}", 4, 128)
         layers.append(nn.Linear(in_features, out_features))
         layers.append(nn.ReLU())
-        p = trial.suggest_float("dropout_l{}".format(i), 0.2, 0.5)
+        p = trial.suggest_float(f"dropout_l{i}", 0.2, 0.5)
         layers.append(nn.Dropout(p))
-
         in_features = out_features
+
     layers.append(nn.Linear(in_features, CLASSES))
     layers.append(nn.LogSoftmax(dim=1))
 
@@ -59,7 +65,6 @@ def define_model(trial):
 
 
 def get_mnist():
-    # Load FashionMNIST dataset.
     train_loader = torch.utils.data.DataLoader(
         datasets.FashionMNIST(DIR, train=True, download=True, transform=transforms.ToTensor()),
         batch_size=BATCHSIZE,
@@ -70,102 +75,95 @@ def get_mnist():
         batch_size=BATCHSIZE,
         shuffle=True,
     )
-
     return train_loader, valid_loader
 
 
 def objective(trial):
-    # Generate the model.
     model = define_model(trial).to(DEVICE)
 
-    # Generate the optimizers.
     optimizer_name = trial.suggest_categorical("optimizer", ["Adam", "RMSprop", "SGD"])
     lr = trial.suggest_float("lr", 1e-5, 1e-1, log=True)
     optimizer = getattr(optim, optimizer_name)(model.parameters(), lr=lr)
 
-    trial_number = RetryFailedTrialCallback.retried_trial_number(trial)
-    trial_checkpoint_dir = os.path.join(CHECKPOINT_DIR, str(trial_number))
-    checkpoint_path = os.path.join(trial_checkpoint_dir, "model.pt")
-    checkpoint_exists = os.path.isfile(checkpoint_path)
+    artifact_id = None
+    retry_history = RetryFailedTrialCallback.retry_history(trial)
+    for trial_number in reversed(retry_history):
+        artifact_id = trial.study.trials[trial_number].user_attrs.get("artifact_id")
+        if artifact_id is not None:
+            retry_trial_number = trial_number
+            break
 
-    if trial_number is not None and checkpoint_exists:
-        checkpoint = torch.load(checkpoint_path)
-        epoch = checkpoint["epoch"]
-        epoch_begin = epoch + 1
+    with tempfile.TemporaryDirectory() as tmpdir:
+        checkpoint_path = os.path.join(tmpdir, "checkpoint.pt")
 
-        print(f"Loading a checkpoint from trial {trial_number} in epoch {epoch}.")
+        if artifact_id is not None:
+            download_artifact(
+                artifact_store=artifact_store,
+                file_path=checkpoint_path,
+                artifact_id=artifact_id,
+            )
+            checkpoint = torch.load(checkpoint_path)
+            epoch_begin = checkpoint["epoch"] + 1
 
-        model.load_state_dict(checkpoint["model_state_dict"])
-        optimizer.load_state_dict(checkpoint["optimizer_state_dict"])
-        accuracy = checkpoint["accuracy"]
-    else:
-        trial_checkpoint_dir = os.path.join(CHECKPOINT_DIR, str(trial.number))
-        checkpoint_path = os.path.join(trial_checkpoint_dir, "model.pt")
-        epoch_begin = 0
+            print(
+                f"Loading checkpoint from trial {retry_trial_number}, epoch {checkpoint['epoch']}."
+            )
 
-    # Get the FashionMNIST dataset.
-    train_loader, valid_loader = get_mnist()
+            model.load_state_dict(checkpoint["model_state_dict"])
+            optimizer.load_state_dict(checkpoint["optimizer_state_dict"])
+            accuracy = checkpoint["accuracy"]
+        else:
+            epoch_begin = 0
 
-    os.makedirs(trial_checkpoint_dir, exist_ok=True)
-    # A checkpoint may be corrupted when the process is killed during `torch.save`.
-    # Reduce the risk by first calling `torch.save` to a temporary file, then copy.
-    tmp_checkpoint_path = os.path.join(trial_checkpoint_dir, "tmp_model.pt")
+        train_loader, valid_loader = get_mnist()
 
-    print(f"Checkpoint path for trial is '{checkpoint_path}'.")
-
-    # Training of the model.
-    for epoch in range(epoch_begin, EPOCHS):
-        model.train()
-        for batch_idx, (data, target) in enumerate(train_loader):
-            # Limiting training data for faster epochs.
-            if batch_idx * BATCHSIZE >= N_TRAIN_EXAMPLES:
-                break
-
-            data, target = data.view(data.size(0), -1).to(DEVICE), target.to(DEVICE)
-
-            optimizer.zero_grad()
-            output = model(data)
-            loss = F.nll_loss(output, target)
-            loss.backward()
-            optimizer.step()
-
-        # Validation of the model.
-        model.eval()
-        correct = 0
-        with torch.no_grad():
-            for batch_idx, (data, target) in enumerate(valid_loader):
-                # Limiting validation data.
-                if batch_idx * BATCHSIZE >= N_VALID_EXAMPLES:
+        for epoch in range(epoch_begin, EPOCHS):
+            model.train()
+            for batch_idx, (data, target) in enumerate(train_loader):
+                if batch_idx * BATCHSIZE >= N_TRAIN_EXAMPLES:
                     break
                 data, target = data.view(data.size(0), -1).to(DEVICE), target.to(DEVICE)
+                optimizer.zero_grad()
                 output = model(data)
-                # Get the index of the max log-probability.
-                pred = output.argmax(dim=1, keepdim=True)
-                correct += pred.eq(target.view_as(pred)).sum().item()
+                loss = F.nll_loss(output, target)
+                loss.backward()
+                optimizer.step()
 
-        accuracy = correct / min(len(valid_loader.dataset), N_VALID_EXAMPLES)
+            model.eval()
+            correct = 0
+            with torch.no_grad():
+                for batch_idx, (data, target) in enumerate(valid_loader):
+                    if batch_idx * BATCHSIZE >= N_VALID_EXAMPLES:
+                        break
+                    data, target = data.view(data.size(0), -1).to(DEVICE), target.to(DEVICE)
+                    output = model(data)
+                    pred = output.argmax(dim=1, keepdim=True)
+                    correct += pred.eq(target.view_as(pred)).sum().item()
 
-        trial.report(accuracy, epoch)
+            accuracy = correct / min(len(valid_loader.dataset), N_VALID_EXAMPLES)
+            trial.report(accuracy, epoch)
 
-        # Save optimization status. We should save the objective value because the process may be
-        # killed between saving the last model and recording the objective value to the storage.
+            print(f"Saving a checkpoint in epoch {epoch}.")
 
-        print(f"Saving a checkpoint in epoch {epoch}.")
+            torch.save(
+                {
+                    "epoch": epoch,
+                    "model_state_dict": model.state_dict(),
+                    "optimizer_state_dict": optimizer.state_dict(),
+                    "accuracy": accuracy,
+                },
+                checkpoint_path,
+            )
 
-        torch.save(
-            {
-                "epoch": epoch,
-                "model_state_dict": model.state_dict(),
-                "optimizer_state_dict": optimizer.state_dict(),
-                "accuracy": accuracy,
-            },
-            tmp_checkpoint_path,
-        )
-        shutil.move(tmp_checkpoint_path, checkpoint_path)
+            artifact_id = upload_artifact(
+                artifact_store=artifact_store,
+                file_path=checkpoint_path,
+                study_or_trial=trial,
+            )
+            trial.set_user_attr("artifact_id", artifact_id)
 
-        # Handle pruning based on the intermediate value.
-        if trial.should_prune():
-            raise optuna.exceptions.TrialPruned()
+            if trial.should_prune():
+                raise optuna.exceptions.TrialPruned()
 
     return accuracy
 
@@ -177,7 +175,10 @@ if __name__ == "__main__":
         failed_trial_callback=RetryFailedTrialCallback(),
     )
     study = optuna.create_study(
-        storage=storage, study_name="pytorch_checkpoint", direction="maximize", load_if_exists=True
+        storage=storage,
+        study_name="pytorch_checkpoint",
+        direction="maximize",
+        load_if_exists=True,
     )
     study.optimize(objective, n_trials=10, timeout=600)
 
@@ -191,12 +192,10 @@ if __name__ == "__main__":
 
     print("Best trial:")
     trial = study.best_trial
-
     print("  Value: ", trial.value)
 
     print("  Params: ")
     for key, value in trial.params.items():
-        print("    {}: {}".format(key, value))
+        print(f"    {key}: {value}")
 
-    # The line of the resumed trial's intermediate values begins with the restarted epoch.
     optuna.visualization.plot_intermediate_values(study).show()

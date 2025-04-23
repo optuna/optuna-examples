@@ -1,4 +1,4 @@
 mlflow
 optuna
 scikit-learn
-tensorflow
+tensorflow-cpu
