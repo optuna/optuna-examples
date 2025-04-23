@@ -1,4 +1,4 @@
 optuna 
-shap 
+optuna-integration
 scikit-learn 
 matplotlib
