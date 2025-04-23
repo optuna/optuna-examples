@@ -1,12 +1,12 @@
-name: dask_ml
+name: openml
 
 on:
   schedule:
     - cron: '0 15 * * *'
   pull_request:
     paths:
-      - 'dask_ml/**'
-      - '.github/workflows/dask_ml.yml'
+      - 'openml/**'
+      - '.github/workflows/openml.yml'
 
 jobs:
   examples:
@@ -14,7 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
+        # TODO(c-bata): Add Python 3.9 here after fixing https://github.com/optuna/optuna-examples/issues/307
+        python-version: ['3.10', '3.11', '3.12']
 
     steps:
     - uses: actions/checkout@v4
@@ -27,15 +28,13 @@ jobs:
         python -m pip install --upgrade pip
         pip install --progress-bar off -U setuptools
         pip install git+https://github.com/optuna/optuna.git
-        # TODO(c-bata): Remove the version constraint after dask-ml supports dask 2025.1.0
-        pip install "dask<2025.1.0"
-        # TODO(c-bata): Remove the version constraint after fixes https://github.com/optuna/optuna-examples/issues/314
-        pip install "numpy<2.2"
         python -c 'import optuna'
+        pip install git+https://github.com/optuna/optuna-integration.git
+        python -c 'import optuna_integration'
 
-        pip install -r dask_ml/requirements.txt
+        pip install -r openml/requirements.txt
     - name: Run examples
       run: |
-        python dask_ml/dask_ml_simple.py
+        python openml/openml_simple.py
       env:
         OMP_NUM_THREADS: 1
