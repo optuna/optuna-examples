@@ -8,11 +8,12 @@ jax nad haiku. We optimize the number of linear layers and learning rate of the 
 The example code is based on https://github.com/deepmind/dm-haiku/blob/master/examples/mnist.py
 """
 
+from __future__ import annotations
+
+from collections.abc import Generator
+from collections.abc import Mapping
 import os
 from typing import Any
-from typing import Generator
-from typing import Mapping
-from typing import Tuple
 import urllib
 
 import jax
@@ -119,7 +120,7 @@ def objective(trial):
         params: hk.Params,
         opt_state: OptState,
         batch: Batch,
-    ) -> Tuple[hk.Params, OptState]:
+    ) -> tuple[hk.Params, OptState]:
         """Learning rule (stochastic gradient descent)."""
         grads = jax.grad(loss)(params, batch)
         updates, opt_state = opt.update(grads, opt_state)
