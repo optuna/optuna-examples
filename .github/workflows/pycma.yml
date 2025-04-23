@@ -1,12 +1,12 @@
-name: fastai
+name: pycma
 
 on:
   schedule:
     - cron: '0 15 * * *'
   pull_request:
     paths:
-      - 'fastai/**'
-      - '.github/workflows/fastai.yml'
+      - 'pycma/**'
+      - '.github/workflows/pycma.yml'
 
 jobs:
   examples:
@@ -32,10 +32,9 @@ jobs:
         pip install git+https://github.com/optuna/optuna-integration.git
         python -c 'import optuna_integration'
 
-        pip install -r fastai/requirements.txt
+        pip install -r pycma/requirements.txt
     - name: Run examples
       run: |
-        python fastai/fastai_simple.py
-        python fastai/fastai_simple.py --pruning
+        python pycma/pycma_integration.py
       env:
         OMP_NUM_THREADS: 1
