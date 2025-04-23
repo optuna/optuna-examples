@@ -3,15 +3,17 @@ Optuna example that demonstrates a CMA-ES sampler using PyCmaSampler.
 
 In this example, we optimize the hyperparameters of a RandomForestClassifier on the Iris dataset.
 We use the PyCmaSampler, which wraps CMA-ES (Covariance Matrix Adaptation Evolution Strategy),
-to sample hyperparameters such as the number of estimators, maximum depth, and feature selection strategy.
+to sample hyperparameters such as the number of estimators, maximum depth, and feature selection
+strategy.
 
-This example also demonstrates how to use Optuna for meta-optimization of the underlying CMA-ES parameters
-(e.g., sigma and maximum number of function evaluations). The script trains the model using the best-found
-configuration and visualizes the parameter importance.
+This example also demonstrates how to use Optuna for meta-optimization of the underlying CMA-ES
+parameters (e.g., sigma and maximum number of function evaluations).
+The script trains the model using the best configuration and visualizes the parameter importance.
 
 You can run this example as follows:
     $ python pycma_integration.py
 """
+
 import matplotlib.pyplot as plt
 import optuna
 from optuna.integration import PyCmaSampler
