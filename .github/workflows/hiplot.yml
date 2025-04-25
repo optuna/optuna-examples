@@ -8,6 +8,7 @@ on:
     paths:
       - 'hiplot/**'
       - '.github/workflows/hiplot.yml'
+  workflow_dispatch:
 
 jobs:
   examples:

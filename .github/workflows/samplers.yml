@@ -7,6 +7,7 @@ on:
     paths:
       - 'samplers/**'
       - '.github/workflows/samplers.yml'
+  workflow_dispatch:
 
 jobs:
   examples:

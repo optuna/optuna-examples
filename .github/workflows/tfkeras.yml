@@ -7,6 +7,7 @@ on:
     paths:
       - 'tfkeras/**'
       - '.github/workflows/tfkeras.yml'
+  workflow_dispatch:
 
 jobs:
   examples:

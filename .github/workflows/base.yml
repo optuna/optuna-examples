@@ -8,6 +8,7 @@ on:
       - './**.py'
       - 'requirements.txt'
       - '.github/workflows/base.yml'
+  workflow_dispatch:
 
 jobs:
   examples:

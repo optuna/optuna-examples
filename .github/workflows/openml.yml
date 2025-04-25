@@ -7,6 +7,7 @@ on:
     paths:
       - 'openml/**'
       - '.github/workflows/openml.yml'
+  workflow_dispatch:
 
 jobs:
   examples:
