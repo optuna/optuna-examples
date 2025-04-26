@@ -1,0 +1,8 @@
+optuna
+transformers
+evaluate
+scikit-learn
+torch
+torchaudio
+torchvision
+datasets
