@@ -90,7 +90,7 @@ training_args = TrainingArguments(
     save_total_limit=1,
     load_best_model_at_end=True,
     logging_dir="./logs",
-    report_to="tensorboard",
+    report_to="none",
     fp16=False,
     dataloader_pin_memory=torch.cuda.is_available(),  # Safer on CPU or smaller GPUs
 )
