@@ -6,3 +6,4 @@ torch
 torchaudio
 torchvision
 datasets
+accelerate
