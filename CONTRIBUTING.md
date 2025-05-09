@@ -29,6 +29,17 @@ and additional conventions are described in the [Wiki](https://github.com/optuna
 If your environment is missing some dependencies such as black, flake8, or isort,
 you will be asked to install them.
 
+You can use `pre-commit` to automatically check the format, coding style, and type hints before committing.
+The following commands automatically fix format errors by auto-formatters.
+
+```bash
+# Install `pre-commit`.
+$ pip install pre-commit
+
+$ pre-commit install
+$ pre-commit run --all-files
+```
+
 ## Continuous Integration and Local Verification
 
 This repository uses GitHub Actions.
