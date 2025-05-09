@@ -7,6 +7,7 @@ on:
     paths:
       - 'aim/**'
       - '.github/workflows/aim.yml'
+  workflow_dispatch:
 
 jobs:
   examples:

@@ -7,6 +7,7 @@ on:
     paths:
       - 'dask/**'
       - '.github/workflows/dask.yml'
+  workflow_dispatch:
 
 jobs:
   examples:

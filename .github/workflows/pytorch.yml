@@ -7,6 +7,7 @@ on:
     paths:
       - 'pytorch/**'
       - '.github/workflows/pytorch.yml'
+  workflow_dispatch:
 
 jobs:
   examples:

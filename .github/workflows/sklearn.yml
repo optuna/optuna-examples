@@ -8,6 +8,7 @@ on:
     paths:
       - 'sklearn/**'
       - '.github/workflows/sklearn.yml'
+  workflow_dispatch:
 
 jobs:
   examples:
