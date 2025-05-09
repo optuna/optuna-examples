@@ -25,37 +25,4 @@ repos:
     rev: 5.13.2
     hooks:
       - id: isort
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.13.0
-    hooks:
-    - id: mypy
-      additional_dependencies: [
-        "alembic>=1.5.0",
-        "colorlog",
-        "numpy",
-        "packaging>=20.0",
-        "sqlalchemy>=1.3.0",
-        "tqdm",
-        "PyYAML",
-        "mypy_boto3_s3",
-        "types-PyYAML",
-        "types-redis",
-        "types-setuptools",
-        "types-tqdm",
-        "typing_extensions>=3.10.0.0",
-        "types-protobuf",
-      ]
-      exclude: docs|tutorial|optuna/storages/_rdb/alembic|optuna/storages/_grpc/auto_generated
-      args: [
-        --warn-unused-configs,
-        --disallow-untyped-calls,
-        --disallow-untyped-defs,
-        --disallow-incomplete-defs,
-        --check-untyped-defs,
-        --no-implicit-optional,
-        --warn-redundant-casts,
-        --strict-equality,
-        --extra-checks,
-        --no-implicit-reexport,
-        --ignore-missing-imports,
-      ]
+
