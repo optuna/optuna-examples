@@ -15,7 +15,6 @@ repos:
     rev: 7.1.1
     hooks:
       - id: flake8
-        exclude: tutorial|docs/visualization_examples|docs/visualization_matplotlib_examples|optuna/storages/_grpc/auto_generated
         args: [
             "--max-line-length=99",
             "--ignore=E203,E704,W503",
