@@ -24,7 +24,8 @@ set_seed(42)
 device = torch.device("cpu")
 
 # Load dataset
-dataset = load_dataset("imdb")
+train_dataset = load_dataset("imdb", split="train").shuffle().select(range(1000))
+val_dataset = load_dataset("imdb", split="test").shuffle().select(range(500))
 metric = evaluate.load("accuracy")
 
 model_name = "prajjwal1/bert-tiny"
@@ -44,20 +45,8 @@ dataset.set_format("torch", columns=["input_ids", "attention_mask", "labels"])
 train_dataset = dataset["train"].select(range(1000))
 eval_dataset = dataset["test"].select(range(500))
 
-# Model config
-config = AutoConfig.from_pretrained(
-    model_name,
-    num_labels=2,
-)
-
-
 def model_init():
-    model = AutoModelForSequenceClassification.from_pretrained(
-        model_name,
-        config=config,
-    )
-    model.to(device)
-    return model
+    return AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=2)
 
 
 # Metric computation
