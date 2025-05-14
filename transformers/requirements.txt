@@ -1,4 +1,3 @@
-optuna
 transformers
 evaluate
 scikit-learn
