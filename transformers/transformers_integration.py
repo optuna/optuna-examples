@@ -69,9 +69,6 @@ training_args = TrainingArguments(
     report_to="none",
     fp16=False,
     dataloader_pin_memory=False,
-    per_device_train_batch_size=16,
-    num_train_epochs=1,
-    learning_rate=1e-6,
 )
 
 # Trainer
