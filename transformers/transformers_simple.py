@@ -24,7 +24,7 @@ device = torch.device("cpu")
 
 raw_dataset = load_dataset("imdb")
 
-raw_train = raw_dataset["train"].shuffle(seed=42).select(range(1000))
+train_dataset = load_dataset("imdb", split="train").shuffle(seed=42).select(range(1000))
 raw_test = raw_dataset["test"].shuffle(seed=42).select(range(500))
 
 model_name = "prajjwal1/bert-tiny"
