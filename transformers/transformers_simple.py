@@ -2,7 +2,7 @@
 Optuna example for fine-tuning a BERT-based text classification model on the IMDb dataset
 with hyperparameter optimization using Optuna. In this example, we fine-tune a lightweight
 pre-trained BERT model on a small subset of the IMDb dataset to classify movie reviews as
-positive or negative.We optimize the validation accuracy by tuning the learning rate, batch size
+positive or negative. We optimize the validation accuracy by tuning the learning rate, batch size
 and number of training epochs.
 """
 
@@ -25,6 +25,8 @@ device = torch.device("cpu")
 
 raw_dataset = load_dataset("imdb")
 
+raw_train = raw_dataset["train"].shuffle(seed=42).select(range(1000))
+raw_test = raw_dataset["test"].shuffle(seed=42).select(range(500))
 
 model_name = "prajjwal1/bert-tiny"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
@@ -34,15 +36,8 @@ def tokenize(batch):
     return tokenizer(batch["text"], padding="max_length", truncation=True, max_length=512)
 
 
-tokenized_dataset = raw_dataset.map(tokenize, batched=True)
-
-
-tokenized_dataset = tokenized_dataset.rename_column("label", "labels")
-tokenized_dataset.set_format("torch", columns=["input_ids", "attention_mask", "labels"])
-
-
-train_dataset = tokenized_dataset["train"].shuffle(seed=42).select(range(1000))
-eval_dataset = tokenized_dataset["test"].shuffle(seed=42).select(range(500))
+tokenized_train = raw_train.map(tokenize, batched=True).select_columns(["input_ids", "label"])
+tokenized_test = raw_test.map(tokenize, batched=True).select_columns(["input_ids", "label"])
 
 
 metric = evaluate.load("accuracy")
@@ -52,7 +47,6 @@ def model_init():
     return AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=2)
 
 
-# Metric computation
 def compute_metrics(eval_pred):
     predictions = eval_pred.predictions.argmax(axis=-1)
     labels = eval_pred.label_ids
@@ -63,7 +57,6 @@ def compute_objective(metrics):
     return metrics["eval_accuracy"]
 
 
-# Training arguments
 training_args = TrainingArguments(
     output_dir="./results",
     eval_strategy="epoch",
@@ -78,12 +71,11 @@ training_args = TrainingArguments(
     dataloader_pin_memory=False,
 )
 
-# Trainer
 trainer = Trainer(
     model_init=model_init,
     args=training_args,
-    train_dataset=train_dataset,
-    eval_dataset=eval_dataset,
+    train_dataset=tokenized_train,
+    eval_dataset=tokenized_test,
     tokenizer=tokenizer,
     compute_metrics=compute_metrics,
 )
@@ -99,7 +91,7 @@ def optuna_hp_space(trial):
 
 
 # Use Trainer's built-in hyperparameter tuning with Optuna
-best_trials = trainer.hyperparameter_search(
+best_run = trainer.hyperparameter_search(
     direction="maximize",
     backend="optuna",
     hp_space=optuna_hp_space,
@@ -109,4 +101,4 @@ best_trials = trainer.hyperparameter_search(
 
 # Print best result
 print("Best trial:")
-print(best_trials)
+print(best_run)
