@@ -2,5 +2,4 @@ accelerate
 datasets
 evaluate
 scikit-learn
-torch
 transformers

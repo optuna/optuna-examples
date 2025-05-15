@@ -10,7 +10,6 @@ https://huggingface.co/docs/transformers/en/hpo_train.
 
 from datasets import load_dataset
 import evaluate
-import torch
 
 from transformers import AutoModelForSequenceClassification
 from transformers import AutoTokenizer
@@ -20,9 +19,6 @@ from transformers import TrainingArguments
 
 
 set_seed(42)
-
-
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 train_dataset = load_dataset("imdb", split="train").shuffle(seed=42).select(range(1000))
