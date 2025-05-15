@@ -2,8 +2,7 @@
 Optuna example for fine-tuning a BERT-based text classification model on the IMDb dataset
 with hyperparameter optimization using Optuna. In this example, we fine-tune a lightweight
 pre-trained BERT model on a small subset of the IMDb dataset to classify movie reviews as
-positive or negative. We optimize the validation accuracy by tuning the learning rate, batch size
-and number of training epochs.
+positive or negative. We optimize the validation accuracy by tuning the learning rate and batch size.
 """
 
 from datasets import load_dataset
@@ -90,7 +89,6 @@ def optuna_hp_space(trial):
     }
 
 
-# Use Trainer's built-in hyperparameter tuning with Optuna
 best_run = trainer.hyperparameter_search(
     direction="maximize",
     backend="optuna",
@@ -99,6 +97,5 @@ best_run = trainer.hyperparameter_search(
     compute_objective=compute_objective,
 )
 
-# Print best result
-print("Best trial:")
+print("Best run:")
 print(best_run)
