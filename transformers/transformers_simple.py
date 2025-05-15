@@ -3,8 +3,9 @@ Optuna example for fine-tuning a BERT-based text classification model on the IMD
 with hyperparameter optimization using Optuna. In this example, we fine-tune a lightweight
 pre-trained BERT model on a small subset of the IMDb dataset to classify movie reviews as
 positive or negative. We optimize the validation accuracy by tuning the learning rate
-and batch size.To learn more, you can check the following
-documentation: https://huggingface.co/docs/transformers/en/hpo_train?
+and batch size. To learn more about transformers' hyperparameter search, 
+you can check the following documentation: 
+https://huggingface.co/docs/transformers/en/hpo_train.
 """
 
 from datasets import load_dataset
@@ -35,8 +36,8 @@ def tokenize(batch):
     return tokenizer(batch["text"], padding="max_length", truncation=True, max_length=512)
 
 
-tokenized_train = train_dataset.map(tokenize, batched=True).select_columns(["input_ids", "label"])
-tokenized_valid = valid_dataset.map(tokenize, batched=True).select_columns(["input_ids", "label"])
+tokenized_train = train_dataset.map(tokenize, batched=True).select_columns(["input_ids", "attention_mask", "label"])
+tokenized_valid = valid_dataset.map(tokenize, batched=True).select_columns(["input_ids", "attention_mask", "label"])
 
 
 metric = evaluate.load("accuracy")
