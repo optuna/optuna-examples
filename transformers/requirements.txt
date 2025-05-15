@@ -1,8 +1,6 @@
-transformers
+accelerate
+datasets
 evaluate
 scikit-learn
 torch
-torchaudio
-torchvision
-datasets
-accelerate
+transformers
