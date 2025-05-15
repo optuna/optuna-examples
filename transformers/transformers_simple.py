@@ -3,7 +3,8 @@ Optuna example for fine-tuning a BERT-based text classification model on the IMD
 with hyperparameter optimization using Optuna. In this example, we fine-tune a lightweight
 pre-trained BERT model on a small subset of the IMDb dataset to classify movie reviews as
 positive or negative. We optimize the validation accuracy by tuning the learning rate
-and batch size.
+and batch size.To learn more, you can check the following
+documentation: https://huggingface.co/docs/transformers/en/hpo_train?
 """
 
 from datasets import load_dataset
@@ -20,7 +21,7 @@ from transformers import TrainingArguments
 set_seed(42)
 
 
-device = torch.device("cpu")
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 train_dataset = load_dataset("imdb", split="train").shuffle(seed=42).select(range(1000))
@@ -56,14 +57,13 @@ def compute_objective(metrics):
 
 
 training_args = TrainingArguments(
-training_args = TrainingArguments(
     eval_strategy="epoch",
     save_strategy="best",
     load_best_model_at_end=True,
     logging_strategy="epoch",
     report_to="none",
 )
-)
+
 
 trainer = Trainer(
     model_init=model_init,
