@@ -2,7 +2,8 @@
 Optuna example for fine-tuning a BERT-based text classification model on the IMDb dataset
 with hyperparameter optimization using Optuna. In this example, we fine-tune a lightweight
 pre-trained BERT model on a small subset of the IMDb dataset to classify movie reviews as
-positive or negative. We optimize the validation accuracy by tuning the learning rate and batch size.
+positive or negative. We optimize the validation accuracy by tuning the learning rate
+and batch size.
 """
 
 from datasets import load_dataset
@@ -22,10 +23,8 @@ set_seed(42)
 device = torch.device("cpu")
 
 
-raw_dataset = load_dataset("imdb")
-
 train_dataset = load_dataset("imdb", split="train").shuffle(seed=42).select(range(1000))
-raw_test = raw_dataset["test"].shuffle(seed=42).select(range(500))
+valid_dataset = load_dataset("imdb", split="test").shuffle(seed=42).select(range(500))
 
 model_name = "prajjwal1/bert-tiny"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
@@ -35,8 +34,8 @@ def tokenize(batch):
     return tokenizer(batch["text"], padding="max_length", truncation=True, max_length=512)
 
 
-tokenized_train = raw_train.map(tokenize, batched=True).select_columns(["input_ids", "label"])
-tokenized_test = raw_test.map(tokenize, batched=True).select_columns(["input_ids", "label"])
+tokenized_train = train_dataset.map(tokenize, batched=True).select_columns(["input_ids", "label"])
+tokenized_valid = valid_dataset.map(tokenize, batched=True).select_columns(["input_ids", "label"])
 
 
 metric = evaluate.load("accuracy")
@@ -74,7 +73,7 @@ trainer = Trainer(
     model_init=model_init,
     args=training_args,
     train_dataset=tokenized_train,
-    eval_dataset=tokenized_test,
+    eval_dataset=tokenized_valid,
     processing_class=tokenizer,
     compute_metrics=compute_metrics,
 )
