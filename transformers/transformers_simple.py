@@ -56,17 +56,13 @@ def compute_objective(metrics):
 
 
 training_args = TrainingArguments(
-    output_dir="./results",
+training_args = TrainingArguments(
     eval_strategy="epoch",
-    save_strategy="epoch",
-    save_total_limit=1,
+    save_strategy="best",
     load_best_model_at_end=True,
-    weight_decay=0.01,
-    logging_dir="./logs",
     logging_strategy="epoch",
     report_to="none",
-    fp16=False,
-    dataloader_pin_memory=False,
+)
 )
 
 trainer = Trainer(
@@ -92,9 +88,8 @@ best_run = trainer.hyperparameter_search(
     direction="maximize",
     backend="optuna",
     hp_space=optuna_hp_space,
-    n_trials=10,
+    n_trials=5,
     compute_objective=compute_objective,
 )
 
-print("Best run:")
 print(best_run)
