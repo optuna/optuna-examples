@@ -2,7 +2,7 @@
 Optuna example for fine-tuning a BERT-based text classification model on the IMDb dataset
 with hyperparameter optimization using Optuna. In this example, we fine-tune a lightweight
 pre-trained BERT model on a small subset of the IMDb dataset to classify movie reviews as
-positive or negative.We optimize the validation accuracy by tuning the learning rate, batch size
+positive or negative.We optimize the validation accuracy by tuning the learning rate and batch size.
 and number of training epochs.
 """
 
@@ -52,7 +52,6 @@ def model_init():
     return AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=2)
 
 
-# Metric computation
 def compute_metrics(eval_pred):
     predictions = eval_pred.predictions.argmax(axis=-1)
     labels = eval_pred.label_ids
@@ -63,7 +62,6 @@ def compute_objective(metrics):
     return metrics["eval_accuracy"]
 
 
-# Training arguments
 training_args = TrainingArguments(
     output_dir="./results",
     eval_strategy="epoch",
@@ -78,7 +76,6 @@ training_args = TrainingArguments(
     dataloader_pin_memory=False,
 )
 
-# Trainer
 trainer = Trainer(
     model_init=model_init,
     args=training_args,
