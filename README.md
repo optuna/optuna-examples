@@ -79,6 +79,7 @@ Here are the URLs to the example codeblocks to the corresponding setups.
 * [Scikit-learn OptunaSearchCV](./sklearn/sklearn_optuna_search_cv_simple.py)
 * [Scikit-image](./skimage/skimage_lbp_simple.py)
 * [SKORCH](./pytorch/skorch_simple.py)
+* [Hugging Face Transformers](./transformers/transformers_simple.py)
 * [Tensorflow](./tensorflow/tensorflow_estimator_simple.py)
 * [Tensorflow (eager)](./tensorflow/tensorflow_eager_simple.py)
 * [XGBoost](./xgboost/xgboost_simple.py)
