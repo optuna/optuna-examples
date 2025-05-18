@@ -1,4 +1,4 @@
 tensorflow-estimator
-tensorflow>=2.11
+tensorflow-cpu>=2.11.0
 tensorflow-datasets
 optuna
