@@ -1,5 +1,5 @@
 keras
-numpy<2.0.0  # TODO(nabe): Remove this constraint once this issue is resolved. https://github.com/numpy/numpy/issues/26710
+numpy
 optuna
-tensorflow-cpu<2.19.0  # TODO(y0z): remove the version constraint <2.19.0 after resolve the CI issue (cf. #304)
+tensorflow-cpu<2.19.0
 tensorflow-datasets
