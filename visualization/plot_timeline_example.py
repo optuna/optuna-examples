@@ -13,10 +13,11 @@ This is particularly useful for:
 - Understanding convergence behavior over time
 """
 
+import random
+import time
+
 import optuna
 from optuna.visualization import plot_timeline
-import time
-import random
 
 
 def objective(trial):
