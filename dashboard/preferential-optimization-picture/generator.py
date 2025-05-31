@@ -1,18 +1,18 @@
 from __future__ import annotations
 
+import argparse
 import os
 import tempfile
 import time
 from typing import NoReturn
-
-import argparse
 
 from optuna.artifacts import FileSystemArtifactStore
 from optuna.artifacts import upload_artifact
 from optuna_dashboard import register_preference_feedback_component
 from optuna_dashboard.preferential import create_study
 from optuna_dashboard.preferential.samplers.gp import PreferentialGPSampler
-from PIL import Image, ImageEnhance
+from PIL import Image
+from PIL import ImageEnhance
 
 
 STORAGE_URL = "sqlite:///db.sqlite3"
@@ -25,10 +25,7 @@ def main() -> NoReturn:
     # Parse command-line arguments
     parser = argparse.ArgumentParser(description="Optimize image enhancement parameters.")
     parser.add_argument(
-        "--image_path",
-        type=str,
-        required=True,
-        help="Path to the input image file."
+        "--image_path", type=str, required=True, help="Path to the input image file."
     )
     args = parser.parse_args()
 
