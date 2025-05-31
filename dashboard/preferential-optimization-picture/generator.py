@@ -10,7 +10,8 @@ from optuna.artifacts import upload_artifact
 from optuna_dashboard import register_preference_feedback_component
 from optuna_dashboard.preferential import create_study
 from optuna_dashboard.preferential.samplers.gp import PreferentialGPSampler
-from PIL import Image, ImageEnhance
+from PIL import Image
+from PIL import ImageEnhance
 
 
 STORAGE_URL = "sqlite:///db.sqlite3"
