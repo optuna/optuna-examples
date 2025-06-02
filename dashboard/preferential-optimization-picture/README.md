@@ -15,5 +15,5 @@ $ python generator.py --image_path sample.png
 Then, launch Optuna Dashboard in a separate process using the following command.
 
 ```bash
-optuna-dashboard sqlite:///example.db --artifact-dir ./artifact
+optuna-dashboard sqlite:///db.sqlite3 --artifact-dir ./artifact
 ```

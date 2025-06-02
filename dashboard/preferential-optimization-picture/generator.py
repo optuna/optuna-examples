@@ -22,14 +22,14 @@ os.makedirs(artifact_path, exist_ok=True)
 
 
 def main() -> NoReturn:
-    # Parse command-line arguments
+    # Parse command-line arguments.
     parser = argparse.ArgumentParser(description="Optimize image enhancement parameters.")
     parser.add_argument(
         "--image_path", type=str, required=True, help="Path to the input image file."
     )
     args = parser.parse_args()
 
-    # Validate the image path
+    # Validate the image path.
     if not os.path.exists(args.image_path):
         raise FileNotFoundError(f"The specified image file does not exist: {args.image_path}")
 
@@ -44,33 +44,33 @@ def main() -> NoReturn:
     # By default (component_type="note"), the Trial's Markdown note is displayed.
     user_attr_key = "rgb_image"
     register_preference_feedback_component(study, "artifact", user_attr_key)
-    image_sample = Image.open(args.image_path)  # Use the image path from command-line arguments
+    image_sample = Image.open(args.image_path)  # Use the image path from command-line arguments.
     with tempfile.TemporaryDirectory() as tmpdir:
         while True:
             # If study.should_generate() returns False,
             # the generator waits for human evaluation.
             if not study.should_generate():
-                time.sleep(0.1)  # Avoid busy-loop
+                time.sleep(0.1)  # Avoid busy-loop.
                 continue
 
             trial = study.ask()
-            # 1. Ask new parameters
+            # 1. Ask new parameters.
             contrast_factor = trial.suggest_float("contrast_factor", 0.0, 2.0)
             brightness_factor = trial.suggest_float("brightness_factor", 0.0, 2.0)
             color_factor = trial.suggest_float("color_factor", 0.0, 2.0)
             sharpness_factor = trial.suggest_float("sharpness_factor", 0.0, 2.0)
 
-            # 2. Generate image
+            # 2. Generate image.
             image_path = os.path.join(tmpdir, f"sample-{trial.number}.png")
             image = image_sample.copy()
 
-            # Adjust contrast
+            # Adjust contrast.
             image = ImageEnhance.Contrast(image).enhance(contrast_factor)
-            # Adjust brightness
+            # Adjust brightness.
             image = ImageEnhance.Brightness(image).enhance(brightness_factor)
-            # Adjust color
+            # Adjust color.
             image = ImageEnhance.Color(image).enhance(color_factor)
-            # Adjust sharpness
+            # Adjust sharpness.
             image = ImageEnhance.Sharpness(image).enhance(sharpness_factor)
 
             image.save(image_path)
