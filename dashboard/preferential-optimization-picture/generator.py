@@ -64,19 +64,19 @@ def main() -> NoReturn:
             image_path = os.path.join(tmpdir, f"sample-{trial.number}.png")
             image = image_sample.copy()
 
-            # Adjust contrast.
             image = ImageEnhance.Contrast(image).enhance(contrast_factor)
-            # Adjust brightness.
             image = ImageEnhance.Brightness(image).enhance(brightness_factor)
-            # Adjust color.
             image = ImageEnhance.Color(image).enhance(color_factor)
-            # Adjust sharpness.
             image = ImageEnhance.Sharpness(image).enhance(sharpness_factor)
 
             image.save(image_path)
 
             # 3. Upload Artifact and set artifact_id to trial.user_attrs["rgb_image"].
-            artifact_id = upload_artifact(trial, image_path, artifact_store)
+            artifact_id = upload_artifact(
+                artifact_store=artifact_store,
+                file_path=image_path,
+                study_or_trial=trial,
+            )
             trial.set_user_attr(user_attr_key, artifact_id)
 
 
