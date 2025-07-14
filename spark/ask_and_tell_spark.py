@@ -27,7 +27,7 @@ if __name__ == "__main__":
         study.tell(trial, result)
         print(f"Trial#{trial.number}: {x=:.4e}, {result=:.4e}")
 
-        print("\nBest trial:")
-        print(f"\tValue: {study.best_value}")
-        print(f"\tParams: {study.best_trial.params}")
-        spark.stop()
+    print("\nBest trial:")
+    print(f"\tValue: {study.best_value}")
+    print(f"\tParams: {study.best_trial.params}")
+    spark.stop()
