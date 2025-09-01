@@ -1,0 +1,24 @@
+services:
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "127.0.0.1:13000:3000"
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus.yml
+    command:
+      - "--config.file=/etc/prometheus.yml"
+    ports:
+      - "127.0.0.19090:9090"
+  otel-collector:
+    image: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:latest
+    volumes:
+      - ./otel-collector-config.yml:/etc/otel-collector-config.yml
+    command: ["--config=/etc/otel-collector-config.yml"]
+    ports:
+      - "127.0.0.1:8888:8888" # Prometheus metrics exposed by the collector
+      - "127.0.0.1:8889:8889" # Prometheus exporter metrics
+      - "127.0.0.1:13133:13133" # health_check extension
+      - "127.0.0.1:4317:4317" # OTLP gRPC receiver
+      - "127.0.0.1:4318:4318" # OTLP HTTP receiver
