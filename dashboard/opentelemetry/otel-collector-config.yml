@@ -1,0 +1,25 @@
+receivers:
+  otlp:
+    protocols:
+      http:
+        endpoint: otel-collector:4318
+        cors:
+          allowed_origins:
+            - "http://*"
+            - "https://*"
+processors:
+  batch:
+exporters:
+  prometheus:
+    endpoint: "0.0.0.0:8889"
+  debug:
+    verbosity: detailed
+extensions:
+  health_check:
+service:
+  extensions: ["health_check"]
+  pipelines:
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [prometheus, debug]

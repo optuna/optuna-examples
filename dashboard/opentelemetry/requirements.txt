@@ -1,0 +1,7 @@
+optuna-dashboard
+opentelemetry-api>=1.34.1
+opentelemetry-exporter-otlp>=1.34.1
+opentelemetry-exporter-prometheus>=0.55b1
+opentelemetry-sdk>=1.34.1
+opentelemetry-instrumentation-wsgi
+opentelemetry-instrumentation-sqlalchemy
