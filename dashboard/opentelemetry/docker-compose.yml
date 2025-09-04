@@ -10,7 +10,7 @@ services:
     command:
       - "--config.file=/etc/prometheus.yml"
     ports:
-      - "127.0.0.19090:9090"
+      - "127.0.0.1:9090:9090"
   otel-collector:
     image: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:latest
     volumes:
