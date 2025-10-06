@@ -30,6 +30,8 @@ jobs:
         pip install git+https://github.com/optuna/optuna.git
         python -c 'import optuna'
 
+        # TODO(c-bata): Remove the version constraint after fixes https://github.com/optuna/optuna-examples/issues/331
+        pip install "transformers<4.57.0"
         pip install -r transformers/requirements.txt
     - name: Run examples
       run: |
