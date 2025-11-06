@@ -15,21 +15,19 @@ import argparse
 
 import numpy as np
 import optuna
-from optuna.integration import SkorchPruningCallback
 import skorch
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torchvision import datasets
-
+from optuna.integration import SkorchPruningCallback
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
-
+from torchvision import datasets
 
 SUBSET_RATIO = 0.4
 
-mnist_train = datasets.MNIST(root="./data", train=True, download=False)
-mnist_test = datasets.MNIST(root="./data", train=False, download=False)
+mnist_train = datasets.MNIST(root="./data", train=True, download=True)
+mnist_test = datasets.MNIST(root="./data", train=False, download=True)
 
 X = np.concatenate([mnist_train.data.numpy(), mnist_test.data.numpy()], axis=0)
 y = np.concatenate([mnist_train.targets.numpy(), mnist_test.targets.numpy()], axis=0)
@@ -41,7 +39,9 @@ N = int(len(X) * SUBSET_RATIO)
 X = X[indices][:N]
 y = y[indices][:N]
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.25, random_state=42
+)
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 
@@ -96,7 +96,9 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    pruner = optuna.pruners.MedianPruner() if args.pruning else optuna.pruners.NopPruner()
+    pruner = (
+        optuna.pruners.MedianPruner() if args.pruning else optuna.pruners.NopPruner()
+    )
 
     study = optuna.create_study(direction="maximize", pruner=pruner)
     study.optimize(objective, n_trials=100, timeout=600)
