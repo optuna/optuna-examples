@@ -16,29 +16,30 @@ import argparse
 import numpy as np
 import optuna
 from optuna.integration import SkorchPruningCallback
-import pandas as pd
 import skorch
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from torchvision import datasets
 
-from sklearn.datasets import fetch_openml
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 
 
 SUBSET_RATIO = 0.4
 
-mnist = fetch_openml("mnist_784", cache=False)
+mnist_train = datasets.MNIST(root="./data", train=True, download=False)
+mnist_test = datasets.MNIST(root="./data", train=False, download=False)
 
-X = pd.DataFrame(mnist.data)
-y = mnist.target.astype("int64")
+X = np.concatenate([mnist_train.data.numpy(), mnist_test.data.numpy()], axis=0)
+y = np.concatenate([mnist_train.targets.numpy(), mnist_test.targets.numpy()], axis=0)
+
+X = X.reshape(X.shape[0], -1).astype(np.float32) / 255.0
+
 indices = np.random.permutation(len(X))
 N = int(len(X) * SUBSET_RATIO)
-X = X.iloc[indices][:N].astype(np.float32)
+X = X[indices][:N]
 y = y[indices][:N]
-
-X /= 255.0
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
 device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -79,9 +80,9 @@ def objective(trial: optuna.Trial) -> float:
         callbacks=[SkorchPruningCallback(trial, "valid_acc")],
     )
 
-    net.fit(X_train.to_numpy().astype(np.float32), y_train)
+    net.fit(X_train, y_train)
 
-    return accuracy_score(y_test.to_numpy(), net.predict(X_test.to_numpy().astype(np.float32)))
+    return accuracy_score(y_test, net.predict(X_test))
 
 
 if __name__ == "__main__":

@@ -79,9 +79,6 @@ jobs:
       env:
         OMP_NUM_THREADS: 1
     - name: Run skorch example
-      # TODO(c-bata): Remove the following if statement after fixing the example.
-      # See https://github.com/optuna/optuna-examples/issues/336 for details.
-      if: github.event_name != 'schedule'
       run: |
         python pytorch/skorch_simple.py
       env:
