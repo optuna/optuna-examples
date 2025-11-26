@@ -12,17 +12,16 @@ We can execute this example as follows.
 **Note:** If a parameter contains missing values, a trial with missing values is not plotted.
 """
 
+from mnists import FashionMNIST
 import numpy as np
 import optuna
-from mnists import FashionMNIST
-from optuna.visualization import (
-    plot_contour,
-    plot_intermediate_values,
-    plot_optimization_history,
-    plot_parallel_coordinate,
-    plot_param_importances,
-    plot_slice,
-)
+from optuna.visualization import plot_contour
+from optuna.visualization import plot_intermediate_values
+from optuna.visualization import plot_optimization_history
+from optuna.visualization import plot_parallel_coordinate
+from optuna.visualization import plot_param_importances
+from optuna.visualization import plot_slice
+
 from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPClassifier
 
@@ -66,9 +65,7 @@ def objective(trial):
 
 
 if __name__ == "__main__":
-    study = optuna.create_study(
-        direction="maximize", pruner=optuna.pruners.MedianPruner()
-    )
+    study = optuna.create_study(direction="maximize", pruner=optuna.pruners.MedianPruner())
     study.optimize(objective, n_trials=100, timeout=600)
 
     # Visualize the optimization history.
