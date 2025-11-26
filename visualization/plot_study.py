@@ -12,39 +12,38 @@ We can execute this example as follows.
 **Note:** If a parameter contains missing values, a trial with missing values is not plotted.
 """
 
-import urllib
-
+import numpy as np
 import optuna
-from optuna.visualization import plot_contour
-from optuna.visualization import plot_intermediate_values
-from optuna.visualization import plot_optimization_history
-from optuna.visualization import plot_parallel_coordinate
-from optuna.visualization import plot_param_importances
-from optuna.visualization import plot_slice
-
-from sklearn.datasets import fetch_openml
+from mnists import FashionMNIST
+from optuna.visualization import (
+    plot_contour,
+    plot_intermediate_values,
+    plot_optimization_history,
+    plot_parallel_coordinate,
+    plot_param_importances,
+    plot_slice,
+)
 from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPClassifier
 
 
-# TODO(crcrpar): Remove the below three lines once everything is ok.
-# Register a global custom opener to avoid HTTP Error 403: Forbidden when downloading MNIST.
-opener = urllib.request.build_opener()
-opener.addheaders = [("User-agent", "Mozilla/5.0")]
-urllib.request.install_opener(opener)
-
-
 def objective(trial):
-    fmnist = fetch_openml(name="Fashion-MNIST", version=1)
-    classes = list(set(fmnist.target))
+    # Load Fashion-MNIST dataset using mnists
+    fmnist = FashionMNIST()
+    X = fmnist.train_images()  # shape: (n_samples, 28, 28)
+    y = fmnist.train_labels()  # shape: (n_samples,)
 
     # For demonstrational purpose, only use a subset of the dataset.
     n_samples = 4000
-    data = fmnist.data[:n_samples]
-    target = fmnist.target[:n_samples]
+    X = X[:n_samples]
+    y = y[:n_samples]
 
-    x_train, x_valid, y_train, y_valid = train_test_split(data, target)
+    # Flatten images (28x28 -> 784)
+    X = X.reshape(n_samples, -1).astype(np.float32)
 
+    classes = list(set(y))
+
+    x_train, x_valid, y_train, y_valid = train_test_split(X, y)
     clf = MLPClassifier(
         hidden_layer_sizes=tuple(
             [trial.suggest_int("n_units_l{}".format(i), 32, 64) for i in range(3)]
@@ -67,7 +66,9 @@ def objective(trial):
 
 
 if __name__ == "__main__":
-    study = optuna.create_study(direction="maximize", pruner=optuna.pruners.MedianPruner())
+    study = optuna.create_study(
+        direction="maximize", pruner=optuna.pruners.MedianPruner()
+    )
     study.optimize(objective, n_trials=100, timeout=600)
 
     # Visualize the optimization history.

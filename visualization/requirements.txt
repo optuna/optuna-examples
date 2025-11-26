@@ -1,3 +1,4 @@
 plotly
 scikit-learn
 pandas  # used in visualization/plot_study.py
+mnists
