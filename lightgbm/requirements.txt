@@ -1,5 +1,5 @@
 lightgbm>=3.3.0
 numpy
 optuna
-scikit-learn
+scikit-learn<1.6.0  # TODO(y0z:) Remove upper bound when lightgbm supports scikit-learn 1.6.0
 botorch
