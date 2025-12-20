@@ -164,7 +164,6 @@ If you are interested in defining a user-defined sampler, here is an example:
 * [CuPy](https://github.com/cupy/cupy)
 * [Hydra's Optuna Sweeper Plugin](https://hydra.cc/docs/next/plugins/optuna_sweeper/)
 * [Mozilla Voice STT](https://github.com/mozilla/DeepSpeech)
-* [neptune.ai](https://neptune.ai)
 * [OptGBM: A scikit-learn Compatible LightGBM Estimator with Optuna](https://github.com/Y-oHr-N/OptGBM)
 * [Optuna-distributed](https://github.com/xadrianzetx/optuna-distributed)
 * [PyKEEN](https://github.com/pykeen/pykeen)
