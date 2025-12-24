@@ -39,5 +39,5 @@ if __name__ == "__main__":
     print("\nBest trial:")
     print(f"\tValue: {study.best_value}")
     print(f"\tParams: {study.best_trial.params}")
-    print(f"\tNr evaluations: {len(study.trials)}")
+    print(f"\tNumber of evaluations: {len(study.trials)}")
     spark.stop()
