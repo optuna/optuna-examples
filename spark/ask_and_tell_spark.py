@@ -32,9 +32,7 @@ if __name__ == "__main__":
         results = rdd.map(lambda x: evaluate(*x)).collect()
         for trial_number, result in results:
             study.tell(trial_number, result)
-        print(f"Batch: {batch}")
-        print(f"\tValue: {study.best_value}")
-        print(f"\tParams: {study.best_trial.params}")
+            print(f"Trial#{trial_number}: {result=:.4e}")
 
     print("\nBest trial:")
     print(f"\tValue: {study.best_value}")
