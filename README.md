@@ -171,6 +171,7 @@ If you are interested in defining a user-defined sampler, here is an example:
 * [RL Baselines Zoo](https://github.com/DLR-RM/rl-baselines3-zoo)
 * [Hyperparameter Optimization for Machine Learning, Code Repository for Online Course](https://github.com/solegalli/hyperparameter-optimization)
 * [Property-guided molecular optimization using MolMIM with CMA-ES](https://github.com/olachinkei/BioNeMo_WandB/blob/main/Molecule/03_Molecule_LLM.ipynb)
+* [godon-dev- parallelized metaheuristics-driven optimization engine for continuous infrastructure and technology stack optimization with Optuna as one of its backends](https://github.com/godon-dev)
 </details>
 
 > [!IMPORTANT]
