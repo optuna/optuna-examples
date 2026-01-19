@@ -14,7 +14,6 @@ from optuna_dashboard.preferential.samplers.gp import PreferentialGPSampler
 from PIL import Image
 from PIL import ImageEnhance
 
-
 STORAGE_URL = "sqlite:///db.sqlite3"
 artifact_path = os.path.join(os.path.dirname(__file__), "artifact")
 artifact_store = FileSystemArtifactStore(base_path=artifact_path)

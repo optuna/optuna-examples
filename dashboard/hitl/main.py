@@ -33,13 +33,11 @@ def suggest_and_generate_image(
     artifact_path = get_artifact_path(trial, artifact_id)
 
     # 4. Save Note
-    note = textwrap.dedent(
-        f"""\
+    note = textwrap.dedent(f"""\
     ## Trial {trial.number}
 
     ![generated-image]({artifact_path})
-    """
-    )
+    """)
     save_note(trial, note)
 
 

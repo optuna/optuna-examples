@@ -18,7 +18,7 @@ import xgboost as xgb
 
 
 def objective(trial):
-    (data, target) = sklearn.datasets.load_breast_cancer(return_X_y=True)
+    data, target = sklearn.datasets.load_breast_cancer(return_X_y=True)
     train_x, valid_x, train_y, valid_y = train_test_split(data, target, test_size=0.25)
     dtrain = xgb.DMatrix(train_x, label=train_y)
     dvalid = xgb.DMatrix(valid_x, label=valid_y)

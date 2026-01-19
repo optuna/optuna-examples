@@ -12,7 +12,6 @@ from lightgbm import log_evaluation
 import sklearn.datasets
 from sklearn.model_selection import KFold
 
-
 if __name__ == "__main__":
     data, target = sklearn.datasets.load_breast_cancer(return_X_y=True)
     dtrain = lgb.Dataset(data, label=target)

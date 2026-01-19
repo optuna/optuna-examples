@@ -25,7 +25,6 @@ from torchvision import datasets
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 
-
 SUBSET_RATIO = 0.4
 
 mnist_train = datasets.MNIST(root="./data", train=True, download=True)

@@ -14,7 +14,6 @@ import sklearn.datasets
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 
-
 if __name__ == "__main__":
     data, target = sklearn.datasets.load_breast_cancer(return_X_y=True)
     train_x, val_x, train_y, val_y = train_test_split(data, target, test_size=0.25)

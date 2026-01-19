@@ -26,7 +26,6 @@ from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder
 
-
 logger = logging.Logger(name="Experiment Logger", level=1)
 
 # Set your openml api key if you want to upload your results to OpenML (eg:

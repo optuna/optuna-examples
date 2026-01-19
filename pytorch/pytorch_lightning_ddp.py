@@ -29,7 +29,6 @@ from torch.utils.data import random_split
 from torchvision import datasets
 from torchvision import transforms
 
-
 PERCENT_VALID_EXAMPLES = 0.1
 BATCHSIZE = 128
 CLASSES = 10

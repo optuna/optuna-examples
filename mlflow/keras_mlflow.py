@@ -27,7 +27,6 @@ from sklearn.datasets import load_wine
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
-
 TEST_SIZE = 0.25
 BATCHSIZE = 16
 EPOCHS = 100

@@ -27,7 +27,6 @@ from fastai.vision.all import SimpleCNN
 from fastai.vision.all import untar_data
 from fastai.vision.all import URLs
 
-
 BATCHSIZE = 128
 EPOCHS = 10
 
