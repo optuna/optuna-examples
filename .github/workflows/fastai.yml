@@ -1,8 +1,6 @@
 name: fastai
 
 on:
-  schedule:
-    - cron: '0 15 * * *'
   pull_request:
     paths:
       - 'fastai/**'

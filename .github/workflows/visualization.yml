@@ -1,10 +1,6 @@
 name: visualization
 
 on:
-  # TODO(c-bata): Uncomment the following lines after fixing the examples.
-  # See https://github.com/optuna/optuna-examples/issues/336 for details.
-  # schedule:
-  #   - cron: '0 15 * * *'
   pull_request:
     paths:
       - 'visualization/**'
