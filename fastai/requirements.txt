@@ -1,3 +1,4 @@
 fastai>=2.0.0
+fastcore<1.12.2  # TODO(not522): Remove this constraint once this issue is resolved. https://github.com/AnswerDotAI/fastcore/issues/751
 optuna
 ipython

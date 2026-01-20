@@ -29,7 +29,6 @@ from torch.utils.data import random_split
 from torchvision import datasets
 from torchvision import transforms
 
-
 if version.parse(pl.__version__) < version.parse("1.6.0"):
     raise RuntimeError("PyTorch Lightning>=1.6.0 is required for this example.")
 

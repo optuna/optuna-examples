@@ -19,7 +19,6 @@ from packaging import version
 
 import allennlp
 
-
 # This path trick is used since this example is also
 # run from the root of this repository by CI.
 EXAMPLE_DIR = os.path.dirname(os.path.abspath(__file__))

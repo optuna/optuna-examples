@@ -12,7 +12,6 @@ from optuna_dashboard.streamlit import render_objective_form_widgets
 from optuna_dashboard.streamlit import render_trial_note
 import streamlit as st
 
-
 artifact_path = os.path.join(os.path.dirname(__file__), "artifact")
 artifact_backend = FileSystemBackend(base_path=artifact_path)
 

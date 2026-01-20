@@ -20,7 +20,6 @@ import torch.utils.data
 from torchvision import datasets
 from torchvision import transforms
 
-
 DEVICE = torch.device("cpu")
 BATCHSIZE = 128
 CLASSES = 10

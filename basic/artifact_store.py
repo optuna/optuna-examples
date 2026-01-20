@@ -25,7 +25,6 @@ from optuna.artifacts import get_all_artifact_meta
 from optuna.artifacts import upload_artifact
 import pandas as pd
 
-
 dataset_path = "demo-dataset.csv"
 fig_name = "result-trial.png"
 # NOTE: The uploaded artifacts can be viewed in Optuna Dashboard with the following command:

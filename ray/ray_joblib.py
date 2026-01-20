@@ -21,7 +21,6 @@ import sklearn.ensemble
 import sklearn.model_selection
 import sklearn.svm
 
-
 # Get a URL for the Ray dashboard.
 try:
     ray.init(address="auto")

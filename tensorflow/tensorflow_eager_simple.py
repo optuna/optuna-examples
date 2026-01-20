@@ -15,7 +15,6 @@ from packaging import version
 import tensorflow as tf
 from tensorflow.keras.datasets import mnist
 
-
 # TODO(crcrpar): Remove the below three lines once everything is ok.
 # Register a global custom opener to avoid HTTP Error 403: Forbidden when downloading MNIST.
 opener = urllib.request.build_opener()

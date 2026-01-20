@@ -30,7 +30,6 @@ from torchvision.transforms import Compose
 from torchvision.transforms import Normalize
 from torchvision.transforms import ToTensor
 
-
 EPOCHS = 10
 TRAIN_BATCH_SIZE = 64
 VAL_BATCH_SIZE = 1000

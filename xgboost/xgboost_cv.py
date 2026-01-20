@@ -16,14 +16,13 @@ import sklearn.datasets
 import sklearn.metrics
 import xgboost as xgb
 
-
 SEED = 108
 N_FOLDS = 3
 CV_RESULT_DIR = "./xgboost_cv_results"
 
 
 def objective(trial):
-    (data, target) = sklearn.datasets.load_breast_cancer(return_X_y=True)
+    data, target = sklearn.datasets.load_breast_cancer(return_X_y=True)
     dtrain = xgb.DMatrix(data, label=target)
 
     param = {

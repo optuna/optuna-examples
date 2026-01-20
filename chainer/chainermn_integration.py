@@ -25,7 +25,6 @@ import chainer
 import chainer.functions as F
 import chainer.links as L
 
-
 N_TRAIN_EXAMPLES = 3000
 N_VALID_EXAMPLES = 1000
 BATCHSIZE = 128

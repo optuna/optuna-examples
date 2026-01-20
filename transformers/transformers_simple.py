@@ -17,7 +17,6 @@ from transformers import set_seed
 from transformers import Trainer
 from transformers import TrainingArguments
 
-
 set_seed(42)
 
 

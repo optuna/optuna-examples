@@ -22,7 +22,6 @@ from stable_baselines3.common.monitor import Monitor
 import torch
 import torch.nn as nn
 
-
 N_TRIALS = 100
 N_STARTUP_TRIALS = 5
 N_EVALUATIONS = 2

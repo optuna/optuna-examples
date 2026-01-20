@@ -10,7 +10,6 @@ from opentelemetry.sdk.resources import Resource
 from optuna.storages import RDBStorage
 import optuna_dashboard
 
-
 SQLALCHEMY_URL = "sqlite:///db.sqlite3"
 OTEL_COLLECTOR_ENDPOINT = "http://127.0.0.1:4318/v1/metrics"
 
