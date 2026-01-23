@@ -2,7 +2,7 @@ name: rapids
 
 on:
   schedule:
-    - cron: '0 15 * * *'
+    - cron: '0 15 * * 1'
   pull_request:
     paths:
       - 'rapids/**'
