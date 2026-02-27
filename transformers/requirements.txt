@@ -2,4 +2,4 @@ accelerate
 datasets
 evaluate
 scikit-learn
-transformers
+transformers<5.2.0  # TODO(not522): Remove this constraint once this issue is resolved. https://huggingface.co/prajjwal1/bert-tiny/discussions/16
