@@ -1,1 +1,2 @@
 tensorflow-cpu
+optuna_integration[tensorboard]
