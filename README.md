@@ -147,7 +147,6 @@ If you are interested in defining a user-defined sampler, here is an example:
 <summary>MLOps Platform</summary>
 
 * [Tracking Optimization Process with aim](./aim/aim_integration.py)
-* [Tracking Optimization Process with MLflow](./mlflow/keras_mlflow.py)
 * [Optimization with Hydra](./hydra/simple.py)
 </details>
 
