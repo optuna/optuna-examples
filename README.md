@@ -58,8 +58,6 @@ Here are the URLs to the example codeblocks to the corresponding setups.
 <details open>
 <summary>Machine Learning (Incl. LightGBMTuner and OptunaSearchCV)</summary>
 
-* [AllenNLP](./allennlp/allennlp_simple.py)
-* [AllenNLP (Jsonnet)](./allennlp/allennlp_jsonnet.py)
 * [Catalyst](./pytorch/catalyst_simple.py)
 * [CatBoost](./catboost/catboost_simple.py)
 * [Chainer](./chainer/chainer_simple.py)
