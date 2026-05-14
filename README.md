@@ -148,7 +148,6 @@ If you are interested in defining a user-defined sampler, here is an example:
 
 * [Tracking Optimization Process with aim](./aim/aim_integration.py)
 * [Tracking Optimization Process with MLflow](./mlflow/keras_mlflow.py)
-* [Tracking Optimization Process with Weights & Biases](./wandb/wandb_integration.py)
 * [Optimization with Hydra](./hydra/simple.py)
 </details>
 
