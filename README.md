@@ -58,12 +58,8 @@ Here are the URLs to the example codeblocks to the corresponding setups.
 <details open>
 <summary>Machine Learning (Incl. LightGBMTuner and OptunaSearchCV)</summary>
 
-* [AllenNLP](./allennlp/allennlp_simple.py)
-* [AllenNLP (Jsonnet)](./allennlp/allennlp_jsonnet.py)
 * [Catalyst](./pytorch/catalyst_simple.py)
 * [CatBoost](./catboost/catboost_simple.py)
-* [Chainer](./chainer/chainer_simple.py)
-* [ChainerMN](./chainer/chainermn_simple.py)
 * [Dask-ML](./dask_ml/dask_ml_simple.py)
 * [FastAI](./fastai/fastai_simple.py)
 * [Haiku](./haiku/haiku_simple.py)
@@ -100,8 +96,6 @@ In addition, integration modules are available for the following libraries, prov
 
 * [Pruning with Catalyst Integration Module](./pytorch/catalyst_simple.py)
 * [Pruning with CatBoost Integration Module](./catboost/catboost_pruning.py)
-* [Pruning with Chainer Integration Module](./chainer/chainer_integration.py)
-* [Pruning with ChainerMN Integration Module](./chainer/chainermn_integration.py)
 * [Pruning with FastAI Integration Module](./fastai/fastai_simple.py)
 * [Pruning with Keras Integration Module](./keras/keras_integration.py)
 * [Pruning with LightGBM Integration Module](./lightgbm/lightgbm_integration.py)
@@ -149,8 +143,6 @@ If you are interested in defining a user-defined sampler, here is an example:
 <summary>MLOps Platform</summary>
 
 * [Tracking Optimization Process with aim](./aim/aim_integration.py)
-* [Tracking Optimization Process with MLflow](./mlflow/keras_mlflow.py)
-* [Tracking Optimization Process with Weights & Biases](./wandb/wandb_integration.py)
 * [Optimization with Hydra](./hydra/simple.py)
 </details>
 

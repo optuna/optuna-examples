@@ -9,10 +9,6 @@ results and stops unpromising trials.
 You can run this example as follows:
     $ python keras_integration.py
 
-For a similar Optuna example that demonstrates Keras without a pruner on a regression dataset,
-see the following link:
-    https://github.com/optuna/optuna-examples/blob/main/mlflow/keras_mlflow.py
-
 """
 
 import urllib
