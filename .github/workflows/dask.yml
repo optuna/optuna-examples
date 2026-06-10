@@ -9,6 +9,9 @@ on:
       - '.github/workflows/dask.yml'
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   examples:
 

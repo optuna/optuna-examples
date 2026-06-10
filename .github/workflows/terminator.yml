@@ -9,6 +9,9 @@ on:
       - '.github/workflows/terminator.yml'
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   examples:
     if: (github.event_name == 'schedule' && github.repository == 'optuna/optuna-examples') || (github.event_name != 'schedule')
