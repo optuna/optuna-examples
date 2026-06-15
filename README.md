@@ -165,9 +165,6 @@ If you are interested in defining a user-defined sampler, here is an example:
 * [Property-guided molecular optimization using MolMIM with CMA-ES](https://github.com/olachinkei/BioNeMo_WandB/blob/main/Molecule/03_Molecule_LLM.ipynb)
 </details>
 
-> [!IMPORTANT]
-> PRs to add additional real-world examples or projects are welcome!
-
 ### Running with Optuna's Docker images?
 
 Our Docker images for most examples are available with the tag ending with `-dev`.
