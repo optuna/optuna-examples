@@ -1,18 +1,14 @@
 # Contribution Guidelines
 
-It’s such an honor to have you on board!
+Thank you for your interest in contributing to Optuna Examples!
 
-If you feel like giving your hand to us, here are some ways
-- Add an example
-    - If you have an idea for an example, please feel free to open a PR as draft to discuss design or work on your example.
-- Report a bug
-    - If you find some bug, don't hesitate to report it! Your reports matter.
-
-If you choose to write some code, we have some conventions as follows.
+> [!NOTE]
+> Optuna Examples is temporarily pausing external pull request submissions so that maintainers can focus on maintaining the existing examples within our available review capacity.
+> In the meantime, bug reports, feedback, and suggestions remain welcome through [GitHub Issues](https://github.com/optuna/optuna-examples/issues).
+The following guidelines are provided for maintainers and anyone working on a local copy of the repository.
 
 - [Guidelines](#guidelines)
 - [Continuous Integration and Local Verification](#continuous-integration-and-local-verification)
-- [Creating a Pull Request](#creating-a-pull-request)
 
 ## Guidelines
 
@@ -68,27 +64,3 @@ act -j examples -W path/to/example.yml/file
 ```
 
 Usually, the example.yml file will be in the [`.github/workflows/`](.github/workflows/) directory.
-
-## Creating a Pull Request
-
-When you are ready to create a pull request, please try to keep the following in mind.
-
-### Title
-
-The title of your pull request should
-
-- briefly describe and reflect the changes
-- wrap any code with backticks
-- not end with a period
-
-#### Example
-
-Add new example for using Optuna to tune GPT-4
-
-### Description
-
-The description of your pull request should
-
-- describe the motivation
-- describe the changes
-- if still work-in-progress, describe remaining tasks
